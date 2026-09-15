@@ -42,6 +42,17 @@
 
     <hr>
 
+    <br>
+    <br>
+
+<a href="{{ route('admin.analytics.index') }}">
+    Analytics Siswa
+</a>
+
+<a href="{{ route('admin.assessments.index') }}">
+    Kelola Penilaian Siswa
+</a>
+
     <a href="{{ route('admin.students.index') }}">
         Kelola Data Siswa
     </a>
