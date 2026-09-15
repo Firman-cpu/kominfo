@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Assessment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -20,4 +22,9 @@ class Student extends Model
         'start_date' => 'date',
         'end_date' => 'date',
     ];
+
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(Assessment::class);
+    }
 }

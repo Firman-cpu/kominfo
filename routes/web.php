@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
@@ -18,9 +19,8 @@ Route::get('/students', [StudentController::class, 'index'])
 
 Route::middleware('admin')->prefix('admin')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.page');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('admin.dashboard.page');
 
     Route::get('/students', [AdminStudentController::class, 'index'])
         ->name('admin.students.index');
