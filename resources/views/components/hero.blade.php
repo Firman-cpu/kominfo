@@ -1,4 +1,4 @@
-2<section class="hero-section">
+<section class="hero-section">
 
     <div class="container hero-grid">
 
