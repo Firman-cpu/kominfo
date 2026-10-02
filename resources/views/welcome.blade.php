@@ -77,13 +77,6 @@
                                class="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
                         </a>
                     </div>
-
-                    <div class="hero-footer mt-10 flex items-center gap-3 font-mono text-[9px] text-slate-600">
-                        <span class="text-teal-300">●</span>
-                        database.connected
-                        <span class="text-slate-700">/</span>
-                        <span class="text-sky-300/80">live_data</span>
-                    </div>
                 </div>
 
 
