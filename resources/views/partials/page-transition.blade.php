@@ -1,30 +1,54 @@
 {{-- =========================================================
-     PAGE TRANSITION — Simple Blue Ice Fade
-     - Opacity 1 pada load → fade OUT (reveal page)
-     - Opacity 0 saat idle → fade IN (curtain) sebelum navigate
+     PAGE TRANSITION — Blue Ice Fade
+     - Opacity 1 saat load → fade OUT untuk menampilkan halaman
+     - Opacity 0 saat idle → fade IN sebelum navigasi
 ========================================================== --}}
 
 <div
     id="page-transition"
     aria-hidden="true"
-    style="opacity:1;"
-    class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0a1520]"
+    style="opacity: 1;"
+    class="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#f5f7fa]"
 >
+    {{-- Soft blue radial glow --}}
+    <div
+        class="pointer-events-none absolute inset-0 opacity-80
+               [background:radial-gradient(circle_at_50%_45%,rgba(65,107,158,0.13),transparent_55%)]"
+    ></div>
 
-    {{-- Soft radial glow --}}
-    <div class="pointer-events-none absolute inset-0 opacity-70 [background:radial-gradient(circle_at_50%_50%,rgba(56,189,248,0.16),transparent_65%)]"></div>
+    {{-- Subtle ambient glow --}}
+    <div
+        class="pointer-events-none absolute h-56 w-56 rounded-full
+               bg-[#416b9e]/[0.06] blur-3xl"
+    ></div>
 
-    {{-- Icon database + pulse ring --}}
+    {{-- Loading indicator --}}
     <div class="relative flex items-center justify-center">
 
-        {{-- Pulsing ring --}}
-        <span class="absolute inline-flex h-16 w-16 animate-ping rounded-full bg-sky-400/20"></span>
+        {{-- Pulse ring --}}
+        <span
+            class="absolute inline-flex h-20 w-20 animate-ping rounded-full
+                   border border-[#416b9e]/20 bg-[#416b9e]/[0.04]"
+        ></span>
 
-        {{-- Icon --}}
-        <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-sky-300/20 bg-sky-400/[0.08] backdrop-blur-xl">
-            <i data-lucide="database" class="h-6 w-6 text-sky-300"></i>
+        {{-- Icon container --}}
+        <div
+            class="relative flex h-14 w-14 items-center justify-center
+                   rounded-2xl border border-[#dce5f0]
+                   bg-white/90 shadow-[0_8px_30px_rgba(54,91,136,0.12)]
+                   backdrop-blur-xl"
+        >
+            <i
+                data-lucide="database"
+                class="h-6 w-6 text-[#365b88]"
+            ></i>
         </div>
 
+        {{-- Small status dot --}}
+        <span
+            class="absolute -right-1 -top-1 h-3 w-3 rounded-full
+                   border-2 border-[#f5f7fa] bg-[#416b9e]"
+        ></span>
     </div>
 </div>
 
@@ -35,9 +59,16 @@
         var pt = document.getElementById('page-transition');
         if (!pt) return;
 
-        /* Buat icon di dalam overlay juga (karena overlay di atas icons di body) */
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
+        /* Render icon di dalam overlay */
+        if (
+            window.lucide &&
+            typeof window.lucide.createIcons === 'function'
+        ) {
+            window.lucide.createIcons({
+                attrs: {
+                    'stroke-width': 1.8
+                }
+            });
         }
 
         if (!window.gsap) {
@@ -71,13 +102,20 @@
             var href = link.getAttribute('href');
             if (!href) return;
             if (href.charAt(0) === '#') return;
-            if (/^(mailto:|tel:|javascript:|blob:|data:)/i.test(href)) return;
+
+            if (/^(mailto:|tel:|javascript:|blob:|data:)/i.test(href)) {
+                return;
+            }
 
             try {
                 var url = new URL(href, window.location.origin);
+
                 if (url.origin !== window.location.origin) return;
-                if (url.pathname === window.location.pathname
-                    && url.search === window.location.search) {
+
+                if (
+                    url.pathname === window.location.pathname &&
+                    url.search === window.location.search
+                ) {
                     return;
                 }
             } catch (err) {

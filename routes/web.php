@@ -2,11 +2,14 @@
 
 use App\Models\Student;
 use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\AssessmentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PublicStudentController;
+use App\Http\Controllers\PublicAnalyticsController;
+use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +36,12 @@ Route::get(
     '/students/{student}',
     [PublicStudentController::class, 'show']
 )->name('students.show');
+
+Route::get('/analytics', [PublicAnalyticsController::class, 'index'])
+    ->name('analytics.index');
+
+Route::get('/profile', [PublicProfileController::class, 'index'])
+    ->name('profile.index');
 
 // Admin
 
@@ -79,9 +88,15 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])
         ->name('admin.analytics.index');
-    
+
     Route::get('/analytics/students/{student}', [AnalyticsController::class, 'student'])
         ->name('admin.analytics.student');
+
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('admin.profile.index');
+
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('admin.profile.update');
 });
 
 // Admin Auth

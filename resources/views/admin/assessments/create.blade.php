@@ -1,448 +1,511 @@
+
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tambah Penilaian Siswa — PRAKERIN DISKOMINFO.">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Tambah Penilaian Siswa — PRAKERIN DISKOMINFO PACITAN.">
 
     <title>Tambah Penilaian — PRAKERIN</title>
 
-    {{-- Preconnect --}}
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Pre-hide SEBELUM paint --}}
-    <script>
-        document.documentElement.classList.add('gsap-init');
-    </script>
-
-    <style>
-        [x-cloak] { display: none !important; }
-
-        html.gsap-init [data-anim] { opacity: 0; }
-
-        @keyframes shimmer {
-            0%   { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-        .shimmer-text {
-            background-size: 200% auto;
-            animation: shimmer 6s linear infinite;
-        }
-
-        /* Orb pakai radial-gradient — 0 cost GPU */
-        .orb {
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
-        }
-        .orb-1 {
-            background: radial-gradient(circle,
-                rgba(14, 165, 233, 0.28) 0%,
-                rgba(14, 165, 233, 0.14) 35%,
-                rgba(14, 165, 233, 0.04) 60%,
-                transparent 75%);
-        }
-        .orb-2 {
-            background: radial-gradient(circle,
-                rgba(34, 211, 238, 0.22) 0%,
-                rgba(34, 211, 238, 0.1) 38%,
-                rgba(34, 211, 238, 0.03) 62%,
-                transparent 78%);
-        }
-        .orb-3 {
-            background: radial-gradient(circle,
-                rgba(59, 130, 246, 0.24) 0%,
-                rgba(59, 130, 246, 0.1) 38%,
-                rgba(59, 130, 246, 0.03) 62%,
-                transparent 78%);
-        }
-
-        .field,
-        .btn-magnetic {
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
-        }
-
-        /* Sembunyikan spinner default input number biar konsisten */
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-
-        /* Color-scheme biar ikon date-picker browser ikut gelap */
-        input[type="date"] { color-scheme: dark; }
-
-        /* Select option warna sesuai tema */
-        select option { background-color: #0f1b2c; color: #e2e8f0; }
-    </style>
-
-    {{-- Libs di HEAD + defer --}}
     <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.451.0/dist/umd/lucide.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
 
-<body class="min-h-screen overflow-x-hidden bg-[#0a1520] text-slate-100 antialiased selection:bg-sky-400/30">
+<body class="min-h-screen overflow-x-hidden bg-[#f8fafc] text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">
 
-    {{-- BACKGROUND — ICE ATMOSPHERE --}}
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div class="orb orb-1 absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full"></div>
-        <div class="orb orb-2 absolute -right-40 top-[18%] h-[500px] w-[500px] rounded-full"></div>
-        <div class="orb orb-3 absolute bottom-[-250px] left-[35%] h-[500px] w-[500px] rounded-full"></div>
-
-        <div class="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(186,230,253,1)_1px,transparent_1px),linear-gradient(90deg,rgba(186,230,253,1)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_bottom,black,transparent_70%)]"></div>
-
-        <div class="absolute left-1/2 top-0 h-px w-[70%] -translate-x-1/2 bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"></div>
+    {{-- BACKGROUND --}}
+    <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <div class="absolute -left-40 -top-40 h-[420px] w-[420px] rounded-full bg-sky-100/70 blur-3xl"></div>
+        <div class="absolute -right-40 top-[15%] h-[420px] w-[420px] rounded-full bg-blue-100/60 blur-3xl"></div>
+        <div class="absolute bottom-[-220px] left-[35%] h-[400px] w-[400px] rounded-full bg-cyan-100/50 blur-3xl"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.07)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_65%)]"></div>
     </div>
 
+    <main class="relative z-10 mx-auto max-w-5xl px-4 pb-14 pt-6 sm:px-6 sm:pt-9 lg:px-8 lg:pb-20">
 
-    <main class="relative mx-auto max-w-4xl px-4 pb-20 pt-12 sm:px-6 sm:pt-16 lg:px-8 lg:pb-28">
+        {{-- NAVIGATION --}}
+        <nav data-anim class="mb-10 flex items-center justify-between gap-4">
+            <a href="{{ route('admin.dashboard.page') }}" class="group flex min-w-0 items-center gap-3">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-100 bg-white text-sky-600 shadow-sm transition duration-300 group-hover:-translate-y-0.5 group-hover:border-sky-200 group-hover:shadow-md">
+                    <i data-lucide="graduation-cap" class="h-5 w-5"></i>
+                </div>
 
-        {{-- BACK --}}
-        <a
-            data-anim
-            href="{{ route('admin.assessments.index') }}"
-            class="group inline-flex items-center gap-2.5 rounded-full border border-sky-400/20 bg-sky-400/[0.07] px-4 py-2 transition duration-300 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-sky-400/[0.14]"
-        >
-            <i data-lucide="arrow-left" class="h-3.5 w-3.5 text-sky-300 transition group-hover:-translate-x-0.5"></i>
-            <span class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-sky-200">
-                Kembali
-            </span>
-        </a>
+                <div class="min-w-0">
+                    <p class="text-sm font-black tracking-[0.06em] text-slate-900">PRAKERIN</p>
+                    <p class="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+                        DISKOMINFO PACITAN
+                    </p>
+                </div>
+            </a>
 
+            <a
+                href="{{ route('admin.assessments.index') }}"
+                class="group inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition duration-200 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+            >
+                <i data-lucide="arrow-left" class="h-4 w-4 transition-transform group-hover:-translate-x-1"></i>
+                <span>Kembali</span>
+            </a>
+        </nav>
 
-        {{-- HEADER --}}
-        <section class="mt-6">
-            <div data-anim class="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/[0.07] px-3 py-1.5">
-                <i data-lucide="clipboard-plus" class="h-3.5 w-3.5 text-sky-300"></i>
-                <span class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-sky-200">
-                    assessment.create
+        {{-- PAGE HEADER --}}
+        <header class="mb-8">
+            <div data-anim class="mb-4 inline-flex items-center gap-2 rounded-full border border-sky-100 bg-white px-3.5 py-2 shadow-sm">
+                <span class="relative flex h-2 w-2">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-40"></span>
+                    <span class="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
+                </span>
+                <span class="text-[10px] font-bold uppercase tracking-[0.16em] text-sky-700">
+                    Formulir Penilaian
                 </span>
             </div>
 
-            <h1 data-anim class="max-w-3xl text-5xl font-black leading-[0.9] tracking-[-0.055em] text-white sm:text-6xl">
-                TAMBAH
-                <span class="shimmer-text mt-1 block bg-gradient-to-r from-sky-200 via-cyan-200 to-blue-300 bg-clip-text text-transparent">
-                    PENILAIAN
-                </span>
+            <h1 data-anim class="text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-5xl">
+                Tambah Penilaian
+                <span class="mt-1 block text-sky-600">Siswa PRAKERIN.</span>
             </h1>
 
-            <p data-anim class="mt-6 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
-                Isi seluruh aspek penilaian siswa Praktik Kerja Lapangan.
-                Semua kolom bernilai wajib kecuali catatan.
+            <p data-anim class="mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
+                Catat hasil evaluasi siswa selama Praktik Kerja Lapangan. Lengkapi identitas, nilai kompetensi, dan catatan evaluasi dengan teliti.
             </p>
 
-            <div data-anim class="mt-8 h-px w-full bg-gradient-to-r from-sky-400/30 via-cyan-300/10 to-transparent"></div>
-        </section>
+            <div data-anim class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div class="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
+                        <i data-lucide="list-checks" class="h-5 w-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-slate-800">6 Aspek</p>
+                        <p class="mt-0.5 text-xs text-slate-400">Kompetensi siswa</p>
+                    </div>
+                </div>
 
+                <div class="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+                        <i data-lucide="chart-no-axes-column-increasing" class="h-5 w-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-slate-800">Skala 0–100</p>
+                        <p class="mt-0.5 text-xs text-slate-400">Rentang penilaian</p>
+                    </div>
+                </div>
 
-        {{-- ERRORS --}}
+                <div class="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                        <i data-lucide="shield-check" class="h-5 w-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-slate-800">Terlindungi</p>
+                        <p class="mt-0.5 text-xs text-slate-400">Validasi dan CSRF</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {{-- VALIDATION ERRORS --}}
         @if ($errors->any())
-            <div data-anim class="mt-8 overflow-hidden rounded-2xl border border-red-400/25 bg-red-500/[0.08] p-5">
+            <section data-anim role="alert" class="mb-6 rounded-2xl border border-red-200 bg-red-50 p-5">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="alert-triangle" class="mt-0.5 h-4 w-4 shrink-0 text-red-300"></i>
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-600">
+                        <i data-lucide="alert-triangle" class="h-5 w-5"></i>
+                    </div>
+
                     <div class="min-w-0">
-                        <div class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-red-300">
-                            Ada kesalahan
-                        </div>
-                        <ul class="mt-2 space-y-1">
+                        <h2 class="text-sm font-bold text-red-800">Periksa kembali formulir</h2>
+                        <p class="mt-1 text-xs leading-5 text-red-600">Terdapat informasi yang perlu diperbaiki.</p>
+
+                        <ul class="mt-3 space-y-2">
                             @foreach ($errors->all() as $error)
-                                <li class="text-xs leading-5 text-red-200/90">
-                                    {{ $error }}
+                                <li class="flex items-start gap-2 text-sm text-red-700">
+                                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500"></span>
+                                    <span>{{ $error }}</span>
                                 </li>
                             @endforeach
                         </ul>
                     </div>
                 </div>
-            </div>
+            </section>
         @endif
 
-
         {{-- FORM --}}
-        <form
-            data-anim
-            action="{{ route('admin.assessments.store') }}"
-            method="POST"
-            class="mt-8 space-y-8"
-        >
+        <form id="assessment-form" action="{{ route('admin.assessments.store') }}" method="POST" class="space-y-6">
             @csrf
 
-
-            {{-- STUDENT & DATE --}}
-            <section class="form-card relative overflow-hidden rounded-2xl border border-sky-200/[0.1] bg-[#0f1b2c]/80 p-5 backdrop-blur-xl sm:p-7">
-                <div class="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-sky-500/10 blur-[100px]"></div>
-
-                <div class="relative">
-                    <div class="mb-5 flex items-center gap-3">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-sky-300/15 bg-sky-300/[0.08]">
-                            <i data-lucide="user-round" class="h-4 w-4 text-sky-300"></i>
-                        </div>
-                        <span class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                            Identitas
-                        </span>
+            {{-- STUDENT AND DATE --}}
+            <section data-anim class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-200/50">
+                <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
+                        <i data-lucide="user-round" class="h-5 w-5"></i>
                     </div>
 
-                    <div class="grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-900">Identitas Penilaian</h2>
+                        <p class="mt-1 text-xs text-slate-500">Informasi dasar siswa yang dievaluasi.</p>
+                    </div>
 
-                        {{-- SISWA --}}
-                        <div class="field">
-                            <label
-                                for="student_id"
-                                class="mb-2 flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-slate-500"
-                            >
-                                <i data-lucide="users" class="h-3.5 w-3.5 text-sky-300"></i>
-                                Siswa
-                            </label>
+                    <span class="ml-auto rounded-lg bg-slate-50 px-2.5 py-1.5 font-mono text-[10px] font-semibold text-slate-400">01 / 03</span>
+                </div>
 
+                <div class="grid gap-5 p-5 sm:grid-cols-2 sm:p-7">
+                    <div>
+                        <label for="student_id" class="mb-2 block text-xs font-bold text-slate-700">
+                            Pilih Siswa <span class="text-red-500">*</span>
+                        </label>
+
+                        <div class="relative">
                             <select
                                 name="student_id"
                                 id="student_id"
                                 required
-                                class="w-full rounded-xl border border-sky-200/[0.12] bg-black/25 px-4 py-3 text-sm text-slate-100 outline-none transition duration-200 focus:border-sky-300/50 focus:bg-black/35 focus:ring-2 focus:ring-sky-400/20"
+                                class="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 pr-10 text-sm text-slate-700 outline-none transition hover:border-sky-300 focus:border-sky-500 focus:bg-white focus:ring-4 focus:ring-sky-500/10"
                             >
-                                <option value="">
-                                    -- Pilih Siswa --
-                                </option>
-
+                                <option value="">-- Pilih Siswa --</option>
                                 @foreach ($students as $student)
-                                    <option
-                                        value="{{ $student->id }}"
-                                        {{ old('student_id') == $student->id ? 'selected' : '' }}
-                                    >
+                                    <option value="{{ $student->id }}" {{ old('student_id') == $student->id ? 'selected' : '' }}>
                                         {{ $student->name }} — {{ $student->nis }}
                                     </option>
                                 @endforeach
                             </select>
+                            <i data-lucide="chevron-down" class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"></i>
                         </div>
 
-                        {{-- DATE --}}
-                        <div class="field">
-                            <label
-                                for="assessment_date"
-                                class="mb-2 flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-slate-500"
-                            >
-                                <i data-lucide="calendar-check" class="h-3.5 w-3.5 text-cyan-300"></i>
-                                Tanggal Penilaian
-                            </label>
+                        @error('student_id')
+                            <p class="mt-2 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                            <input
-                                type="date"
-                                name="assessment_date"
-                                id="assessment_date"
-                                value="{{ old('assessment_date', now()->format('Y-m-d')) }}"
-                                required
-                                class="w-full rounded-xl border border-sky-200/[0.12] bg-black/25 px-4 py-3 font-mono text-sm text-slate-100 outline-none transition duration-200 focus:border-cyan-300/50 focus:bg-black/35 focus:ring-2 focus:ring-cyan-400/20"
-                            >
-                        </div>
+                    <div>
+                        <label for="assessment_date" class="mb-2 block text-xs font-bold text-slate-700">
+                            Tanggal Penilaian <span class="text-red-500">*</span>
+                        </label>
 
+                        <input
+                            type="date"
+                            name="assessment_date"
+                            id="assessment_date"
+                            value="{{ old('assessment_date', now()->format('Y-m-d')) }}"
+                            required
+                            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-700 outline-none transition hover:border-sky-300 focus:border-sky-500 focus:bg-white focus:ring-4 focus:ring-sky-500/10"
+                        >
+
+                        @error('assessment_date')
+                            <p class="mt-2 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex items-start gap-3 rounded-xl border border-sky-100 bg-sky-50/70 p-4 sm:col-span-2">
+                        <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-sky-600"></i>
+                        <p class="text-xs leading-6 text-sky-800">
+                            Pastikan siswa yang dipilih sesuai dengan peserta PRAKERIN yang akan dievaluasi.
+                        </p>
                     </div>
                 </div>
             </section>
 
-
-            {{-- ASPECTS --}}
-            <section class="form-card relative overflow-hidden rounded-2xl border border-sky-200/[0.1] bg-[#0f1b2c]/80 p-5 backdrop-blur-xl sm:p-7">
-                <div class="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-cyan-500/10 blur-[100px]"></div>
-
-                <div class="relative">
-                    <div class="mb-5 flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/15 bg-cyan-300/[0.08]">
-                                <i data-lucide="clipboard-list" class="h-4 w-4 text-cyan-300"></i>
-                            </div>
-                            <span class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                                Aspek Penilaian
-                            </span>
-                        </div>
-                        <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500">
-                            0 – 100
-                        </span>
+            {{-- SCORES --}}
+            <section data-anim class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-200/50">
+                <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-700">
+                        <i data-lucide="clipboard-list" class="h-5 w-5"></i>
                     </div>
+
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-900">Aspek Penilaian</h2>
+                        <p class="mt-1 text-xs text-slate-500">Berikan nilai untuk setiap kompetensi siswa.</p>
+                    </div>
+
+                    <span class="ml-auto rounded-lg border border-sky-100 bg-sky-50 px-2.5 py-1.5 font-mono text-[10px] font-bold text-sky-700">0–100</span>
+                </div>
+
+                <div class="p-5 sm:p-7">
+                    <div class="mb-5 flex items-start gap-3 rounded-xl border border-amber-200/70 bg-amber-50 p-4">
+                        <i data-lucide="lightbulb" class="mt-0.5 h-4 w-4 shrink-0 text-amber-600"></i>
+                        <p class="text-xs leading-6 text-amber-900">
+                            Masukkan nilai antara <strong>0 sampai 100</strong>. Rata-rata di bawah merupakan pratinjau nilai dan bukan pengganti perhitungan di backend.
+                        </p>
+                    </div>
+
+                    @php
+                        $aspectInputs = [
+                            ['name' => 'discipline', 'label' => 'Kedisiplinan', 'icon' => 'shield-check', 'iconClass' => 'text-sky-600', 'iconBg' => 'bg-sky-50'],
+                            ['name' => 'responsibility', 'label' => 'Tanggung Jawab', 'icon' => 'target', 'iconClass' => 'text-cyan-700', 'iconBg' => 'bg-cyan-50'],
+                            ['name' => 'teamwork', 'label' => 'Kerja Sama', 'icon' => 'users-round', 'iconClass' => 'text-blue-600', 'iconBg' => 'bg-blue-50'],
+                            ['name' => 'communication', 'label' => 'Komunikasi', 'icon' => 'messages-square', 'iconClass' => 'text-teal-600', 'iconBg' => 'bg-teal-50'],
+                            ['name' => 'initiative', 'label' => 'Inisiatif', 'icon' => 'lightbulb', 'iconClass' => 'text-indigo-600', 'iconBg' => 'bg-indigo-50'],
+                            ['name' => 'work_quality', 'label' => 'Kualitas Kerja', 'icon' => 'award', 'iconClass' => 'text-emerald-600', 'iconBg' => 'bg-emerald-50'],
+                        ];
+                    @endphp
 
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-
-                        @php
-                            $aspectInputs = [
-                                ['name' => 'discipline',     'label' => 'Kedisiplinan',   'icon' => 'shield',         'accent' => 'sky'],
-                                ['name' => 'responsibility', 'label' => 'Tanggung Jawab', 'icon' => 'target',         'accent' => 'cyan'],
-                                ['name' => 'teamwork',       'label' => 'Kerja Sama',     'icon' => 'handshake',      'accent' => 'blue'],
-                                ['name' => 'communication',  'label' => 'Komunikasi',     'icon' => 'message-square', 'accent' => 'teal'],
-                                ['name' => 'initiative',     'label' => 'Inisiatif',      'icon' => 'lightbulb',      'accent' => 'sky'],
-                                ['name' => 'work_quality',   'label' => 'Kualitas Kerja', 'icon' => 'award',          'accent' => 'cyan'],
-                            ];
-                        @endphp
-
                         @foreach ($aspectInputs as $input)
-                            <div class="field">
-                                <label
-                                    for="{{ $input['name'] }}"
-                                    class="mb-2 flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-slate-500"
-                                >
-                                    <i data-lucide="{{ $input['icon'] }}" class="h-3.5 w-3.5 text-{{ $input['accent'] }}-300"></i>
+                            <div class="score-card rounded-2xl border border-slate-200 bg-slate-50/70 p-4 transition duration-200 hover:border-sky-200 hover:bg-white hover:shadow-md hover:shadow-slate-200/50">
+                                <label for="{{ $input['name'] }}" class="mb-3 flex items-center gap-2.5 text-xs font-bold text-slate-700">
+                                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl {{ $input['iconBg'] }}">
+                                        <i data-lucide="{{ $input['icon'] }}" class="h-4 w-4 {{ $input['iconClass'] }}"></i>
+                                    </span>
                                     {{ $input['label'] }}
+                                    <span class="text-red-500">*</span>
                                 </label>
 
-                                <input
-                                    type="number"
-                                    name="{{ $input['name'] }}"
-                                    id="{{ $input['name'] }}"
-                                    min="0"
-                                    max="100"
-                                    value="{{ old($input['name']) }}"
-                                    required
-                                    placeholder="0"
-                                    inputmode="numeric"
-                                    class="w-full rounded-xl border border-sky-200/[0.12] bg-black/25 px-4 py-3 font-mono text-sm text-slate-100 placeholder:text-slate-600 outline-none transition duration-200 focus:border-sky-300/50 focus:bg-black/35 focus:ring-2 focus:ring-sky-400/20"
-                                >
+                                <div class="relative">
+                                    <input
+                                        type="number"
+                                        name="{{ $input['name'] }}"
+                                        id="{{ $input['name'] }}"
+                                        min="0"
+                                        max="100"
+                                        step="1"
+                                        value="{{ old($input['name']) }}"
+                                        required
+                                        inputmode="numeric"
+                                        placeholder="0"
+                                        class="score-input w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 pr-14 font-mono text-lg font-bold tabular-nums text-slate-900 outline-none transition placeholder:text-slate-300 focus:border-sky-400 focus:ring-4 focus:ring-sky-500/10"
+                                    >
+                                    <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 font-mono text-[10px] text-slate-400">/ 100</span>
+                                </div>
+
+                                @error($input['name'])
+                                    <p class="mt-2 text-xs text-red-600">{{ $message }}</p>
+                                @enderror
+
+                                <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-slate-200">
+                                    <div data-score-bar="{{ $input['name'] }}" class="h-full w-0 rounded-full bg-gradient-to-r from-sky-500 to-cyan-400 transition-all duration-300"></div>
+                                </div>
                             </div>
                         @endforeach
+                    </div>
 
+                    {{-- AVERAGE PREVIEW --}}
+                    <div class="mt-6 rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-5 sm:p-6">
+                        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-sky-100 bg-white text-sky-600 shadow-sm">
+                                    <i data-lucide="chart-no-axes-combined" class="h-5 w-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-slate-900">Rata-rata Sementara</h3>
+                                    <p id="average-hint" class="mt-1 text-xs text-slate-500">Isi keenam nilai untuk mendapatkan rata-rata.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-baseline gap-2 sm:text-right">
+                                <span id="average-score" class="text-4xl font-black tracking-tight text-sky-700">—</span>
+                                <span class="font-mono text-xs text-slate-400">/ 100</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 h-2 overflow-hidden rounded-full bg-sky-100">
+                            <div id="average-progress" class="h-full w-0 rounded-full bg-gradient-to-r from-sky-500 to-cyan-400 transition-all duration-300"></div>
+                        </div>
                     </div>
                 </div>
             </section>
-
 
             {{-- NOTES --}}
-            <section class="form-card relative overflow-hidden rounded-2xl border border-sky-200/[0.1] bg-[#0f1b2c]/80 p-5 backdrop-blur-xl sm:p-7">
-                <div class="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-blue-500/10 blur-[100px]"></div>
-
-                <div class="relative">
-                    <div class="mb-5 flex items-center gap-3">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-blue-300/15 bg-blue-300/[0.08]">
-                            <i data-lucide="message-square-text" class="h-4 w-4 text-blue-300"></i>
-                        </div>
-                        <span class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                            Catatan
-                        </span>
-                        <span class="ml-auto font-mono text-[9px] uppercase tracking-[0.18em] text-slate-500">
-                            Opsional
-                        </span>
+            <section data-anim class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-200/50">
+                <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+                        <i data-lucide="notebook-pen" class="h-5 w-5"></i>
                     </div>
 
-                    <div class="field">
-                        <textarea
-                            name="notes"
-                            id="notes"
-                            rows="5"
-                            placeholder="Tuliskan catatan tambahan untuk siswa ini..."
-                            class="w-full resize-y rounded-xl border border-sky-200/[0.12] bg-black/25 px-4 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-600 outline-none transition duration-200 focus:border-blue-300/50 focus:bg-black/35 focus:ring-2 focus:ring-blue-400/20"
-                        >{{ old('notes') }}</textarea>
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-900">Catatan Evaluasi</h2>
+                        <p class="mt-1 text-xs text-slate-500">Masukan tambahan untuk perkembangan siswa.</p>
+                    </div>
+
+                    <span class="ml-auto rounded-lg bg-slate-100 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500">Opsional</span>
+                </div>
+
+                <div class="p-5 sm:p-7">
+                    <label for="notes" class="mb-2 block text-xs font-bold text-slate-700">Catatan</label>
+
+                    <textarea
+                        name="notes"
+                        id="notes"
+                        rows="5"
+                        placeholder="Tuliskan evaluasi, pencapaian, hal yang perlu ditingkatkan, atau saran untuk siswa..."
+                        class="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm leading-6 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-500/10"
+                    >{{ old('notes') }}</textarea>
+
+                    @error('notes')
+                        <p class="mt-2 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+
+                    <div class="mt-3 flex items-start gap-2 text-xs leading-5 text-slate-500">
+                        <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-sky-600"></i>
+                        <p>Catatan ini dapat digunakan untuk mendokumentasikan perkembangan, pencapaian, dan evaluasi siswa selama PRAKERIN.</p>
                     </div>
                 </div>
             </section>
 
-
             {{-- ACTIONS --}}
-            <div class="flex flex-wrap items-center justify-end gap-3 pt-2">
-                <a
-                    href="{{ route('admin.assessments.index') }}"
-                    class="inline-flex items-center gap-2 rounded-xl border border-sky-200/[0.12] bg-white/[0.03] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-sky-300/30 hover:bg-white/[0.06] hover:text-white"
-                >
-                    <i data-lucide="x" class="h-4 w-4"></i>
-                    Batal
-                </a>
+            <section data-anim class="flex flex-col-reverse gap-4 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                <p class="flex items-center gap-2 text-xs leading-5 text-slate-500">
+                    <i data-lucide="lock-keyhole" class="h-4 w-4 shrink-0 text-emerald-600"></i>
+                    Formulir dilindungi oleh token CSRF Laravel.
+                </p>
 
-                <button
-                    type="submit"
-                    class="btn-magnetic group inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-400 to-blue-500 px-5 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-xl shadow-sky-500/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-sky-400/50"
-                >
-                    <i data-lucide="save" class="h-4 w-4"></i>
-                    Simpan Penilaian
-                    <i data-lucide="arrow-right" class="h-4 w-4 transition group-hover:translate-x-0.5"></i>
-                </button>
-            </div>
+                <div class="flex flex-col-reverse gap-3 sm:flex-row">
+                    <a
+                        href="{{ route('admin.assessments.index') }}"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
+                    >
+                        <i data-lucide="x" class="h-4 w-4"></i>
+                        Batal
+                    </a>
 
+                    <button
+                        id="submit-button"
+                        type="submit"
+                        class="group inline-flex items-center justify-center gap-3 rounded-xl bg-sky-600 px-5 py-3.5 text-xs font-bold text-white shadow-lg shadow-sky-600/20 transition duration-200 hover:-translate-y-0.5 hover:bg-sky-700 hover:shadow-xl hover:shadow-sky-600/25 focus:outline-none focus:ring-4 focus:ring-sky-500/20 disabled:cursor-wait disabled:opacity-60"
+                    >
+                        <i data-lucide="save" class="h-4 w-4"></i>
+                        <span>Simpan Penilaian</span>
+                        <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+            </section>
         </form>
 
-
-        {{-- FOOTER NOTE --}}
-        <div data-anim class="mt-14 flex items-center justify-center gap-3 font-mono text-[9px] text-slate-600">
-            <span class="text-teal-300">●</span>
-            assessment.form.ready
-            <span class="text-slate-700">/</span>
-            <span class="text-sky-300/80">csrf.protected</span>
-        </div>
-
+        {{-- FOOTER --}}
+        <footer data-anim class="mt-12 border-t border-slate-200 pt-6">
+            <div class="flex flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
+                <div class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400">assessment.form.ready</span>
+                </div>
+                <p class="text-xs text-slate-400">PRAKERIN · DISKOMINFO PACITAN</p>
+            </div>
+        </footer>
     </main>
 
-
-    {{-- SCRIPT — ICONS + ANIMATIONS --}}
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        var root = document.documentElement;
-
-        /* ICONS */
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
-        }
-
-        /* GSAP */
-        if (!window.gsap) {
-            root.classList.remove('gsap-init');
-        } else {
-            gsap.config({ force3D: true });
-            gsap.ticker.lagSmoothing(500, 33);
-
-            try {
-                var tl = gsap.timeline({
-                    defaults: { ease: 'power3.out', clearProps: 'transform,opacity' }
+        document.addEventListener('DOMContentLoaded', function () {
+            // Icons
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons({
+                    attrs: { 'stroke-width': 1.8 }
                 });
-
-                tl.from('[data-anim]', {
-                    y: 22,
-                    opacity: 0,
-                    duration: 0.6,
-                    stagger: { each: 0.04, from: 'start' }
-                });
-
-                root.classList.remove('gsap-init');
-
-                /* Ambient orb — transform only */
-                gsap.to('.orb-1', { x: 40,  y: 30,  duration: 14, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-                gsap.to('.orb-2', { x: -30, y: 40,  duration: 16, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-                gsap.to('.orb-3', { x: 20,  y: -30, duration: 18, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-
-                /* SUBMIT BUTTON MAGNETIC */
-                document.querySelectorAll('.btn-magnetic').forEach(function (btn) {
-                    btn.addEventListener('mousemove', function (e) {
-                        var rect = btn.getBoundingClientRect();
-                        var x = e.clientX - rect.left - rect.width / 2;
-                        var y = e.clientY - rect.top - rect.height / 2;
-                        gsap.to(btn, { x: x * 0.12, y: y * 0.2, duration: 0.4, ease: 'power2.out' });
-                    });
-                    btn.addEventListener('mouseleave', function () {
-                        gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
-                    });
-                });
-
-            } catch (err) {
-                console.warn('[gsap] animation error — showing content', err);
-                root.classList.remove('gsap-init');
             }
-        }
 
-        /* SAFETY NET */
-        window.setTimeout(function () {
-            root.classList.remove('gsap-init');
-            document.querySelectorAll('[data-anim]').forEach(function (el) {
-                if (getComputedStyle(el).opacity === '0') {
-                    el.style.opacity = '';
-                    el.style.transform = '';
+            // Entrance animation; page remains usable without GSAP.
+            if (window.gsap) {
+                try {
+                    gsap.config({ force3D: true });
+                    gsap.ticker.lagSmoothing(500, 33);
+
+                    gsap.from('[data-anim]', {
+                        y: 16,
+                        opacity: 0,
+                        duration: 0.5,
+                        stagger: 0.04,
+                        ease: 'power3.out',
+                        clearProps: 'transform,opacity'
+                    });
+
+                    gsap.from('.score-card', {
+                        y: 8,
+                        opacity: 0,
+                        duration: 0.35,
+                        stagger: 0.04,
+                        delay: 0.12,
+                        ease: 'power2.out',
+                        clearProps: 'transform,opacity'
+                    });
+                } catch (error) {
+                    console.warn('Animasi tidak dapat dijalankan:', error);
                 }
+            }
+
+            // Score preview
+            const scoreInputs = Array.from(document.querySelectorAll('.score-input'));
+            const averageScore = document.getElementById('average-score');
+            const averageProgress = document.getElementById('average-progress');
+            const averageHint = document.getElementById('average-hint');
+
+            function updateScores() {
+                const values = scoreInputs.map(function (input) {
+                    return input.value.trim() === '' ? null : Number(input.value);
+                });
+
+                scoreInputs.forEach(function (input, index) {
+                    const bar = document.querySelector('[data-score-bar="' + input.name + '"]');
+                    if (!bar) return;
+
+                    const value = values[index];
+                    bar.style.width = value === null
+                        ? '0%'
+                        : Math.min(100, Math.max(0, value)) + '%';
+                });
+
+                const completed = values.filter(function (value) {
+                    return value !== null && Number.isFinite(value);
+                });
+
+                if (completed.length === 0) {
+                    averageScore.textContent = '—';
+                    averageProgress.style.width = '0%';
+                    averageHint.textContent = 'Isi keenam nilai untuk mendapatkan rata-rata.';
+                    return;
+                }
+
+                const average = completed.reduce(function (sum, value) {
+                    return sum + value;
+                }, 0) / completed.length;
+
+                averageScore.textContent = average.toLocaleString('id-ID', {
+                    maximumFractionDigits: 2
+                });
+
+                averageProgress.style.width = Math.min(100, Math.max(0, average)) + '%';
+
+                averageHint.textContent = completed.length < scoreInputs.length
+                    ? completed.length + ' dari ' + scoreInputs.length + ' aspek terisi · rata-rata sementara'
+                    : 'Semua aspek sudah diisi · rata-rata enam nilai';
+            }
+
+            scoreInputs.forEach(function (input) {
+                input.addEventListener('input', updateScores);
+
+                input.addEventListener('change', function () {
+                    if (input.value.trim() !== '') {
+                        const value = Number(input.value);
+                        if (value < 0) input.value = '0';
+                        if (value > 100) input.value = '100';
+                    }
+                    updateScores();
+                });
             });
-        }, 1500);
 
-    });
+            updateScores();
+
+            // Prevent accidental double submission.
+            const form = document.getElementById('assessment-form');
+            const submitButton = document.getElementById('submit-button');
+
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    form.reportValidity();
+                    return;
+                }
+
+                if (submitButton.disabled) {
+                    event.preventDefault();
+                    return;
+                }
+
+                submitButton.disabled = true;
+
+                const label = submitButton.querySelector('span');
+                if (label) label.textContent = 'Menyimpan...';
+            });
+        });
     </script>
-
 </body>
-
 </html>
