@@ -99,36 +99,10 @@
 
     <main class="relative z-10 mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
 
-        {{-- Breadcrumb --}}
-        <nav data-animate class="mb-7 flex flex-wrap items-center gap-2 text-sm text-[#8390a1]"
-            aria-label="Breadcrumb">
-
-            <a href="{{ route('admin.students.index') }}"
-                class="transition-colors hover:text-[#365b88]">
-                Admin
-            </a>
-
-            <i data-lucide="chevron-right" class="h-4 w-4"></i>
-
-            <a href="{{ route('admin.students.index') }}"
-                class="transition-colors hover:text-[#365b88]">
-                Data Siswa
-            </a>
-
-            <i data-lucide="chevron-right" class="h-4 w-4"></i>
-
-            <span class="font-medium text-[#365b88]">
-                Tambah Siswa
-            </span>
-        </nav>
-
         {{-- Header --}}
         <header data-animate class="mb-8">
-            <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#dce6f2] bg-white text-[#365b88] shadow-[0_6px_20px_rgba(36,63,99,0.06)]">
-                <i data-lucide="user-round-plus" class="h-7 w-7"></i>
-            </div>
 
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div class="flex flex-col items-center sm:flex-row sm:justify-between">
                 <div>
                     <p class="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-[#416b9e]">
                         Manajemen Data
@@ -137,16 +111,12 @@
                     <h1 class="text-3xl font-bold tracking-tight text-[#243f63] sm:text-4xl">
                         Tambah Siswa PKL
                     </h1>
-
-                    <p class="mt-3 max-w-xl text-sm leading-6 text-[#718096] sm:text-base">
-                        Lengkapi informasi siswa untuk menambahkan data peserta Praktik Kerja Lapangan.
-                    </p>
                 </div>
-
-                <div class="flex w-fit items-center gap-2 rounded-full border border-[#e0e7f0] bg-white/80 px-3.5 py-2 text-xs font-medium text-[#718096]">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                    Formulir Siswa
-                </div>
+                <img
+                    src="{{ asset('image/logo.png') }}"
+                    alt="Logo DISKOMINFO Kabupaten Pacitan"
+                    class="h-25 w-auto object-contain"
+                >
             </div>
         </header>
 

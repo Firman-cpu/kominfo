@@ -55,7 +55,7 @@
                 <div>
                     <div
                         data-anim
-                        class="mb-5 inline-flex items-center gap-2 rounded-full border border-[#dce7f4] bg-white px-3.5 py-2 shadow-sm"
+                        class="mb-5 inline-flex items-center gap-2"
                     >
                         <i data-lucide="clipboard-list" class="h-4 w-4 text-[#416b9e]"></i>
 
@@ -73,25 +73,13 @@
                             SISWA
                         </span>
                     </h1>
-
-                    <p data-anim class="mt-5 max-w-xl text-sm leading-7 text-[#718096] sm:text-base">
-                        Kelola seluruh data penilaian siswa Praktik Kerja Lapangan.
-                        Pantau enam aspek kompetensi, perbarui nilai, dan dokumentasikan catatan pembimbing.
-                    </p>
                 </div>
 
-
-                {{-- ADD BUTTON --}}
-                <a
-                    data-anim
-                    href="{{ route('admin.assessments.create') }}"
-                    class="btn-magnetic group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#243f63] via-[#365b88] to-[#416b9e] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-blue-900/15 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/20"
+                <img
+                    src="{{ asset('image/logo.png') }}"
+                    alt="Logo DISKOMINFO Kabupaten Pacitan"
+                    class="h-30 w-auto object-contain"
                 >
-                    <i data-lucide="plus" class="h-4 w-4"></i>
-                    Tambah Penilaian
-                    <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
-                </a>
-
             </div>
 
             <div data-anim class="mt-8 h-px w-full bg-gradient-to-r from-[#365b88]/30 via-blue-200 to-transparent"></div>
@@ -106,7 +94,7 @@
                 class="mt-6 overflow-hidden rounded-2xl border border-emerald-200 bg-emerald-50/90 p-4 sm:p-5"
             >
                 <div class="flex items-start gap-3">
-                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-emerald-600 shadow-sm">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-emerald-600 shadow-sm">
                         <i data-lucide="check-circle-2" class="h-5 w-5"></i>
                     </div>
 
@@ -115,7 +103,7 @@
                             Berhasil
                         </h2>
 
-                        <p class="mt-1 text-sm leading-6 text-emerald-700">
+                        <p class=" text-sm leading-6 text-emerald-700">
                             {{ session('success') }}
                         </p>
                     </div>
@@ -153,9 +141,10 @@
         {{-- LIST SECTION --}}
         <section class="mt-8">
 
-            <div data-anim class="mb-5 flex flex-wrap items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0e7f0] bg-white text-[#365b88] shadow-sm">
-                    <i data-lucide="files" class="h-4 w-4"></i>
+            <div data-anim class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex gap-2">
+                <div class="flex h-9 w-9 items-center justify-center">
+                    <i data-lucide="files" class="h-7 w-7"></i>
                 </div>
 
                 <div>
@@ -167,14 +156,20 @@
                         Seluruh data hasil evaluasi siswa.
                     </p>
                 </div>
-
-                <div class="ml-auto inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-
-                    <span class="text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
-                        Data Penilaian
-                    </span>
                 </div>
+
+                <div class=" ">
+                {{-- ADD BUTTON --}}
+                <a
+                    data-anim
+                    href="{{ route('admin.assessments.create') }}"
+                    class="group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#243f63] via-[#365b88] to-[#416b9e] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-white
+                >
+                    <i data-lucide="plus" class="h-4 w-4"></i>
+                    Tambah Penilaian
+                    <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                </a>
+            </div>
             </div>
 
 

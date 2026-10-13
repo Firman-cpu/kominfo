@@ -94,32 +94,23 @@
             <div class="relative">
 
                 {{-- BRAND --}}
-                <div class="login-brand mb-8 flex items-center gap-3">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#243f63] to-[#416b9e] text-white shadow-lg shadow-[#243f63]/15">
-                        <i data-lucide="graduation-cap" class="h-5 w-5"></i>
-                    </div>
+                <div class="login-brand mb-8 flex items-center">
+                <img
+                    src="{{ asset('image/logo.png') }}"
+                    alt="Logo DISKOMINFO Kabupaten Pacitan"
+                    class="h-12 w-auto object-contain"
+                >
 
                     <div>
                         <p class="text-sm font-extrabold tracking-tight text-[#263449]">
-                            PRAKERIN
+                            DINAS KOMUNIKASI DAN INFORMATIKA
                         </p>
 
-                        <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#8390a1]">
-                            DISKOMINFO PACITAN
+                        <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#8390a1]">
+                            KABUPATEN PACITAN
                         </p>
                     </div>
                 </div>
-
-
-                {{-- BADGE --}}
-                <div class="login-badge mb-6 inline-flex items-center gap-2 rounded-full border border-[#dce6f2] bg-[#f4f8fc] px-3 py-1.5">
-                    <i data-lucide="shield-check" class="h-3.5 w-3.5 text-[#365b88]"></i>
-
-                    <span class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#365b88]">
-                        admin.auth.required
-                    </span>
-                </div>
-
 
                 {{-- HEADING --}}
                 <h1
@@ -132,11 +123,6 @@
                         LOGIN
                     </span>
                 </h1>
-
-                <p class="login-sub mt-4 max-w-sm text-sm leading-6 text-[#718096]">
-                    Masuk ke dashboard administrator untuk mengelola data siswa Praktik Kerja Lapangan DISKOMINFO.
-                </p>
-
 
                 {{-- ERRORS --}}
                 @if ($errors->any())
@@ -253,43 +239,6 @@
                         <i data-lucide="arrow-right" class="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"></i>
                     </button>
                 </form>
-
-
-                {{-- SECURITY NOTE --}}
-                <div class="login-security mt-6 flex items-start gap-3 rounded-xl border border-[#e5ebf3] bg-[#f8fafc] p-3.5">
-                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#eaf1f9] text-[#365b88]">
-                        <i data-lucide="shield-check" class="h-4 w-4"></i>
-                    </div>
-
-                    <div>
-                        <p class="text-xs font-bold text-[#3b4d65]">
-                            Akses administrator
-                        </p>
-
-                        <p class="mt-1 text-[11px] leading-5 text-[#8390a1]">
-                            Gunakan akun resmi yang telah diberikan. Jangan bagikan kredensial login kepada orang lain.
-                        </p>
-                    </div>
-                </div>
-
-
-                {{-- FOOTER NOTE --}}
-                <div class="login-footer mt-7 flex flex-wrap items-center justify-center gap-2 font-mono text-[9px] text-[#9aa7b8]">
-                    <span class="text-emerald-500">●</span>
-
-                    <span>secure.channel</span>
-
-                    <span class="text-[#d1d9e4]">/</span>
-
-                    <span class="text-[#416b9e]">session.ready</span>
-                </div>
-
-                <div class="mt-5 border-t border-[#edf1f6] pt-4 text-center">
-                    <p class="text-[10px] text-[#a0aaba]">
-                        &copy; {{ date('Y') }} DISKOMINFO Kabupaten Pacitan
-                    </p>
-                </div>
-
             </div>
         </section>
 

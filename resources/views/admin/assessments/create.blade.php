@@ -29,75 +29,53 @@
 
     <main class="relative z-10 mx-auto max-w-5xl px-4 pb-14 pt-6 sm:px-6 sm:pt-9 lg:px-8 lg:pb-20">
 
-        {{-- NAVIGATION --}}
-        <nav data-anim class="mb-10 flex items-center justify-between gap-4">
-            <a href="{{ route('admin.dashboard.page') }}" class="group flex min-w-0 items-center gap-3">
-                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-100 bg-white text-sky-600 shadow-sm transition duration-300 group-hover:-translate-y-0.5 group-hover:border-sky-200 group-hover:shadow-md">
-                    <i data-lucide="graduation-cap" class="h-5 w-5"></i>
-                </div>
-
-                <div class="min-w-0">
-                    <p class="text-sm font-black tracking-[0.06em] text-slate-900">PRAKERIN</p>
-                    <p class="mt-0.5 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-                        DISKOMINFO PACITAN
-                    </p>
-                </div>
-            </a>
-
-            <a
-                href="{{ route('admin.assessments.index') }}"
-                class="group inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition duration-200 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
-            >
-                <i data-lucide="arrow-left" class="h-4 w-4 transition-transform group-hover:-translate-x-1"></i>
-                <span>Kembali</span>
-            </a>
-        </nav>
-
         {{-- PAGE HEADER --}}
         <header class="mb-8">
-            <div data-anim class="mb-4 inline-flex items-center gap-2 rounded-full border border-sky-100 bg-white px-3.5 py-2 shadow-sm">
-                <span class="relative flex h-2 w-2">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-40"></span>
-                    <span class="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
-                </span>
+            <div data-anim class="mb-4 inline-flex items-center gap-2">
                 <span class="text-[10px] font-bold uppercase tracking-[0.16em] text-sky-700">
                     Formulir Penilaian
                 </span>
             </div>
 
+            <div class="flex items-center justify-between">
             <h1 data-anim class="text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-5xl">
                 Tambah Penilaian
                 <span class="mt-1 block text-sky-600">Siswa PRAKERIN.</span>
             </h1>
 
-            <p data-anim class="mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
-                Catat hasil evaluasi siswa selama Praktik Kerja Lapangan. Lengkapi identitas, nilai kompetensi, dan catatan evaluasi dengan teliti.
-            </p>
+            <img
+                    src="{{ asset('image/logo.png') }}"
+                    alt="Logo DISKOMINFO Kabupaten Pacitan"
+                    class="h-25 w-auto object-contain"
+                >
+            </div>
 
-            <div data-anim class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <div class="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
-                        <i data-lucide="list-checks" class="h-5 w-5"></i>
+            <div data-anim class="mt-6 flex items-center gap-3 justify-between">
+                <div class="flex items-center px-30 justify-between gap-3 w-3/4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
+                    <div class="flex gap-3">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center text-sky-600">
+                        <i data-lucide="list-checks" class="h-8 w-8"></i>
                     </div>
                     <div>
                         <p class="text-sm font-bold text-slate-800">6 Aspek</p>
                         <p class="mt-0.5 text-xs text-slate-400">Kompetensi siswa</p>
                     </div>
-                </div>
+                    </div>
 
-                <div class="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
-                        <i data-lucide="chart-no-axes-column-increasing" class="h-5 w-5"></i>
+                    <div class="flex gap-3">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center text-cyan-600">
+                        <i data-lucide="chart-no-axes-column-increasing" class="h-8 w-8"></i>
                     </div>
                     <div>
                         <p class="text-sm font-bold text-slate-800">Skala 0–100</p>
                         <p class="mt-0.5 text-xs text-slate-400">Rentang penilaian</p>
                     </div>
+                    </div>
                 </div>
 
-                <div class="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-                        <i data-lucide="shield-check" class="h-5 w-5"></i>
+                <div class="flex items-center justify-center gap-3 w-1/4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center text-emerald-600">
+                        <i data-lucide="shield-check" class="h-8 w-8"></i>
                     </div>
                     <div>
                         <p class="text-sm font-bold text-slate-800">Terlindungi</p>
@@ -139,8 +117,8 @@
             {{-- STUDENT AND DATE --}}
             <section data-anim class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-200/50">
                 <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
-                        <i data-lucide="user-round" class="h-5 w-5"></i>
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center text-sky-600">
+                        <i data-lucide="user-round" class="h-8 w-8"></i>
                     </div>
 
                     <div>
@@ -148,7 +126,7 @@
                         <p class="mt-1 text-xs text-slate-500">Informasi dasar siswa yang dievaluasi.</p>
                     </div>
 
-                    <span class="ml-auto rounded-lg bg-slate-50 px-2.5 py-1.5 font-mono text-[10px] font-semibold text-slate-400">01 / 03</span>
+                    <span class="ml-auto px-2.5 py-1.5 font-mono text-[10px] font-semibold text-slate-400">01 / 03</span>
                 </div>
 
                 <div class="grid gap-5 p-5 sm:grid-cols-2 sm:p-7">
@@ -198,9 +176,9 @@
                         @enderror
                     </div>
 
-                    <div class="flex items-start gap-3 rounded-xl border border-sky-100 bg-sky-50/70 p-4 sm:col-span-2">
+                    <div class="flex items-center gap-3 p-4 sm:col-span-2">
                         <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-sky-600"></i>
-                        <p class="text-xs leading-6 text-sky-800">
+                        <p class="text-xs text-sky-800">
                             Pastikan siswa yang dipilih sesuai dengan peserta PRAKERIN yang akan dievaluasi.
                         </p>
                     </div>
@@ -210,8 +188,8 @@
             {{-- SCORES --}}
             <section data-anim class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-200/50">
                 <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-700">
-                        <i data-lucide="clipboard-list" class="h-5 w-5"></i>
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center text-cyan-700">
+                        <i data-lucide="clipboard-list" class="h-8 w-8"></i>
                     </div>
 
                     <div>
@@ -219,25 +197,25 @@
                         <p class="mt-1 text-xs text-slate-500">Berikan nilai untuk setiap kompetensi siswa.</p>
                     </div>
 
-                    <span class="ml-auto rounded-lg border border-sky-100 bg-sky-50 px-2.5 py-1.5 font-mono text-[10px] font-bold text-sky-700">0–100</span>
+                    <span class="ml-auto px-2.5 py-1.5 font-mono text-[10px] font-bold text-slate-400">0–100</span>
                 </div>
 
                 <div class="p-5 sm:p-7">
-                    <div class="mb-5 flex items-start gap-3 rounded-xl border border-amber-200/70 bg-amber-50 p-4">
+                    <div class="mb-5 flex items-start gap-3">
                         <i data-lucide="lightbulb" class="mt-0.5 h-4 w-4 shrink-0 text-amber-600"></i>
                         <p class="text-xs leading-6 text-amber-900">
-                            Masukkan nilai antara <strong>0 sampai 100</strong>. Rata-rata di bawah merupakan pratinjau nilai dan bukan pengganti perhitungan di backend.
+                            Masukkan nilai antara <strong>0 sampai 100</strong>. Rata-rata di bawah merupakan pratinjau nilai dan bukan pengganti perhitungan di latar belakang.
                         </p>
                     </div>
 
                     @php
                         $aspectInputs = [
-                            ['name' => 'discipline', 'label' => 'Kedisiplinan', 'icon' => 'shield-check', 'iconClass' => 'text-sky-600', 'iconBg' => 'bg-sky-50'],
-                            ['name' => 'responsibility', 'label' => 'Tanggung Jawab', 'icon' => 'target', 'iconClass' => 'text-cyan-700', 'iconBg' => 'bg-cyan-50'],
-                            ['name' => 'teamwork', 'label' => 'Kerja Sama', 'icon' => 'users-round', 'iconClass' => 'text-blue-600', 'iconBg' => 'bg-blue-50'],
-                            ['name' => 'communication', 'label' => 'Komunikasi', 'icon' => 'messages-square', 'iconClass' => 'text-teal-600', 'iconBg' => 'bg-teal-50'],
-                            ['name' => 'initiative', 'label' => 'Inisiatif', 'icon' => 'lightbulb', 'iconClass' => 'text-indigo-600', 'iconBg' => 'bg-indigo-50'],
-                            ['name' => 'work_quality', 'label' => 'Kualitas Kerja', 'icon' => 'award', 'iconClass' => 'text-emerald-600', 'iconBg' => 'bg-emerald-50'],
+                            ['name' => 'discipline', 'label' => 'Kedisiplinan', 'icon' => 'shield-check', 'iconClass' => 'text-sky-600'],
+                            ['name' => 'responsibility', 'label' => 'Tanggung Jawab', 'icon' => 'target', 'iconClass' => 'text-cyan-700'],
+                            ['name' => 'teamwork', 'label' => 'Kerja Sama', 'icon' => 'users-round', 'iconClass' => 'text-blue-600'],
+                            ['name' => 'communication', 'label' => 'Komunikasi', 'icon' => 'messages-square', 'iconClass' => 'text-teal-600'],
+                            ['name' => 'initiative', 'label' => 'Inisiatif', 'icon' => 'lightbulb', 'iconClass' => 'text-indigo-600'],
+                            ['name' => 'work_quality', 'label' => 'Kualitas Kerja', 'icon' => 'award', 'iconClass' => 'text-emerald-600'],
                         ];
                     @endphp
 
@@ -245,7 +223,7 @@
                         @foreach ($aspectInputs as $input)
                             <div class="score-card rounded-2xl border border-slate-200 bg-slate-50/70 p-4 transition duration-200 hover:border-sky-200 hover:bg-white hover:shadow-md hover:shadow-slate-200/50">
                                 <label for="{{ $input['name'] }}" class="mb-3 flex items-center gap-2.5 text-xs font-bold text-slate-700">
-                                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl {{ $input['iconBg'] }}">
+                                    <span class="flex h-9 w-9 shrink-0 items-center justify-center">
                                         <i data-lucide="{{ $input['icon'] }}" class="h-4 w-4 {{ $input['iconClass'] }}"></i>
                                     </span>
                                     {{ $input['label'] }}
@@ -281,11 +259,11 @@
                     </div>
 
                     {{-- AVERAGE PREVIEW --}}
-                    <div class="mt-6 rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-5 sm:p-6">
+                    <div class="mt-6 bg-white p-5 sm:p-6">
                         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                             <div class="flex items-center gap-3">
-                                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-sky-100 bg-white text-sky-600 shadow-sm">
-                                    <i data-lucide="chart-no-axes-combined" class="h-5 w-5"></i>
+                                <div class="flex h-12 w-12 shrink-0 items-center justify-center text-sky-600">
+                                    <i data-lucide="chart-no-axes-combined" class="h-8 w-8"></i>
                                 </div>
                                 <div>
                                     <h3 class="text-sm font-bold text-slate-900">Rata-rata Sementara</h3>
@@ -294,7 +272,7 @@
                             </div>
 
                             <div class="flex items-baseline gap-2 sm:text-right">
-                                <span id="average-score" class="text-4xl font-black tracking-tight text-sky-700">—</span>
+                                <span id="average-score" class="text-4xl font-black tracking-tight text-sky-700">.</span>
                                 <span class="font-mono text-xs text-slate-400">/ 100</span>
                             </div>
                         </div>
@@ -309,8 +287,8 @@
             {{-- NOTES --}}
             <section data-anim class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-200/50">
                 <div class="flex items-center gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
-                        <i data-lucide="notebook-pen" class="h-5 w-5"></i>
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center text-indigo-600">
+                        <i data-lucide="notebook-pen" class="h-8 w-8"></i>
                     </div>
 
                     <div>
@@ -318,7 +296,7 @@
                         <p class="mt-1 text-xs text-slate-500">Masukan tambahan untuk perkembangan siswa.</p>
                     </div>
 
-                    <span class="ml-auto rounded-lg bg-slate-100 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500">Opsional</span>
+                    <span class="ml-auto px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500">Opsional</span>
                 </div>
 
                 <div class="p-5 sm:p-7">
@@ -344,11 +322,7 @@
             </section>
 
             {{-- ACTIONS --}}
-            <section data-anim class="flex flex-col-reverse gap-4 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                <p class="flex items-center gap-2 text-xs leading-5 text-slate-500">
-                    <i data-lucide="lock-keyhole" class="h-4 w-4 shrink-0 text-emerald-600"></i>
-                    Formulir dilindungi oleh token CSRF Laravel.
-                </p>
+            <section data-anim class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
 
                 <div class="flex flex-col-reverse gap-3 sm:flex-row">
                     <a
@@ -362,7 +336,7 @@
                     <button
                         id="submit-button"
                         type="submit"
-                        class="group inline-flex items-center justify-center gap-3 rounded-xl bg-sky-600 px-5 py-3.5 text-xs font-bold text-white shadow-lg shadow-sky-600/20 transition duration-200 hover:-translate-y-0.5 hover:bg-sky-700 hover:shadow-xl hover:shadow-sky-600/25 focus:outline-none focus:ring-4 focus:ring-sky-500/20 disabled:cursor-wait disabled:opacity-60"
+                        class="group inline-flex items-center justify-center gap-3 rounded-xl bg-sky-600 px-5 py-3.5 text-xs font-bold text-white"
                     >
                         <i data-lucide="save" class="h-4 w-4"></i>
                         <span>Simpan Penilaian</span>
@@ -375,11 +349,7 @@
         {{-- FOOTER --}}
         <footer data-anim class="mt-12 border-t border-slate-200 pt-6">
             <div class="flex flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-                <div class="flex items-center gap-2">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                    <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-slate-400">assessment.form.ready</span>
-                </div>
-                <p class="text-xs text-slate-400">PRAKERIN · DISKOMINFO PACITAN</p>
+                <p class="text-xs text-slate-400">  &copy; {{ date('Y') }} DISKOMINFO Pacitan</p>
             </div>
         </footer>
     </main>
@@ -448,7 +418,7 @@
                 });
 
                 if (completed.length === 0) {
-                    averageScore.textContent = '—';
+                    averageScore.textContent = '.';
                     averageProgress.style.width = '0%';
                     averageHint.textContent = 'Isi keenam nilai untuk mendapatkan rata-rata.';
                     return;

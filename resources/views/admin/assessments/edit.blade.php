@@ -23,79 +23,19 @@
     </div>
 
     <div class="relative z-10 min-h-screen">
-
-        {{-- Navbar --}}
-        <header class="sticky top-0 z-40 border-b border-[#e0e7f0]/90 bg-white/85 backdrop-blur-xl">
-            <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-10">
-
-                <a href="{{ route('admin.dashboard.page') }}"
-                   class="group flex min-w-0 items-center gap-3"
-                   aria-label="Kembali ke dashboard">
-
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#243f63] text-white shadow-lg shadow-[#243f63]/15 transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
-                        <i data-lucide="graduation-cap" class="h-5 w-5"></i>
-                    </div>
-
-                    <div class="min-w-0">
-                        <p class="truncate text-sm font-extrabold tracking-tight text-[#243f63] sm:text-base">
-                            PRAKERIN
-                        </p>
-                        <p class="truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-[#718096] sm:text-xs">
-                            DISKOMINFO PACITAN
-                        </p>
-                    </div>
-                </a>
-
-                <a href="{{ route('admin.assessments.index') }}"
-                   class="inline-flex shrink-0 items-center gap-2 rounded-xl border border-[#e0e7f0] bg-white px-3.5 py-2.5 text-sm font-semibold text-[#53657d] shadow-sm transition duration-200 hover:border-[#c7d6e8] hover:bg-[#f7f9fc] hover:text-[#243f63] sm:px-4">
-                    <i data-lucide="arrow-left" class="h-4 w-4"></i>
-                    <span class="hidden sm:inline">Kembali ke Penilaian</span>
-                    <span class="sm:hidden">Kembali</span>
-                </a>
-
-            </div>
-        </header>
-
         <main class="mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
-
-            {{-- Breadcrumb --}}
-            <nav data-anim aria-label="Breadcrumb" class="mb-7 flex flex-wrap items-center gap-2 text-xs font-medium text-[#718096] sm:text-sm">
-                <a href="{{ route('admin.dashboard.page') }}" class="transition hover:text-[#243f63]">
-                    Dashboard
-                </a>
-                <i data-lucide="chevron-right" class="h-3.5 w-3.5"></i>
-                <a href="{{ route('admin.assessments.index') }}" class="transition hover:text-[#243f63]">
-                    Penilaian Siswa
-                </a>
-                <i data-lucide="chevron-right" class="h-3.5 w-3.5"></i>
-                <span class="font-semibold text-[#365b88]">Edit Penilaian</span>
-            </nav>
 
             {{-- Page heading --}}
             <section data-anim class="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
                 <div class="max-w-2xl">
-                    <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-[#dce6f2] bg-white/80 px-3 py-1.5 text-xs font-bold text-[#365b88] shadow-sm">
-                        <span class="h-1.5 w-1.5 rounded-full bg-[#416b9e]"></span>
+                    <div class="mb-3 inline-flex items-center gap-2  pt-1.5 text-xs font-bold text-[#365b88]">
+                        <span class="h-1.5 w-1.5"></span>
                         MANAJEMEN AKADEMIK
                     </div>
 
                     <h1 class="text-3xl font-black tracking-tight text-[#243f63] sm:text-4xl lg:text-[42px]">
                         Edit Penilaian
                     </h1>
-
-                    <p class="mt-3 max-w-xl text-sm leading-6 text-[#718096] sm:text-base">
-                        Perbarui data siswa, nilai kompetensi, dan catatan evaluasi selama pelaksanaan Praktik Kerja Lapangan.
-                    </p>
-                </div>
-
-                <div class="flex items-center gap-3 rounded-2xl border border-[#e0e7f0] bg-white/80 p-4 shadow-sm">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#edf3fa] text-[#365b88]">
-                        <i data-lucide="clipboard-check" class="h-5 w-5"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs font-medium text-[#718096]">Formulir</p>
-                        <p class="mt-0.5 text-sm font-bold text-[#243f63]">Perubahan Penilaian</p>
-                    </div>
                 </div>
             </section>
 
@@ -140,13 +80,13 @@
                 <section data-anim class="overflow-hidden rounded-3xl border border-[#e0e7f0] bg-white shadow-[0_8px_32px_rgba(36,63,99,0.045)]">
 
                     <div class="flex items-center gap-4 border-b border-[#e9eef5] px-5 py-5 sm:px-7">
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#edf3fa] text-[#365b88]">
-                            <i data-lucide="user-round" class="h-5 w-5"></i>
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-center text-[#365b88]">
+                            <i data-lucide="user-round" class="h-8 w-8"></i>
                         </div>
 
                         <div>
                             <h2 class="font-bold text-[#243f63] sm:text-lg">Informasi Siswa</h2>
-                            <p class="mt-1 text-xs text-[#718096] sm:text-sm">
+                            <p class="text-xs text-[#718096] sm:text-sm">
                                 Pilih siswa dan tentukan tanggal penilaian.
                             </p>
                         </div>
@@ -227,36 +167,29 @@
                 <section data-anim class="overflow-hidden rounded-3xl border border-[#e0e7f0] bg-white shadow-[0_8px_32px_rgba(36,63,99,0.045)]">
 
                     <div class="flex items-center gap-4 border-b border-[#e9eef5] px-5 py-5 sm:px-7">
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#edf3fa] text-[#365b88]">
-                            <i data-lucide="chart-no-axes-column-increasing" class="h-5 w-5"></i>
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-centers text-[#365b88]">
+                            <i data-lucide="chart-no-axes-column-increasing" class="h-8 w-8"></i>
                         </div>
 
                         <div>
                             <h2 class="font-bold text-[#243f63] sm:text-lg">Nilai Kompetensi</h2>
-                            <p class="mt-1 text-xs text-[#718096] sm:text-sm">
+                            <p class="text-xs text-[#718096] sm:text-sm">
                                 Masukkan skor untuk setiap aspek penilaian.
                             </p>
                         </div>
 
-                        <div class="ml-auto hidden rounded-lg bg-[#f0f4f9] px-3 py-2 text-xs font-bold text-[#536d8d] sm:block">
+                        <div class="ml-auto hidden px-3 py-2 text-xs font-bold text-[#536d8d] sm:block">
                             Skala 0–100
                         </div>
                     </div>
 
                     <div class="p-5 sm:p-7">
-                        <div class="mb-6 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50/70 p-4">
-                            <i data-lucide="lightbulb" class="mt-0.5 h-4 w-4 shrink-0 text-[#416b9e]"></i>
-                            <p class="text-xs leading-5 text-[#536d8d] sm:text-sm">
-                                Gunakan nilai antara <strong>0 sampai 100</strong> berdasarkan hasil pengamatan dan evaluasi siswa selama PRAKERIN.
-                            </p>
-                        </div>
-
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
                             {{-- Discipline --}}
                             <div class="score-field rounded-2xl border border-[#e6ecf3] bg-[#fbfcfe] p-4 transition duration-200 hover:border-[#c8d7e8] hover:bg-white">
                                 <label for="discipline" class="mb-3 flex items-center gap-2.5 text-sm font-bold text-[#344761]">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                                    <span class="flex h-9 w-9 items-center justify-center text-blue-700">
                                         <i data-lucide="clock-3" class="h-4 w-4"></i>
                                     </span>
                                     Kedisiplinan
@@ -286,7 +219,7 @@
                             {{-- Responsibility --}}
                             <div class="score-field rounded-2xl border border-[#e6ecf3] bg-[#fbfcfe] p-4 transition duration-200 hover:border-[#c8d7e8] hover:bg-white">
                                 <label for="responsibility" class="mb-3 flex items-center gap-2.5 text-sm font-bold text-[#344761]">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+                                    <span class="flex h-9 w-9 items-center justify-center text-emerald-700">
                                         <i data-lucide="shield-check" class="h-4 w-4"></i>
                                     </span>
                                     Tanggung Jawab
@@ -316,7 +249,7 @@
                             {{-- Teamwork --}}
                             <div class="score-field rounded-2xl border border-[#e6ecf3] bg-[#fbfcfe] p-4 transition duration-200 hover:border-[#c8d7e8] hover:bg-white">
                                 <label for="teamwork" class="mb-3 flex items-center gap-2.5 text-sm font-bold text-[#344761]">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-50 text-violet-700">
+                                    <span class="flex h-9 w-9 items-center justify-center text-violet-700">
                                         <i data-lucide="users-round" class="h-4 w-4"></i>
                                     </span>
                                     Kerja Sama
@@ -346,7 +279,7 @@
                             {{-- Communication --}}
                             <div class="score-field rounded-2xl border border-[#e6ecf3] bg-[#fbfcfe] p-4 transition duration-200 hover:border-[#c8d7e8] hover:bg-white">
                                 <label for="communication" class="mb-3 flex items-center gap-2.5 text-sm font-bold text-[#344761]">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-50 text-cyan-700">
+                                    <span class="flex h-9 w-9 items-center justify-center text-cyan-700">
                                         <i data-lucide="messages-square" class="h-4 w-4"></i>
                                     </span>
                                     Komunikasi
@@ -376,7 +309,7 @@
                             {{-- Initiative --}}
                             <div class="score-field rounded-2xl border border-[#e6ecf3] bg-[#fbfcfe] p-4 transition duration-200 hover:border-[#c8d7e8] hover:bg-white">
                                 <label for="initiative" class="mb-3 flex items-center gap-2.5 text-sm font-bold text-[#344761]">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-700">
+                                    <span class="flex h-9 w-9 items-center justify-center text-amber-700">
                                         <i data-lucide="zap" class="h-4 w-4"></i>
                                     </span>
                                     Inisiatif
@@ -406,7 +339,7 @@
                             {{-- Work quality --}}
                             <div class="score-field rounded-2xl border border-[#e6ecf3] bg-[#fbfcfe] p-4 transition duration-200 hover:border-[#c8d7e8] hover:bg-white">
                                 <label for="work_quality" class="mb-3 flex items-center gap-2.5 text-sm font-bold text-[#344761]">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-700">
+                                    <span class="flex h-9 w-9 items-center justify-center text-rose-700">
                                         <i data-lucide="badge-check" class="h-4 w-4"></i>
                                     </span>
                                     Kualitas Kerja
@@ -436,11 +369,11 @@
                         </div>
 
                         {{-- Score summary --}}
-                        <div class="mt-6 rounded-2xl border border-[#dce6f2] bg-gradient-to-r from-[#f5f8fc] to-[#edf3fa] p-5 sm:p-6">
+                        <div class="mt-6 p-5 sm:p-6">
                             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-[#365b88] shadow-sm">
-                                        <i data-lucide="calculator" class="h-5 w-5"></i>
+                                    <div class="flex h-11 w-11 shrink-0 items-center justify-center text-[#365b88]">
+                                        <i data-lucide="calculator" class="h-8 w-8"></i>
                                     </div>
 
                                     <div>
@@ -470,8 +403,8 @@
                 <section data-anim class="overflow-hidden rounded-3xl border border-[#e0e7f0] bg-white shadow-[0_8px_32px_rgba(36,63,99,0.045)]">
 
                     <div class="flex items-center gap-4 border-b border-[#e9eef5] px-5 py-5 sm:px-7">
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#edf3fa] text-[#365b88]">
-                            <i data-lucide="notebook-pen" class="h-5 w-5"></i>
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-center text-[#365b88]">
+                            <i data-lucide="notebook-pen" class="h-8 w-8"></i>
                         </div>
 
                         <div>
@@ -481,7 +414,7 @@
                             </p>
                         </div>
 
-                        <span class="ml-auto rounded-lg border border-[#e0e7f0] bg-[#fbfcfe] px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#718096]">
+                        <span class="ml-auto px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#718096]">
                             Opsional
                         </span>
                     </div>
@@ -511,18 +444,8 @@
                 </section>
 
                 {{-- Form actions --}}
-                <section data-anim class="rounded-3xl border border-[#e0e7f0] bg-white p-5 shadow-[0_8px_32px_rgba(36,63,99,0.045)] sm:p-7">
+                <section data-anim class="p-3">
                     <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="shield-check" class="mt-0.5 h-5 w-5 shrink-0 text-[#416b9e]"></i>
-                            <div>
-                                <p class="text-sm font-bold text-[#344761]">Periksa kembali data</p>
-                                <p class="mt-1 text-xs leading-5 text-[#718096]">
-                                    Pastikan semua nilai sudah benar sebelum menyimpan perubahan.
-                                </p>
-                            </div>
-                        </div>
 
                         <div class="flex flex-col-reverse gap-3 sm:flex-row">
                             <a
@@ -536,7 +459,7 @@
                             <button
                                 type="submit"
                                 id="submit-button"
-                                class="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#294d78] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#294d78]/15 transition duration-200 hover:-translate-y-0.5 hover:bg-[#243f63] hover:shadow-xl hover:shadow-[#294d78]/20 focus:outline-none focus:ring-4 focus:ring-[#416b9e]/20 active:translate-y-0"
+                                class="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#294d78] px-6 py-3 text-sm font-bold text-white"
                             >
                                 <i data-lucide="save" class="h-4 w-4 transition-transform duration-200 group-hover:scale-110"></i>
                                 <span>Simpan Perubahan</span>
@@ -550,18 +473,9 @@
             {{-- Footer --}}
             <footer data-anim class="mt-10 border-t border-[#e0e7f0] py-6">
                 <div class="flex flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-                    <div class="flex items-center gap-2.5">
-                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#243f63] text-white">
-                            <i data-lucide="graduation-cap" class="h-4 w-4"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs font-extrabold tracking-wide text-[#365b88]">PRAKERIN</p>
-                            <p class="text-[10px] text-[#8b9bb0]">DISKOMINFO PACITAN</p>
-                        </div>
-                    </div>
 
                     <p class="text-xs text-[#8b9bb0]">
-                        Sistem Informasi Praktik Kerja Lapangan
+                        &copy; {{ date('Y') }} DISKOMINFO Pacitan
                     </p>
                 </div>
             </footer>

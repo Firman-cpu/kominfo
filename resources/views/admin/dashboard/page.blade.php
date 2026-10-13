@@ -130,7 +130,7 @@
                 <div>
                     <div
                         data-anim
-                        class="mb-6 inline-flex items-center gap-2 rounded-full border border-[#dce6f2] bg-white/80 px-3 py-1.5 shadow-sm"
+                        class="mb-6 inline-flex items-center gap-2"
                     >
                         <i data-lucide="shield-check" class="h-3.5 w-3.5 text-[#365b88]"></i>
 
@@ -150,34 +150,15 @@
                         </span>
                     </h1>
 
-                    <p data-anim class="mt-6 max-w-xl text-sm leading-7 text-[#718096] sm:text-base">
-                        Selamat datang kembali,
-
-                        <span class="font-mono font-semibold text-[#365b88]">
-                            {{ session('admin_username') }}
-                        </span>.
-
-                        Kelola data siswa Praktik Kerja Lapangan dari satu pusat kendali.
-                    </p>
                 </div>
 
-
-                {{-- LOGOUT --}}
-                <form
-                    data-anim
-                    action="{{ route('admin.logout') }}"
-                    method="POST"
+                <div class="flex flex-col gap-6 items-center justify-center">
+                <img
+                    src="{{ asset('image/logo.png') }}"
+                    alt="Logo DISKOMINFO Kabupaten Pacitan"
+                    class="h-30 w-auto object-contain"
                 >
-                    @csrf
-
-                    <button
-                        type="submit"
-                        class="btn-magnetic group inline-flex items-center gap-3 rounded-xl border border-red-200 bg-white px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-red-600 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-red-300 hover:bg-red-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-500/10"
-                    >
-                        <i data-lucide="log-out" class="h-4 w-4"></i>
-                        Logout
-                    </button>
-                </form>
+                </div>
 
             </div>
 
@@ -207,7 +188,7 @@
                 {{-- TOTAL STUDENTS --}}
                 <div
                     data-anim
-                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_4px_20px_-12px_rgba(36,63,99,0.16)] transition duration-300 hover:-translate-y-1 hover:border-[#b9cbe0] hover:shadow-lg"
+                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5"
                 >
                     <div class="relative flex items-start justify-between">
                         <div>
@@ -223,7 +204,7 @@
                             </div>
                         </div>
 
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#dce6f2] bg-[#f1f6fc] transition duration-300 group-hover:scale-110">
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-center">
                             <i data-lucide="users-round" class="h-5 w-5 text-[#365b88]"></i>
                         </div>
                     </div>
@@ -242,7 +223,7 @@
                 {{-- ACTIVE STUDENTS --}}
                 <div
                     data-anim
-                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_4px_20px_-12px_rgba(36,63,99,0.16)] transition duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-lg"
+                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5"
                 >
                     <div class="relative flex items-start justify-between">
                         <div>
@@ -258,7 +239,7 @@
                             </div>
                         </div>
 
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-cyan-100 bg-cyan-50 transition duration-300 group-hover:scale-110">
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-center">
                             <i data-lucide="activity" class="h-5 w-5 text-cyan-700"></i>
                         </div>
                     </div>
@@ -277,7 +258,7 @@
                 {{-- COMPLETED STUDENTS --}}
                 <div
                     data-anim
-                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_4px_20px_-12px_rgba(36,63,99,0.16)] transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg"
+                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5"
                 >
                     <div class="relative flex items-start justify-between">
                         <div>
@@ -293,7 +274,7 @@
                             </div>
                         </div>
 
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-100 bg-emerald-50 transition duration-300 group-hover:scale-110">
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-center">
                             <i data-lucide="check-check" class="h-5 w-5 text-emerald-600"></i>
                         </div>
                     </div>
@@ -312,7 +293,7 @@
                 {{-- INACTIVE STUDENTS --}}
                 <div
                     data-anim
-                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_4px_20px_-12px_rgba(36,63,99,0.16)] transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg"
+                    class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5"
                 >
                     <div class="relative flex items-start justify-between">
                         <div>
@@ -328,7 +309,7 @@
                             </div>
                         </div>
 
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 transition duration-300 group-hover:scale-110">
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-center">
                             <i data-lucide="user-minus" class="h-5 w-5 text-slate-500"></i>
                         </div>
                     </div>
@@ -369,135 +350,88 @@
                 <a
                     data-anim
                     href="{{ route('admin.analytics.index') }}"
-                    class="action-card group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-6 shadow-[0_4px_20px_-12px_rgba(36,63,99,0.16)] transition duration-300 hover:-translate-y-1 hover:border-[#b9cbe0] hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/15"
+                    class="action-card group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-6"
                 >
                     <div class="relative">
                         <div class="flex items-start justify-between">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-[#dce6f2] bg-[#f1f6fc] transition duration-300 group-hover:scale-110">
+                            <div class="flex flex-row text-center gap-3 items-center justify-between">
                                 <i data-lucide="chart-no-axes-combined" class="h-5 w-5 text-[#365b88]"></i>
+                                <h3 class="text-lg font-bold text-[#263449]">
+                                    Analytics Siswa
+                                </h3>
                             </div>
 
                             <i data-lucide="arrow-up-right" class="h-4 w-4 text-[#a0aaba] transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#365b88]"></i>
                         </div>
-
-                        <h3 class="mt-6 text-lg font-bold text-[#263449]">
-                            Analytics Siswa
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-6 text-[#718096]">
-                            Lihat performa, tren, dan metrik aktivitas siswa PKL.
-                        </p>
-
-                        <div class="mt-5 flex items-center justify-between border-t border-[#edf1f6] pt-4">
-                            <span class="font-mono text-[9px] uppercase tracking-[0.12em] text-[#9aa7b8]">
-                                /admin/analytics
-                            </span>
-
-                            <span class="flex items-center gap-1 text-[10px] font-semibold text-[#365b88] opacity-0 transition duration-300 group-hover:opacity-100">
-                                Buka
-                                <i data-lucide="arrow-right" class="h-3 w-3"></i>
-                            </span>
-                        </div>
                     </div>
                 </a>
-
 
                 {{-- ASSESSMENTS --}}
                 <a
                     data-anim
                     href="{{ route('admin.assessments.index') }}"
-                    class="action-card group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-6 shadow-[0_4px_20px_-12px_rgba(36,63,99,0.16)] transition duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/10"
+                    class="action-card group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-6"
                 >
                     <div class="relative">
                         <div class="flex items-start justify-between">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-100 bg-cyan-50 transition duration-300 group-hover:scale-110">
-                                <i data-lucide="clipboard-check" class="h-5 w-5 text-cyan-700"></i>
+                            <div class="flex flex-row text-center gap-3 items-center justify-between">
+                                <i data-lucide="clipboard-check" class="h-5 w-5 text-[#365b88]"></i>
+                                <h3 class="text-lg font-bold text-[#263449]">
+                                    Kelola Penilaian Siswa
+                                </h3>
                             </div>
 
-                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-[#a0aaba] transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan-700"></i>
-                        </div>
-
-                        <h3 class="mt-6 text-lg font-bold text-[#263449]">
-                            Kelola Penilaian Siswa
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-6 text-[#718096]">
-                            Input dan perbarui nilai serta evaluasi siswa PKL.
-                        </p>
-
-                        <div class="mt-5 flex items-center justify-between border-t border-[#edf1f6] pt-4">
-                            <span class="font-mono text-[9px] uppercase tracking-[0.12em] text-[#9aa7b8]">
-                                /admin/assessments
-                            </span>
-
-                            <span class="flex items-center gap-1 text-[10px] font-semibold text-cyan-700 opacity-0 transition duration-300 group-hover:opacity-100">
-                                Buka
-                                <i data-lucide="arrow-right" class="h-3 w-3"></i>
-                            </span>
+                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-[#a0aaba] transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#365b88]"></i>
                         </div>
                     </div>
                 </a>
-
 
                 {{-- STUDENTS --}}
                 <a
                     data-anim
                     href="{{ route('admin.students.index') }}"
-                    class="action-card group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-6 shadow-[0_4px_20px_-12px_rgba(36,63,99,0.16)] transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/10"
+                    class="action-card group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-6"
                 >
                     <div class="relative">
                         <div class="flex items-start justify-between">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-emerald-100 bg-emerald-50 transition duration-300 group-hover:scale-110">
-                                <i data-lucide="database" class="h-5 w-5 text-emerald-700"></i>
+                            <div class="flex flex-row text-center gap-3 items-center justify-between">
+                                <i data-lucide="database" class="h-5 w-5 text-[#365b88]"></i>
+                                <h3 class="text-lg font-bold text-[#263449]">
+                                    Kelola Data Siswa
+                                </h3>
                             </div>
 
-                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-[#a0aaba] transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-700"></i>
-                        </div>
-
-                        <h3 class="mt-6 text-lg font-bold text-[#263449]">
-                            Kelola Data Siswa
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-6 text-[#718096]">
-                            Tambah, ubah, dan hapus data siswa Praktik Kerja Lapangan.
-                        </p>
-
-                        <div class="mt-5 flex items-center justify-between border-t border-[#edf1f6] pt-4">
-                            <span class="font-mono text-[9px] uppercase tracking-[0.12em] text-[#9aa7b8]">
-                                /admin/students
-                            </span>
-
-                            <span class="flex items-center gap-1 text-[10px] font-semibold text-emerald-700 opacity-0 transition duration-300 group-hover:opacity-100">
-                                Buka
-                                <i data-lucide="arrow-right" class="h-3 w-3"></i>
-                            </span>
+                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-[#a0aaba] transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#365b88]"></i>
                         </div>
                     </div>
                 </a>
-
             </div>
         </section>
 
+        
 
         {{-- FOOTER --}}
-        <footer data-anim class="mt-14 border-t border-[#e0e7f0] pt-6">
+        <footer data-anim class="mt-6 border-t border-[#e0e7f0] pt-6">
 
             <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
 
-                <div class="flex items-center gap-2.5">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#243f63] text-white">
-                        <i data-lucide="graduation-cap" class="h-4 w-4"></i>
-                    </div>
+                <div class="flex items-center ml-2">
+                {{-- LOGOUT --}}
+                <form
+                    data-anim
+                    action="{{ route('admin.logout') }}"
+                    method="POST"
+                >
+                    @csrf
 
-                    <div>
-                        <p class="text-xs font-bold text-[#3b4d65]">
-                            PRAKERIN DISKOMINFO
-                        </p>
-
-                        <p class="mt-0.5 text-[10px] text-[#9aa7b8]">
-                            Kabupaten Pacitan
-                        </p>
-                    </div>
+                    <button
+                        type="submit"
+                        class="group inline-flex items-center gap-3"
+                    >
+                        <i data-lucide="log-out" class="h-4 w-4"></i>
+                        Logout
+                    </button>
+                </form>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-center gap-3 font-mono text-[9px] text-[#8390a1]">

@@ -115,24 +115,25 @@
 
 
     <main class="relative mx-auto max-w-7xl px-4 pb-20 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pb-28">
+        {{-- BACK BUTTON --}}
+        <a
+            data-anim
+            href="{{ route('admin.dashboard.page') }}"
+            class="mb-5 group inline-flex items-center gap-2.5 rounded-full border border-[#dce5f0] bg-white/90 px-4 py-2.5 shadow-sm shadow-slate-200/40 transition duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md hover:shadow-blue-100/70"
+        >
+            <i data-lucide="arrow-left" class="h-4 w-4 text-[#365b88] transition-transform duration-300 group-hover:-translate-x-1"></i>
+
+            <span class="text-xs font-bold tracking-wide text-[#365b88]">
+                Kembali ke Dashboard
+            </span>
+        </a>
 
         {{-- HEADER --}}
         <section class="relative">
 
-            <div class="flex flex-col justify-between gap-7 sm:flex-row sm:items-end">
+            <div class="flex flex-row items-center justify-between gap-7 sm:flex-row sm:items-end">
 
                 <div>
-                    <div
-                        data-anim
-                        class="mb-5 inline-flex items-center gap-2 rounded-full border border-[#dce6f2] bg-white/80 px-3 py-1.5 shadow-sm"
-                    >
-                        <i data-lucide="database" class="h-3.5 w-3.5 text-[#365b88]"></i>
-
-                        <span class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#365b88]">
-                            admin.students.management
-                        </span>
-                    </div>
-
                     <h1
                         data-anim
                         class="text-4xl font-black leading-[0.98] tracking-[-0.05em] text-[#263449] sm:text-5xl lg:text-6xl"
@@ -143,24 +144,15 @@
                             SISWA PKL
                         </span>
                     </h1>
-
-                    <p data-anim class="mt-5 max-w-xl text-sm leading-7 text-[#718096]">
-                        Kelola data peserta Praktik Kerja Lapangan dalam satu tempat.
-                        Pantau informasi siswa dan perbarui data dengan mudah.
-                    </p>
                 </div>
 
-
-                {{-- ADD STUDENT --}}
-                <a
-                    data-anim
-                    href="{{ route('admin.students.create') }}"
-                    class="group inline-flex shrink-0 items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-[#243f63] to-[#416b9e] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-[#243f63]/15 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#243f63]/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/20"
+                <img
+                    src="{{ asset('image/logo.png') }}"
+                    alt="Logo DISKOMINFO Kabupaten Pacitan"
+                    class="h-30 w-auto object-contain"
                 >
-                    <i data-lucide="user-round-plus" class="h-4 w-4 transition-transform duration-300 group-hover:scale-110"></i>
-                    Tambah Siswa
-                    <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"></i>
-                </a>
+
+
 
             </div>
 
@@ -222,8 +214,8 @@
                 <div class="flex flex-col gap-3 border-b border-[#edf1f6] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
 
                     <div class="flex items-center gap-3">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-[#dce6f2] bg-[#f1f6fc]">
-                            <i data-lucide="users-round" class="h-5 w-5 text-[#365b88]"></i>
+                        <div class="flex h-10 w-10 items-center justify-center">
+                            <i data-lucide="users-round" class="h-8 w-8 text-[#365b88]"></i>
                         </div>
 
                         <div>
@@ -237,14 +229,16 @@
                         </div>
                     </div>
 
-                    <div class="inline-flex w-fit items-center gap-2 rounded-full border border-[#e0e7f0] bg-[#f8fafc] px-3 py-1.5">
-                        <span class="h-1.5 w-1.5 rounded-full bg-[#416b9e]"></span>
-
-                        <span class="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#718096]">
-                            {{ $students->count() }} data ditampilkan
-                        </span>
-                    </div>
-
+                    {{-- ADD STUDENT --}}
+                    <a
+                        data-anim
+                        href="{{ route('admin.students.create') }}"
+                        class="group inline-flex shrink-0 items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-[#243f63] to-[#416b9e] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-[#243f63]/15 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#243f63]/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/20"
+                    >
+                        <i data-lucide="user-round-plus" class="h-4 w-4 transition-transform duration-300 group-hover:scale-110"></i>
+                        Tambah Siswa
+                        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"></i>
+                    </a>
                 </div>
 
 
@@ -490,10 +484,9 @@
                 {{-- CARD FOOTER --}}
                 <div class="flex flex-col gap-2 border-t border-[#edf1f6] bg-[#fbfcfe] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
 
-                    <p class="flex items-center gap-2 text-[10px] text-[#8390a1]">
-                        <i data-lucide="database" class="h-3.5 w-3.5"></i>
-                        Sistem Pendataan Siswa PKL
-                    </p>
+                        <span class="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#718096]">
+                            {{ $students->count() }} data ditampilkan
+                        </span>
 
                     <p class="font-mono text-[9px] text-[#a0aaba]">
                         PRAKERIN / DISKOMINFO PACITAN

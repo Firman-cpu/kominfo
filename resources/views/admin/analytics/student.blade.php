@@ -60,17 +60,13 @@
         {{-- STUDENT PROFILE --}}
         <section
             data-anim
-            class="relative mt-6 overflow-hidden rounded-3xl border border-[#e0e7f0] bg-white/95 p-6 shadow-xl shadow-slate-200/50 sm:p-9 lg:p-10"
+            class="relative mt-6 overflow-hidden rounded-3xl border border-[#e0e7f0] bg-white/95 p-6 sm:p-9 lg:p-10"
         >
             <div class="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#243f63] via-[#416b9e] to-sky-400"></div>
-
-            <div class="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-blue-100/70 blur-[90px]"></div>
-            <div class="pointer-events-none absolute -bottom-32 -left-20 h-64 w-64 rounded-full bg-sky-100/70 blur-[100px]"></div>
-
             <div class="relative">
 
                 {{-- SECTION LABEL --}}
-                <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-[#dce7f4] bg-[#f5f8fc] px-3.5 py-2">
+                <div class="mb-7 inline-flex items-center gap-2 px-3.5 py-2">
                     <i data-lucide="user-round-search" class="h-4 w-4 text-[#416b9e]"></i>
 
                     <span class="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#416b9e]">
@@ -82,14 +78,11 @@
                 {{-- IDENTITY --}}
                 <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
 
-                    <div class="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#243f63] via-[#365b88] to-[#6090c6] text-3xl font-black text-white shadow-lg shadow-blue-900/15 ring-4 ring-blue-50 sm:h-24 sm:w-24 sm:text-4xl">
-                        {{ strtoupper(substr($student->name, 0, 1)) }}
+                    <div class="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-[#243f63] text-3xl font-black text-white sm:h-24 sm:w-24 sm:text-4xl">
+                        <i data-lucide="user-round" class="h-20 w-20 mt-8 text-white"></i>
                     </div>
 
                     <div class="min-w-0 flex-1">
-                        <p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#8390a1]">
-                            Profil peserta PRAKERIN
-                        </p>
 
                         <h1 class="break-words text-3xl font-black leading-tight tracking-tight text-[#243f63] sm:text-4xl lg:text-5xl">
                             {{ $student->name }}
@@ -97,19 +90,19 @@
 
                         <div class="mt-4 flex flex-wrap gap-2.5">
 
-                            <span class="inline-flex items-center gap-2 rounded-lg border border-[#e2e9f2] bg-[#f8fafc] px-3 py-2 text-xs font-medium text-[#718096]">
+                            <span class="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-[#718096]">
                                 <i data-lucide="contact-round" class="h-3.5 w-3.5 text-[#416b9e]"></i>
                                 NIS:
                                 <span class="font-bold text-[#263449]">{{ $student->nis }}</span>
                             </span>
 
-                            <span class="inline-flex items-center gap-2 rounded-lg border border-[#e2e9f2] bg-[#f8fafc] px-3 py-2 text-xs font-medium text-[#718096]">
+                            <span class="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-[#718096]">
                                 <i data-lucide="book-open" class="h-3.5 w-3.5 text-[#416b9e]"></i>
                                 Jurusan:
                                 <span class="font-bold text-[#263449]">{{ $student->major }}</span>
                             </span>
 
-                            <span class="inline-flex items-center gap-2 rounded-lg border border-[#e2e9f2] bg-[#f8fafc] px-3 py-2 text-xs font-medium text-[#718096]">
+                            <span class="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-[#718096]">
                                 <i data-lucide="graduation-cap" class="h-3.5 w-3.5 text-[#416b9e]"></i>
                                 Kelas:
                                 <span class="font-bold text-[#263449]">{{ $student->class }}</span>
@@ -129,13 +122,13 @@
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
                     {{-- SCORE --}}
-                    <article class="group rounded-2xl border border-[#e0e7f0] bg-[#fbfcfe] p-5 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-100/50">
+                    <article class="group p-5">
                         <div class="flex items-center justify-between gap-3">
                             <span class="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8390a1]">
                                 Overall Performance
                             </span>
 
-                            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-[#365b88] transition duration-300 group-hover:bg-[#365b88] group-hover:text-white">
+                            <div class="flex h-9 w-9 items-center justify-center">
                                 <i data-lucide="gauge" class="h-4 w-4"></i>
                             </div>
                         </div>
@@ -161,13 +154,13 @@
 
 
                     {{-- CATEGORY --}}
-                    <article class="group rounded-2xl border border-[#e0e7f0] bg-[#fbfcfe] p-5 transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-100/50">
+                    <article class="group p-5">
                         <div class="flex items-center justify-between gap-3">
                             <span class="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8390a1]">
                                 Kategori Performa
                             </span>
 
-                            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition duration-300 group-hover:bg-emerald-600 group-hover:text-white">
+                            <div class="flex h-9 w-9 items-center justify-center">
                                 <i data-lucide="badge-check" class="h-4 w-4"></i>
                             </div>
                         </div>
@@ -183,13 +176,13 @@
 
 
                     {{-- DESCRIPTION --}}
-                    <article class="group rounded-2xl border border-[#e0e7f0] bg-[#fbfcfe] p-5 transition duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg hover:shadow-sky-100/50 sm:col-span-2 lg:col-span-1">
+                    <article class="group p-5">
                         <div class="flex items-center justify-between gap-3">
                             <span class="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8390a1]">
                                 Ringkasan Performa
                             </span>
 
-                            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 text-sky-600 transition duration-300 group-hover:bg-sky-600 group-hover:text-white">
+                            <div class="flex h-9 w-9 items-center justify-center">
                                 <i data-lucide="info" class="h-4 w-4"></i>
                             </div>
                         </div>
@@ -203,121 +196,12 @@
             </div>
         </section>
 
-
-        {{-- PERFORMANCE INSIGHTS --}}
-        <section class="mt-10">
-
-            <div data-anim class="mb-5 flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0e7f0] bg-white text-[#365b88] shadow-sm">
-                    <i data-lucide="lightbulb" class="h-4 w-4"></i>
-                </div>
-
-                <div>
-                    <h2 class="text-sm font-extrabold text-[#263449]">
-                        Insight Performa
-                    </h2>
-                    <p class="mt-0.5 text-xs text-[#8390a1]">
-                        Identifikasi kekuatan dan area pengembangan siswa.
-                    </p>
-                </div>
-            </div>
-
-
-            <div class="grid gap-4 md:grid-cols-2">
-
-                {{-- STRONGEST --}}
-                <article
-                    data-anim
-                    class="group relative overflow-hidden rounded-2xl border border-emerald-200/80 bg-white p-6 shadow-sm shadow-slate-200/40 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-100/60"
-                >
-                    <div class="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-emerald-100/70 blur-3xl"></div>
-
-                    <div class="relative">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-700">
-                                    Kekuatan Utama
-                                </p>
-
-                                <p class="mt-1 text-xs text-[#8390a1]">
-                                    Aspek dengan hasil terbaik
-                                </p>
-                            </div>
-
-                            <div class="flex h-11 w-11 items-center justify-center rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-600">
-                                <i data-lucide="trending-up" class="h-5 w-5"></i>
-                            </div>
-                        </div>
-
-                        @if ($strongestAspect)
-                            <h3 class="mt-6 break-words text-2xl font-black tracking-tight text-[#263449] sm:text-3xl">
-                                {{ $strongestAspect['label'] }}
-                            </h3>
-
-                            <div class="mt-4 inline-flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm font-bold text-emerald-700">
-                                <i data-lucide="check-circle-2" class="h-4 w-4"></i>
-                                Skor {{ $strongestAspect['score'] }}
-                            </div>
-                        @else
-                            <p class="mt-6 text-sm text-[#8390a1]">
-                                Belum ada data penilaian.
-                            </p>
-                        @endif
-                    </div>
-                </article>
-
-
-                {{-- WEAKEST --}}
-                <article
-                    data-anim
-                    class="group relative overflow-hidden rounded-2xl border border-amber-200/80 bg-white p-6 shadow-sm shadow-slate-200/40 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-100/60"
-                >
-                    <div class="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-amber-100/70 blur-3xl"></div>
-
-                    <div class="relative">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-amber-700">
-                                    Perlu Perhatian
-                                </p>
-
-                                <p class="mt-1 text-xs text-[#8390a1]">
-                                    Aspek yang dapat dikembangkan
-                                </p>
-                            </div>
-
-                            <div class="flex h-11 w-11 items-center justify-center rounded-xl border border-amber-100 bg-amber-50 text-amber-600">
-                                <i data-lucide="target" class="h-5 w-5"></i>
-                            </div>
-                        </div>
-
-                        @if ($weakestAspect)
-                            <h3 class="mt-6 break-words text-2xl font-black tracking-tight text-[#263449] sm:text-3xl">
-                                {{ $weakestAspect['label'] }}
-                            </h3>
-
-                            <div class="mt-4 inline-flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm font-bold text-amber-700">
-                                <i data-lucide="chart-no-axes-column-decreasing" class="h-4 w-4"></i>
-                                Skor {{ $weakestAspect['score'] }}
-                            </div>
-                        @else
-                            <p class="mt-6 text-sm text-[#8390a1]">
-                                Belum ada data penilaian.
-                            </p>
-                        @endif
-                    </div>
-                </article>
-
-            </div>
-        </section>
-
-
         {{-- RADAR CHART --}}
         <section class="mt-10">
 
             <div data-anim class="mb-5 flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0e7f0] bg-white text-[#365b88] shadow-sm">
-                    <i data-lucide="radar" class="h-4 w-4"></i>
+                <div class="flex h-9 w-9 items-center justify-center">
+                    <i data-lucide="radar" class="h-6 w-6"></i>
                 </div>
 
                 <div>
@@ -335,8 +219,6 @@
                 data-anim
                 class="chart-card relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-4 shadow-sm shadow-slate-200/40 sm:p-7"
             >
-                <div class="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-blue-100/60 blur-[100px]"></div>
-
                 <div class="relative">
                     <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
                         <div>
@@ -349,8 +231,8 @@
                             </p>
                         </div>
 
-                        <span class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-[10px] font-bold text-[#365b88]">
-                            <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] font-bold text-[#365b88]">
+                            <span class="h-2 w-2"></span>
                             Profil Individu
                         </span>
                     </div>
@@ -367,8 +249,8 @@
         <section class="mt-10">
 
             <div data-anim class="mb-5 flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0e7f0] bg-white text-[#365b88] shadow-sm">
-                    <i data-lucide="activity" class="h-4 w-4"></i>
+                <div class="flex h-9 w-9 items-center justify-center">
+                    <i data-lucide="activity" class="h-5 w-5"></i>
                 </div>
 
                 <div>
@@ -386,7 +268,6 @@
                 data-anim
                 class="chart-card relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-4 shadow-sm shadow-slate-200/40 sm:p-7"
             >
-                <div class="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-sky-100/70 blur-[100px]"></div>
 
                 <div class="relative">
                     <div class="mb-5">
@@ -411,8 +292,8 @@
         <section class="mt-10">
 
             <div data-anim class="mb-5 flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0e7f0] bg-white text-[#365b88] shadow-sm">
-                    <i data-lucide="chart-no-axes-combined" class="h-4 w-4"></i>
+                <div class="flex h-9 w-9 items-center justify-center text-[#365b88]">
+                    <i data-lucide="chart-no-axes-combined" class="h-6 w-6"></i>
                 </div>
 
                 <div>
@@ -479,11 +360,11 @@
                 @foreach ($aspects as $aspect)
                     <article
                         data-anim
-                        class="aspect-item group rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-sm shadow-slate-200/30 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-100/40"
+                        class="aspect-item group rounded-2xl border border-[#e0e7f0] bg-white p-5"
                     >
                         <div class="flex items-center justify-between gap-3">
                             <div class="flex items-center gap-3">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f5f8fc] transition duration-300 group-hover:bg-blue-50">
+                                <div class="flex h-10 w-10 items-center justify-center">
                                     <i
                                         data-lucide="{{ $aspect['icon'] }}"
                                         class="h-5 w-5 {{ $aspect['iconColor'] }}"
@@ -522,8 +403,8 @@
         <section class="mt-10">
 
             <div data-anim class="mb-5 flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-[#e0e7f0] bg-white text-[#365b88] shadow-sm">
-                    <i data-lucide="calendar-check" class="h-4 w-4"></i>
+                <div class="flex h-9 w-9 items-center justify-center">
+                    <i data-lucide="calendar-check" class="h-6 w-6"></i>
                 </div>
 
                 <div>
@@ -544,7 +425,6 @@
                         data-anim
                         class="assess-card relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-sm shadow-slate-200/30 transition duration-300 hover:border-blue-200 hover:shadow-md hover:shadow-blue-100/40 sm:p-6"
                     >
-                        <div class="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-50 blur-3xl"></div>
 
                         <div class="relative">
 
@@ -552,7 +432,7 @@
                             <div class="flex flex-wrap items-center justify-between gap-4">
 
                                 <div class="flex items-center gap-3">
-                                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-[#365b88]">
+                                    <div class="flex h-11 w-11 shrink-0 items-center justify-center">
                                         <i data-lucide="calendar-days" class="h-5 w-5"></i>
                                     </div>
 
@@ -567,7 +447,7 @@
                                     </div>
                                 </div>
 
-                                <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[10px] font-bold text-emerald-700">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold text-emerald-700">
                                     <i data-lucide="check-circle-2" class="h-3.5 w-3.5"></i>
                                     Tercatat
                                 </span>
@@ -578,7 +458,7 @@
                             {{-- SCORES --}}
                             <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
-                                <div class="rounded-xl border border-[#e6edf5] bg-[#f8fafc] p-3.5">
+                                <div class="p-3.5 justify-center items-center flex flex-col">
                                     <div class="flex items-center gap-2 text-[#718096]">
                                         <i data-lucide="shield-check" class="h-3.5 w-3.5 text-blue-600"></i>
                                         <span class="text-[10px] font-semibold">Kedisiplinan</span>
@@ -590,7 +470,7 @@
                                 </div>
 
 
-                                <div class="rounded-xl border border-[#e6edf5] bg-[#f8fafc] p-3.5">
+                                <div class="p-3.5 justify-center items-center flex flex-col">
                                     <div class="flex items-center gap-2 text-[#718096]">
                                         <i data-lucide="target" class="h-3.5 w-3.5 text-cyan-600"></i>
                                         <span class="text-[10px] font-semibold">Tanggung Jawab</span>
@@ -602,7 +482,7 @@
                                 </div>
 
 
-                                <div class="rounded-xl border border-[#e6edf5] bg-[#f8fafc] p-3.5">
+                                <div class="p-3.5 justify-center items-center flex flex-col">
                                     <div class="flex items-center gap-2 text-[#718096]">
                                         <i data-lucide="handshake" class="h-3.5 w-3.5 text-indigo-600"></i>
                                         <span class="text-[10px] font-semibold">Kerja Sama</span>
@@ -614,7 +494,7 @@
                                 </div>
 
 
-                                <div class="rounded-xl border border-[#e6edf5] bg-[#f8fafc] p-3.5">
+                                <div class="p-3.5 justify-center items-center flex flex-col">
                                     <div class="flex items-center gap-2 text-[#718096]">
                                         <i data-lucide="messages-square" class="h-3.5 w-3.5 text-teal-600"></i>
                                         <span class="text-[10px] font-semibold">Komunikasi</span>
@@ -626,7 +506,7 @@
                                 </div>
 
 
-                                <div class="rounded-xl border border-[#e6edf5] bg-[#f8fafc] p-3.5">
+                                <div class="p-3.5 justify-center items-center flex flex-col">
                                     <div class="flex items-center gap-2 text-[#718096]">
                                         <i data-lucide="lightbulb" class="h-3.5 w-3.5 text-amber-600"></i>
                                         <span class="text-[10px] font-semibold">Inisiatif</span>
@@ -638,7 +518,7 @@
                                 </div>
 
 
-                                <div class="rounded-xl border border-[#e6edf5] bg-[#f8fafc] p-3.5">
+                                <div class="p-3.5 justify-center items-center flex flex-col">
                                     <div class="flex items-center gap-2 text-[#718096]">
                                         <i data-lucide="award" class="h-3.5 w-3.5 text-sky-600"></i>
                                         <span class="text-[10px] font-semibold">Kualitas Kerja</span>
@@ -677,8 +557,8 @@
                         data-anim
                         class="rounded-2xl border border-dashed border-[#d6e0ec] bg-white/80 px-5 py-12 text-center"
                     >
-                        <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f0f5fb] text-[#7890ae]">
-                            <i data-lucide="clipboard-list" class="h-6 w-6"></i>
+                        <div class="mx-auto flex h-7 w-7 items-center justify-center">
+                            <i data-lucide="clipboard-list" class="h-7 w-7"></i>
                         </div>
 
                         <h3 class="mt-4 text-sm font-bold text-[#263449]">
@@ -705,16 +585,10 @@
                 Student Analytics
             </span>
 
-            <span class="hidden text-[#cbd5e1] sm:inline">/</span>
+            <span class="hidden text-[#cbd5e1] sm:inline">|</span>
 
             <span class="text-[10px] text-[#9aa5b4]">
-                PRAKERIN — DISKOMINFO PACITAN
-            </span>
-
-            <span class="hidden text-[#cbd5e1] sm:inline">/</span>
-
-            <span class="text-[10px] font-semibold text-[#416b9e]">
-                Performance Report
+                &copy; {{ date('Y') }} DISKOMINFO Pacitan
             </span>
         </footer>
 

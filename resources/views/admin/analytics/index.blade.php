@@ -36,15 +36,17 @@
         {{-- TOP NAVIGATION --}}
         <nav data-anim class="mb-9 flex flex-wrap items-center justify-between gap-4">
             <a href="{{ route('admin.dashboard.page') }}"
-                class="group inline-flex items-center gap-3 rounded-2xl border border-[#e0e7f0] bg-white/90 px-4 py-3 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#b9cee5] hover:shadow-md">
+                class="group inline-flex items-center gap-2 px-4 py-3 transition duration-300 hover:-translate-x-0.5">
 
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#243f63] text-white">
-                    <i data-lucide="chart-no-axes-combined" class="h-4 w-4"></i>
-                </span>
+                <img
+                    src="{{ asset('image/logo.png') }}"
+                    alt="Logo DISKOMINFO Kabupaten Pacitan"
+                    class="h-12 w-auto object-contain"
+                >
 
                 <span>
-                    <span class="block text-sm font-bold text-[#243f63]">PRAKERIN</span>
-                    <span class="block text-[10px] tracking-wide text-[#8390a1]">DISKOMINFO PACITAN</span>
+                    <span class="block text-sm font-bold text-[#243f63]">DINAS KOMUNIKASI DAN INFORMATIKA</span>
+                    <span class="block text-[10px] tracking-wide text-[#8390a1]">KABUPATEN PACITAN</span>
                 </span>
             </a>
 
@@ -57,17 +59,14 @@
         </nav>
 
         {{-- HERO --}}
-        <header class="mb-10 overflow-hidden rounded-[28px] border border-[#dce6f2] bg-gradient-to-br from-white via-white to-[#edf5fc] shadow-[0_16px_50px_rgba(36,63,99,0.06)]">
+        <header class="mb-10 overflow-hidden">
 
             <div class="relative p-6 sm:p-9 lg:p-12">
-                <div class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-sky-200/30 blur-3xl"></div>
-                <div class="pointer-events-none absolute bottom-0 right-[20%] h-32 w-32 rounded-full bg-blue-100/50 blur-3xl"></div>
 
                 <div class="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
                     <div>
                         <div data-anim class="mb-5 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3.5 py-2">
                             <span class="relative flex h-2 w-2">
-                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-50"></span>
                                 <span class="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
                             </span>
 
@@ -82,28 +81,10 @@
                                 SISWA.
                             </span>
                         </h1>
-
-                        <p data-anim class="mt-5 max-w-2xl text-sm leading-7 text-[#718096] sm:text-base">
-                            Pantau performa peserta Praktik Kerja Lapangan melalui ringkasan penilaian, rata-rata setiap aspek, dan peringkat siswa dalam satu dashboard.
-                        </p>
-                    </div>
-
-                    <div data-anim class="relative flex items-center gap-3 rounded-2xl border border-white bg-white/80 p-4 shadow-sm backdrop-blur sm:min-w-56">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eaf2fb] text-[#365b88]">
-                            <i data-lucide="activity" class="h-6 w-6"></i>
-                        </div>
-
-                        <div>
-                            <p class="text-xs font-semibold text-[#526176]">Status Dashboard</p>
-                            <p class="mt-1 flex items-center gap-1.5 text-sm font-bold text-emerald-600">
-                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                                Data tersedia
-                            </p>
-                        </div>
                     </div>
                 </div>
 
-                <div data-anim class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-[#e5edf6] pt-5 text-[11px] text-[#8390a1]">
+                <div data-anim class="mt-3 flex flex-wrap items-center gap-x-5 text-[11px] text-[#8390a1]">
                     <span class="inline-flex items-center gap-2">
                         <i data-lucide="shield-check" class="h-4 w-4 text-[#416b9e]"></i>
                         Sistem Penilaian PKL
@@ -132,7 +113,7 @@
 
                 <span class="h-px flex-1 bg-[#dfe7f0]"></span>
 
-                <span class="hidden items-center gap-1.5 rounded-full border border-[#dce6f2] bg-white px-3 py-1.5 text-[10px] font-semibold text-[#718096] sm:inline-flex">
+                <span class="hidden items-center gap-1.5 px-3 py-1.5 text-[10px] font-semibold text-[#718096] sm:inline-flex">
                     <i data-lucide="database" class="h-3.5 w-3.5"></i>
                     Overview
                 </span>
@@ -141,95 +122,81 @@
             <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
                 {{-- TOTAL SISWA --}}
-                <article data-anim class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_8px_28px_rgba(36,63,99,0.035)] transition duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_16px_35px_rgba(36,63,99,0.075)] sm:p-6">
-                    <div class="absolute right-0 top-0 h-24 w-24 rounded-full bg-sky-100/60 blur-2xl transition duration-500 group-hover:bg-sky-200/70"></div>
+                <article data-anim class="flex flex-row items-center justify-center w-300 relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5">
 
-                    <div class="relative flex items-start justify-between gap-3">
+                    <div class="relative flex items-start justify-between gap-30">
+                        <div class="relative flex items-start justify-between gap-3">
                         <div>
+                            <div class="flex flex-row items-center justify-between">
                             <p class="text-xs font-semibold text-[#718096]">Total Siswa</p>
-                            <p class="mt-4 text-4xl font-black tracking-tight text-[#243f63]" data-counter="{{ $totalStudents }}">
-                                {{ $totalStudents }}
-                            </p>
-                            <p class="mt-2 text-[11px] text-[#8390a1]">Peserta terdaftar</p>
-                        </div>
-
-                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-sky-100 bg-sky-50 text-sky-600 transition duration-300 group-hover:scale-105">
+                            <div class="flex h-12 w-12 items-center justify-center text-sky-600 transition duration-300 group-hover:scale-105">
                             <i data-lucide="users-round" class="h-5 w-5"></i>
                         </div>
+                        </div>
+                            <p class="text-center text-4xl font-black tracking-tight text-[#243f63]" data-counter="{{ $totalStudents }}">
+                                {{ $totalStudents }}
+                            </p>
+                            <p class="mt-2 text-center text-[11px] text-[#8390a1]">Peserta terdaftar</p>
+                        </div>
+
+                        
                     </div>
 
-                    <div class="relative mt-5 h-1 overflow-hidden rounded-full bg-sky-50">
-                        <div class="h-full w-3/4 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400"></div>
-                    </div>
-                </article>
 
                 {{-- TOTAL PENILAIAN --}}
-                <article data-anim class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_8px_28px_rgba(36,63,99,0.035)] transition duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_16px_35px_rgba(36,63,99,0.075)] sm:p-6">
-                    <div class="absolute right-0 top-0 h-24 w-24 rounded-full bg-cyan-100/60 blur-2xl transition duration-500 group-hover:bg-cyan-200/70"></div>
-
-                    <div class="relative flex items-start justify-between gap-3">
+                    <div class="relative flex items-start justify-between gap-30">
+                        <div class="relative flex items-start justify-between gap-3">
                         <div>
+                            <div class="flex flex-row items-center justify-between">
                             <p class="text-xs font-semibold text-[#718096]">Total Penilaian</p>
-                            <p class="mt-4 text-4xl font-black tracking-tight text-[#243f63]" data-counter="{{ $totalAssessments }}">
+                            <div class="flex h-12 w-12 items-center justify-center text-cyan-600 transition duration-300 group-hover:scale-105">
+                                <i data-lucide="clipboard-check" class="h-5 w-5"></i>
+                            </div>
+                        </div>
+                            <p class="text-center text-4xl font-black tracking-tight text-[#243f63]" data-counter="{{ $totalAssessments }}">
                                 {{ $totalAssessments }}
                             </p>
-                            <p class="mt-2 text-[11px] text-[#8390a1]">Penilaian tercatat</p>
+                            <p class="mt-2 text-center text-[11px] text-[#8390a1]">Penilaian tercatat</p>
                         </div>
 
-                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-600 transition duration-300 group-hover:scale-105">
-                            <i data-lucide="clipboard-check" class="h-5 w-5"></i>
-                        </div>
+
                     </div>
 
-                    <div class="relative mt-5 h-1 overflow-hidden rounded-full bg-cyan-50">
-                        <div class="h-full w-3/4 rounded-full bg-gradient-to-r from-cyan-400 to-teal-400"></div>
-                    </div>
-                </article>
 
                 {{-- RATA-RATA --}}
-                <article data-anim class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_8px_28px_rgba(36,63,99,0.035)] transition duration-300 hover:-translate-y-1 hover:border-teal-200 hover:shadow-[0_16px_35px_rgba(36,63,99,0.075)] sm:p-6">
-                    <div class="absolute right-0 top-0 h-24 w-24 rounded-full bg-teal-100/60 blur-2xl transition duration-500 group-hover:bg-teal-200/70"></div>
 
-                    <div class="relative flex items-start justify-between gap-3">
+                    <div class="relative flex items-start justify-between gap-30">
+                        <div class="relative flex items-start justify-between gap-3">
                         <div>
+                            <div class= "flex flex-row items-center justify-between">
                             <p class="text-xs font-semibold text-[#718096]">Rata-rata Nilai</p>
-                            <p class="mt-4 text-4xl font-black tracking-tight text-[#243f63]" data-counter="{{ (int) round($average) }}">
+                            <div class="flex h-12 w-12 items-center justify-center text-teal-600 transition duration-300 group-hover:scale-105">
+                                <i data-lucide="gauge" class="h-5 w-5"></i>
+                            </div>
+                        </div>
+                            <p class="text-center text-4xl font-black tracking-tight text-[#243f63]" data-counter="{{ (int) round($average) }}">
                                 {{ $average }}
                             </p>
-                            <p class="mt-2 text-[11px] text-[#8390a1]">Rata-rata keseluruhan</p>
-                        </div>
-
-                        <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-teal-100 bg-teal-50 text-teal-600 transition duration-300 group-hover:scale-105">
-                            <i data-lucide="gauge" class="h-5 w-5"></i>
+                            <p class="mt-2 text-center text-[11px] text-[#8390a1]">Rata-rata keseluruhan</p>
                         </div>
                     </div>
-
-                    <div class="relative mt-5 h-1 overflow-hidden rounded-full bg-teal-50">
-                        <div class="h-full rounded-full bg-gradient-to-r from-teal-400 to-emerald-400"
-                            style="width: {{ max(0, min(100, (float) $average)) }}%;"></div>
-                    </div>
-                </article>
 
                 {{-- KATEGORI --}}
-                <article data-anim class="stat-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_8px_28px_rgba(36,63,99,0.035)] transition duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_16px_35px_rgba(36,63,99,0.075)] sm:p-6">
-                    <div class="absolute right-0 top-0 h-24 w-24 rounded-full bg-indigo-100/60 blur-2xl transition duration-500 group-hover:bg-indigo-200/70"></div>
 
-                    <div class="relative flex items-start justify-between gap-3">
-                        <div class="min-w-0">
+                    <div class="relative flex items-start justify-between gap-30">
+                        <div class="relative flex items-start justify-between gap-3">
+                        <div>
+                            <div class= "flex flex-row items-center justify-between">
                             <p class="text-xs font-semibold text-[#718096]">Kategori Performa</p>
-                            <p class="mt-4 truncate text-2xl font-black tracking-tight text-[#243f63] sm:text-3xl">
+                            <div class="flex h-12 w-12 items-center justify-center t    ext-indigo-600 transition duration-300 group-hover:scale-105">
+                                <i data-lucide="badge-check" class="h-5 w-5"></i>
+                            </div>
+                        </div>
+                            <p class="text-center text-4xl font-black tracking-tight text-[#243f63]" data-counter="{{ (int) round($average) }}">
                                 {{ $category }}
                             </p>
-                            <p class="mt-2 text-[11px] text-[#8390a1]">Hasil evaluasi nilai</p>
+                            <p class="mt-2 text-center text-[11px] text-[#8390a1]">Hasil evaluasi nilai</p>
                         </div>
-
-                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-100 bg-indigo-50 text-indigo-600 transition duration-300 group-hover:scale-105">
-                            <i data-lucide="badge-check" class="h-5 w-5"></i>
-                        </div>
-                    </div>
-
-                    <div class="relative mt-5 h-1 overflow-hidden rounded-full bg-indigo-50">
-                        <div class="h-full w-3/4 rounded-full bg-gradient-to-r from-indigo-400 to-blue-400"></div>
                     </div>
                 </article>
 
@@ -246,8 +213,8 @@
 
                 <span class="h-px flex-1 bg-[#dfe7f0]"></span>
 
-                <span class="inline-flex items-center gap-1.5 rounded-full border border-[#dce6f2] bg-white px-3 py-1.5 text-[10px] font-semibold text-[#718096]">
-                    <i data-lucide="chart-column-increasing" class="h-3.5 w-3.5 text-sky-600"></i>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-semibold text-[#718096]">
+                    <i data-lucide="chart-column-increasing" class="h-3.5 w-3.5"></i>
                     Grafik Nilai
                 </span>
             </div>
@@ -255,8 +222,8 @@
             <div data-anim class="chart-card overflow-hidden rounded-3xl border border-[#e0e7f0] bg-white shadow-[0_12px_40px_rgba(36,63,99,0.045)]">
                 <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#edf1f6] px-5 py-5 sm:px-7">
                     <div class="flex items-center gap-3">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eaf2fb] text-[#365b88]">
-                            <i data-lucide="chart-no-axes-combined" class="h-5 w-5"></i>
+                        <div class="flex h-10 w-10 items-center justify-center text-[#365b88]">
+                            <i data-lucide="chart-no-axes-combined" class="h-7 w-7"></i>
                         </div>
 
                         <div>
@@ -265,8 +232,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-2 rounded-full bg-sky-50 px-3 py-2 text-[10px] font-semibold text-[#416b9e]">
-                        <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+                    <div class="flex items-center gap-2 px-3 py-2 text-[10px] font-semibold">
                         Skala 0–100
                     </div>
                 </div>
@@ -275,7 +241,7 @@
                     <div class="relative h-[280px] w-full sm:h-[340px] lg:h-[380px]">
                         <canvas id="performanceChart" role="img" aria-label="Grafik rata-rata performa siswa"></canvas>
 
-                        <div id="chartFallback" class="absolute inset-0 hidden items-center justify-center rounded-2xl bg-[#f8fafc] p-6 text-center">
+                        <div id="chartFallback" class="absolute inset-0 hidden items-center justify-center2 p-6 text-center">
                             <div>
                                 <i data-lucide="chart-no-axes-column" class="mx-auto h-9 w-9 text-[#8390a1]"></i>
                                 <p class="mt-3 text-sm font-semibold text-[#526176]">Grafik belum dapat dimuat</p>
@@ -304,42 +270,42 @@
                         'label' => 'Kedisiplinan',
                         'value' => $aspectAverages['discipline'],
                         'icon' => 'shield-check',
-                        'iconClass' => 'bg-sky-50 text-sky-600 border-sky-100',
+                        'iconClass' => 'text-sky-600 border-sky-100',
                         'barClass' => 'from-sky-400 to-cyan-400',
                     ],
                     [
                         'label' => 'Tanggung Jawab',
                         'value' => $aspectAverages['responsibility'],
                         'icon' => 'target',
-                        'iconClass' => 'bg-cyan-50 text-cyan-600 border-cyan-100',
+                        'iconClass' => 'text-cyan-600 border-cyan-100',
                         'barClass' => 'from-cyan-400 to-teal-400',
                     ],
                     [
                         'label' => 'Kerja Sama',
                         'value' => $aspectAverages['teamwork'],
                         'icon' => 'handshake',
-                        'iconClass' => 'bg-blue-50 text-blue-600 border-blue-100',
+                        'iconClass' => 'text-blue-600 border-blue-100',
                         'barClass' => 'from-blue-400 to-indigo-400',
                     ],
                     [
                         'label' => 'Komunikasi',
                         'value' => $aspectAverages['communication'],
                         'icon' => 'messages-square',
-                        'iconClass' => 'bg-teal-50 text-teal-600 border-teal-100',
+                        'iconClass' => 'text-teal-600 border-teal-100',
                         'barClass' => 'from-teal-400 to-emerald-400',
                     ],
                     [
                         'label' => 'Inisiatif',
                         'value' => $aspectAverages['initiative'],
                         'icon' => 'lightbulb',
-                        'iconClass' => 'bg-amber-50 text-amber-600 border-amber-100',
+                        'iconClass' => 'text-amber-600 border-amber-100',
                         'barClass' => 'from-amber-400 to-orange-400',
                     ],
                     [
                         'label' => 'Kualitas Kerja',
                         'value' => $aspectAverages['work_quality'],
                         'icon' => 'award',
-                        'iconClass' => 'bg-indigo-50 text-indigo-600 border-indigo-100',
+                        'iconClass' => 'text-indigo-600 border-indigo-100',
                         'barClass' => 'from-indigo-400 to-violet-400',
                     ],
                 ];
@@ -351,10 +317,10 @@
                         $aspectValue = max(0, min(100, (float) $aspect['value']));
                     @endphp
 
-                    <article data-anim class="stat-item group rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_8px_28px_rgba(36,63,99,0.03)] transition duration-300 hover:-translate-y-1 hover:border-[#c8d8e9] hover:shadow-lg">
+                    <article data-anim class="stat-item group rounded-2xl border border-[#e0e7f0] bg-white p-5">
                         <div class="flex items-center justify-between gap-3">
                             <div class="flex min-w-0 items-center gap-3">
-                                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border {{ $aspect['iconClass'] }} transition duration-300 group-hover:scale-105">
+                                <div class="flex h-11 w-11 shrink-0 items-center justify-center {{ $aspect['iconClass'] }}">
                                     <i data-lucide="{{ $aspect['icon'] }}" class="h-5 w-5"></i>
                                 </div>
 
@@ -384,103 +350,25 @@
             </div>
         </section>
 
-        {{-- TOP RANKING --}}
-        <section class="mb-11">
-            <div data-anim class="mb-5 flex items-center gap-3">
-                <div>
-                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#416b9e]">04 / Top Performance</p>
-                    <h2 class="mt-1 text-lg font-bold text-[#243f63]">Peringkat Siswa</h2>
-                </div>
-
-                <span class="h-px flex-1 bg-[#dfe7f0]"></span>
-
-                <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-100 bg-amber-50 px-3 py-1.5 text-[10px] font-bold text-amber-700">
-                    <i data-lucide="trophy" class="h-3.5 w-3.5"></i>
-                    Top 5
-                </span>
-            </div>
-
-            <div class="space-y-3">
-                @forelse ($ranking as $index => $student)
-                    <article data-anim class="rank-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-4 shadow-[0_6px_24px_rgba(36,63,99,0.03)] transition duration-300 hover:-translate-y-0.5 hover:border-[#c8d8e9] hover:shadow-md sm:p-5">
-                        <div class="pointer-events-none absolute -right-12 -top-16 h-36 w-36 rounded-full bg-sky-100/60 blur-3xl transition group-hover:bg-sky-200/60"></div>
-
-                        <div class="relative flex flex-wrap items-center gap-4">
-                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border font-black
-                                {{ $index === 0 ? 'border-amber-200 bg-amber-50 text-amber-600' : '' }}
-                                {{ $index === 1 ? 'border-slate-200 bg-slate-50 text-slate-500' : '' }}
-                                {{ $index === 2 ? 'border-orange-200 bg-orange-50 text-orange-600' : '' }}
-                                {{ $index > 2 ? 'border-sky-100 bg-sky-50 text-[#416b9e]' : '' }}">
-
-                                @if ($index < 3)
-                                    <i data-lucide="trophy" class="h-5 w-5"></i>
-                                @else
-                                    <span>#{{ $index + 1 }}</span>
-                                @endif
-                            </div>
-
-                            <div class="min-w-0 flex-1">
-                                <h3 class="truncate text-sm font-bold text-[#243f63] sm:text-base">
-                                    {{ $student['name'] }}
-                                </h3>
-
-                                <p class="mt-1 text-[10px] uppercase tracking-[0.12em] text-[#8390a1]">
-                                    Peringkat {{ $index + 1 }}
-                                </p>
-                            </div>
-
-                            <div class="min-w-20 text-right">
-                                <p class="text-2xl font-black tracking-tight text-[#365b88]">
-                                    {{ $student['average'] }}
-                                </p>
-                                <p class="text-[10px] text-[#8390a1]">Rata-rata</p>
-                            </div>
-
-                            <span class="rounded-full border border-teal-100 bg-teal-50 px-3 py-1.5 text-[10px] font-bold text-teal-700">
-                                {{ $student['category'] }}
-                            </span>
-
-                            <a href="{{ route('admin.analytics.student', $student['id']) }}"
-                                aria-label="Lihat detail {{ $student['name'] }}"
-                                class="inline-flex items-center justify-center gap-2 rounded-xl border border-[#dfe8f2] bg-[#f8fafc] px-3.5 py-2.5 text-xs font-semibold text-[#365b88] transition duration-300 hover:border-sky-200 hover:bg-sky-50">
-
-                                <span class="hidden sm:inline">Lihat Detail</span>
-                                <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
-                            </a>
-                        </div>
-                    </article>
-                @empty
-                    <div data-anim class="rounded-2xl border border-dashed border-[#d5e0ec] bg-white/80 px-5 py-12 text-center">
-                        <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#edf3fa] text-[#416b9e]">
-                            <i data-lucide="users-round" class="h-6 w-6"></i>
-                        </div>
-
-                        <h3 class="mt-4 text-sm font-bold text-[#34445b]">Belum ada peringkat</h3>
-                        <p class="mt-1 text-xs text-[#8390a1]">Data peringkat akan ditampilkan setelah tersedia penilaian.</p>
-                    </div>
-                @endforelse
-            </div>
-        </section>
-
         {{-- ALL STUDENTS --}}
         <section class="mb-10">
             <div data-anim class="mb-5 flex items-center gap-3">
                 <div>
-                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#416b9e]">05 / Student Directory</p>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#416b9e]">04 / Student Directory</p>
                     <h2 class="mt-1 text-lg font-bold text-[#243f63]">Performa Seluruh Siswa</h2>
                 </div>
 
                 <span class="h-px flex-1 bg-[#dfe7f0]"></span>
 
-                <span class="rounded-full border border-[#dce6f2] bg-white px-3 py-1.5 text-[10px] font-semibold text-[#718096]">
+                <span class="px-3 py-1.5 text-[10px] font-semibold text-[#718096]">
                     {{ count($studentPerformance) }} siswa
                 </span>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 @forelse ($studentPerformance as $student)
-                    <article data-anim class="student-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5 shadow-[0_8px_28px_rgba(36,63,99,0.03)] transition duration-300 hover:-translate-y-1 hover:border-[#c8d8e9] hover:shadow-lg">
-                        <div class="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-sky-100/50 blur-3xl transition group-hover:bg-cyan-100/70"></div>
+                    <article data-anim class="student-item group relative overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white p-5">
+                        <div class="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-sky-100/50 blur-3xl"></div>
 
                         <div class="relative">
                             <div class="flex items-start gap-3">
@@ -515,7 +403,7 @@
                                 </div>
 
                                 <a href="{{ route('admin.analytics.student', $student['id']) }}"
-                                    class="inline-flex items-center gap-2 rounded-xl border border-[#dfe8f2] bg-[#f8fafc] px-3 py-2.5 text-xs font-semibold text-[#365b88] transition hover:border-sky-200 hover:bg-sky-50">
+                                    class="inline-flex items-center gap-2 px-3 py-2.5 text-xs font-semibold text-[#365b88] transition">
 
                                     Detail
                                     <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
@@ -546,24 +434,16 @@
         {{-- FOOTER --}}
         <footer data-anim class="flex flex-col items-center justify-between gap-4 border-t border-[#dfe7f0] pt-6 text-center sm:flex-row sm:text-left">
             <div class="flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-[#dce6f2] bg-white text-[#416b9e]">
-                    <i data-lucide="shield-check" class="h-4 w-4"></i>
-                </div>
 
                 <div>
-                    <p class="text-xs font-bold text-[#526176]">PRAKERIN DISKOMINFO</p>
+                    <p class="text-xs font-bold text-[#526176]">PRAKERIN DINAS KOMUNIKASI DAN INFORMATIKA</p>
                     <p class="mt-1 text-[10px] text-[#8390a1]">Kabupaten Pacitan</p>
                 </div>
             </div>
 
             <p class="text-[10px] text-[#8390a1]">
-                &copy; {{ date('Y') }} DISKOMINFO Kabupaten Pacitan. Seluruh hak dilindungi.
+                &copy; {{ date('Y') }} DISKOMINFO Pacitan
             </p>
-
-            <div class="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[10px] font-semibold text-emerald-700">
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                Analytics siap
-            </div>
         </footer>
 
     </main>
