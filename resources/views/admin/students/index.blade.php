@@ -211,7 +211,7 @@
             >
 
                 {{-- CARD HEADER --}}
-                <div class="flex flex-col gap-3 border-b border-[#edf1f6] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <div class="flex gap-3 sticky z-10 top-0 border-b border-[#edf1f6] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
 
                     <div class="flex items-center gap-3">
                         <div class="flex h-10 w-10 items-center justify-center">

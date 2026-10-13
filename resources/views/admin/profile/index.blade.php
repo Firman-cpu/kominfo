@@ -456,7 +456,7 @@
                     <div class="grid grid-cols-1 gap-3 p-6 sm:grid-cols-3">
 
                         <a href="{{ route('admin.dashboard.page') }}"
-                           class="group flex flex-col items-center gap-3 rounded-2xl border border-sky-200/[0.1] bg-sky-400/[0.04] p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:border-sky-300/25 hover:bg-sky-400/[0.1]">
+                            class="group flex flex-col items-center gap-3 rounded-2xl border border-sky-200/[0.1] bg-sky-400/[0.04] p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:border-sky-300/25 hover:bg-sky-400/[0.1]">
                             <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-sky-300/15 bg-sky-300/[0.08] transition group-hover:scale-110">
                                 <i data-lucide="layout-dashboard" class="h-5 w-5 text-sky-300"></i>
                             </div>
@@ -467,7 +467,7 @@
                         </a>
 
                         <a href="{{ route('admin.analytics.index') }}"
-                           class="group flex flex-col items-center gap-3 rounded-2xl border border-sky-200/[0.1] bg-sky-400/[0.04] p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/25 hover:bg-cyan-400/[0.1]">
+                            class="group flex flex-col items-center gap-3 rounded-2xl border border-sky-200/[0.1] bg-sky-400/[0.04] p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/25 hover:bg-cyan-400/[0.1]">
                             <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-300/15 bg-cyan-300/[0.08] transition group-hover:scale-110">
                                 <i data-lucide="chart-no-axes-combined" class="h-5 w-5 text-cyan-300"></i>
                             </div>
@@ -478,7 +478,7 @@
                         </a>
 
                         <a href="{{ route('admin.students.index') }}"
-                           class="group flex flex-col items-center gap-3 rounded-2xl border border-sky-200/[0.1] bg-sky-400/[0.04] p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:border-teal-300/25 hover:bg-teal-400/[0.1]">
+                            class="group flex flex-col items-center gap-3 rounded-2xl border border-sky-200/[0.1] bg-sky-400/[0.04] p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:border-teal-300/25 hover:bg-teal-400/[0.1]">
                             <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-teal-300/15 bg-teal-300/[0.08] transition group-hover:scale-110">
                                 <i data-lucide="database" class="h-5 w-5 text-teal-300"></i>
                             </div>
