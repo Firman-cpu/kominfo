@@ -173,123 +173,147 @@
 
 
         {{-- ==================================================
-             STUDENT GRID
+             STUDENT TABLE
         =================================================== --}}
         @if ($students->count())
 
-            <section class="students grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Daftar siswa PRAKERIN">
+            <section
+                class="students-table overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white
+                       shadow-[0_4px_20px_rgba(35,57,84,0.04)]"
+                aria-label="Daftar siswa PRAKERIN"
+            >
+                <div class="overflow-x-auto">
 
-                @foreach ($students as $student)
+                    <table class="w-full min-w-[760px] border-collapse text-left">
 
-                    @php
-                        $isActive = in_array(Str::lower((string) $student->status), $activeStatuses, true);
-                    @endphp
+                        <caption class="sr-only">Daftar siswa Praktik Kerja Lapangan DISKOMINFO Kabupaten Pacitan</caption>
 
-                    <article
-                        class="student-card group relative overflow-hidden rounded-2xl
-                               border border-[#e0e7f0] bg-white p-6
-                               shadow-[0_4px_20px_rgba(35,57,84,0.035)]
-                               transition-[border-color,box-shadow] duration-300
-                               hover:border-[#c7d7e9] hover:shadow-[0_12px_32px_rgba(35,57,84,0.09)]"
-                    >
-
-                        {{-- Ambient decoration (radial-gradient, bukan blur) --}}
-                        <div
-                            class="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full
-                                   bg-[radial-gradient(closest-side,rgba(65,107,158,0.12),transparent)]
-                                   opacity-60 transition-opacity duration-500 group-hover:opacity-100"
-                            aria-hidden="true"
-                        ></div>
-
-                        {{-- Avatar + status --}}
-                        <div class="relative mb-5 flex items-start justify-between gap-3">
-
-                            <div
-                                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl
-                                       bg-gradient-to-br from-[#243f63] via-[#365b88] to-[#7197c1]
-                                       text-lg font-black text-white shadow-lg shadow-[#365b88]/15
-                                       transition-transform duration-300 group-hover:scale-105"
-                                aria-hidden="true"
-                            >
-                                {{ Str::upper(Str::substr($student->name, 0, 1)) }}
-                            </div>
-
-                            <span
-                                class="shrink-0 rounded-full border px-2.5 py-1 font-mono text-[10px]
-                                       font-bold uppercase tracking-wider
-                                       {{ $isActive
-                                            ? 'border-[#cde9df] bg-[#edf8f3] text-[#347c68]'
-                                            : 'border-[#dce5f0] bg-[#f1f5fa] text-[#58708e]' }}"
-                            >
-                                {{ Str::ucfirst((string) $student->status) }}
-                            </span>
-
-                        </div>
-
-                        {{-- Identity --}}
-                        <h2
-                            class="relative truncate text-lg font-black tracking-tight text-[#263449]"
-                            title="{{ $student->name }}"
-                        >
-                            {{ $student->name }}
-                        </h2>
-
-                        <p
-                            class="relative mt-1 truncate font-mono text-[11px] uppercase tracking-wider text-[#416b9e]"
-                            title="{{ $student->major }}"
-                        >
-                            {{ $student->major }}
-                        </p>
-
-                        {{-- Info --}}
-                        <dl class="relative mt-5">
-
-                            <div class="flex items-center justify-between gap-3 border-b border-[#edf1f6] py-3">
-                                <dt class="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-[#6b7a8f]">
-                                    <i data-lucide="graduation-cap" class="h-3.5 w-3.5 text-[#7193bb]"></i>
+                        <thead>
+                            <tr class="border-b border-[#e0e7f0] bg-[#f6f9fc]">
+                                <th scope="col" class="w-16 px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
+                                    No
+                                </th>
+                                <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
+                                    Siswa
+                                </th>
+                                <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
+                                    Jurusan
+                                </th>
+                                <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
                                     Kelas
-                                </dt>
-                                <dd class="text-right text-xs font-bold text-[#43546a]">
-                                    {{ $student->class ?? '—' }}
-                                </dd>
-                            </div>
-
-                            <div class="flex items-center justify-between gap-3 border-b border-[#edf1f6] py-3">
-                                <dt class="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-[#6b7a8f]">
-                                    <i data-lucide="calendar-days" class="h-3.5 w-3.5 text-[#7193bb]"></i>
+                                </th>
+                                <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
                                     Mulai
-                                </dt>
-                                <dd class="text-right text-xs font-bold text-[#43546a]">
-                                    {{ $student->start_date?->format('d M Y') ?? '—' }}
-                                </dd>
-                            </div>
+                                </th>
+                                <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
+                                    Status
+                                </th>
+                                <th scope="col" class="px-5 py-4 text-right font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
+                                    Aksi
+                                </th>
+                            </tr>
+                        </thead>
 
-                        </dl>
+                        <tbody class="divide-y divide-[#edf1f6]">
 
-                        {{-- Detail action --}}
-                        <a
-                            href="{{ route('students.show', $student) }}"
-                            class="relative mt-5 inline-flex w-full items-center justify-center gap-2
-                                   rounded-xl border border-[#dce5f0]
-                                   bg-gradient-to-r from-[#f3f7fc] to-[#eaf1fa]
-                                   px-4 py-3 text-[11px] font-bold text-[#365b88]
-                                   transition duration-300
-                                   hover:border-[#b8cbe1] hover:from-[#eaf1fa] hover:to-[#dfeaf7] hover:text-[#243f63]
-                                   focus-visible:outline-none focus-visible:ring-2
-                                   focus-visible:ring-[#416b9e] focus-visible:ring-offset-2"
-                            aria-label="Lihat detail {{ $student->name }}"
-                        >
-                            Lihat Detail
-                            <i
-                                data-lucide="arrow-up-right"
-                                class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                            ></i>
-                        </a>
+                            @foreach ($students as $student)
 
-                    </article>
+                                @php
+                                    $isActive = in_array(Str::lower((string) $student->status), $activeStatuses, true);
+                                @endphp
 
-                @endforeach
+                                <tr class="student-row group transition-colors duration-200 hover:bg-[#f6f9fc]">
 
+                                    {{-- No (lanjut antar halaman pagination) --}}
+                                    <td class="px-5 py-4 font-mono text-xs font-bold text-[#8a98ab]">
+                                        {{ str_pad((string) ($students->firstItem() + $loop->index), 2, '0', STR_PAD_LEFT) }}
+                                    </td>
+
+                                    {{-- Siswa --}}
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                                                       bg-gradient-to-br from-[#243f63] via-[#365b88] to-[#7197c1]
+                                                       text-sm font-black text-white shadow-md shadow-[#365b88]/15"
+                                                aria-hidden="true"
+                                            >
+                                                {{ Str::upper(Str::substr($student->name, 0, 1)) }}
+                                            </div>
+
+                                            <span
+                                                class="max-w-[220px] truncate text-sm font-black tracking-tight text-[#263449]"
+                                                title="{{ $student->name }}"
+                                            >
+                                                {{ $student->name }}
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    {{-- Jurusan --}}
+                                    <td class="px-5 py-4">
+                                        <span
+                                            class="block max-w-[220px] truncate font-mono text-[11px] uppercase tracking-wider text-[#416b9e]"
+                                            title="{{ $student->major }}"
+                                        >
+                                            {{ $student->major }}
+                                        </span>
+                                    </td>
+
+                                    {{-- Kelas --}}
+                                    <td class="whitespace-nowrap px-5 py-4 text-xs font-bold text-[#43546a]">
+                                        {{ $student->class ?? '—' }}
+                                    </td>
+
+                                    {{-- Mulai --}}
+                                    <td class="whitespace-nowrap px-5 py-4 text-xs font-bold text-[#43546a]">
+                                        {{ $student->start_date?->format('d M Y') ?? '—' }}
+                                    </td>
+
+                                    {{-- Status --}}
+                                    <td class="px-5 py-4">
+                                        <span
+                                            class="inline-block rounded-full border px-2.5 py-1 font-mono text-[10px]
+                                                   font-bold uppercase tracking-wider
+                                                   {{ $isActive
+                                                        ? 'border-[#cde9df] bg-[#edf8f3] text-[#347c68]'
+                                                        : 'border-[#dce5f0] bg-[#f1f5fa] text-[#58708e]' }}"
+                                        >
+                                            {{ Str::ucfirst((string) $student->status) }}
+                                        </span>
+                                    </td>
+
+                                    {{-- Aksi --}}
+                                    <td class="px-5 py-4 text-right">
+                                        <a
+                                            href="{{ route('students.show', $student) }}"
+                                            class="inline-flex items-center justify-center gap-1.5 whitespace-nowrap
+                                                   rounded-xl border border-[#dce5f0]
+                                                   bg-gradient-to-r from-[#f3f7fc] to-[#eaf1fa]
+                                                   px-3.5 py-2 text-[11px] font-bold text-[#365b88]
+                                                   transition duration-300
+                                                   hover:border-[#b8cbe1] hover:from-[#eaf1fa] hover:to-[#dfeaf7] hover:text-[#243f63]
+                                                   focus-visible:outline-none focus-visible:ring-2
+                                                   focus-visible:ring-[#416b9e] focus-visible:ring-offset-2"
+                                            aria-label="Lihat detail {{ $student->name }}"
+                                        >
+                                            Lihat Detail
+                                            <i
+                                                data-lucide="arrow-up-right"
+                                                class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                            ></i>
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                            @endforeach
+
+                        </tbody>
+
+                    </table>
+
+                </div>
             </section>
 
         @else
@@ -377,8 +401,8 @@
         ================================================= */
         mm.add('(prefers-reduced-motion: no-preference)', function () {
 
-            // Header + stats dalam satu timeline
-            gsap.timeline({ defaults: { ease: 'power3.out' } })
+            // Header + stats + wrapper tabel dalam satu timeline
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
                 .from('.students-head > *', {
                     y: 24, opacity: 0, duration: 0.8, stagger: 0.12
                 })
@@ -386,32 +410,37 @@
                     y: 30, opacity: 0, duration: 0.8
                 }, '-=0.45');
 
-            // Student cards — sembunyikan dulu, lalu reveal saat masuk viewport
-            const cards = gsap.utils.toArray('.student-card');
+            if (document.querySelector('.students-table')) {
+                tl.from('.students-table', {
+                    y: 30, opacity: 0, duration: 0.8, clearProps: 'opacity,transform'
+                }, '-=0.5');
+            }
 
-            if (cards.length) {
-                gsap.set(cards, { opacity: 0, y: 40, scale: 0.96 });
+            // Baris tabel — sembunyikan dulu, lalu reveal saat masuk viewport
+            const rows = gsap.utils.toArray('.student-row');
+
+            if (rows.length) {
+                gsap.set(rows, { opacity: 0, y: 16 });
 
                 const reveal = function (els) {
                     gsap.to(els, {
                         opacity: 1,
                         y: 0,
-                        scale: 1,
-                        duration: 0.7,
-                        stagger: 0.08,
-                        ease: 'power3.out',
+                        duration: 0.5,
+                        stagger: 0.05,
+                        ease: 'power2.out',
                         clearProps: 'opacity,transform'
                     });
                 };
 
                 if (window.ScrollTrigger) {
-                    ScrollTrigger.batch(cards, {
-                        start: 'top 92%',
+                    ScrollTrigger.batch(rows, {
+                        start: 'top 95%',
                         once: true,
                         onEnter: reveal
                     });
                 } else {
-                    reveal(cards);
+                    reveal(rows);
                 }
             }
 
@@ -439,54 +468,6 @@
                 });
             });
         });
-
-        /* =================================================
-           CARD 3D TILT (hanya mouse + motion diizinkan)
-        ================================================= */
-        mm.add(
-            '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
-            function () {
-
-                const controller = new AbortController();
-                const opts = { signal: controller.signal };
-
-                document.querySelectorAll('.student-card').forEach(function (card) {
-
-                    gsap.set(card, { transformPerspective: 900 });
-
-                    card.addEventListener('mousemove', function (e) {
-                        const rect = card.getBoundingClientRect();
-                        const x = (e.clientX - rect.left) / rect.width - 0.5;
-                        const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                        gsap.to(card, {
-                            rotateY: x * 4,
-                            rotateX: -y * 4,
-                            y: -4,
-                            duration: 0.5,
-                            ease: 'power2.out',
-                            overwrite: 'auto'
-                        });
-                    }, opts);
-
-                    card.addEventListener('mouseleave', function () {
-                        gsap.to(card, {
-                            rotateY: 0,
-                            rotateX: 0,
-                            y: 0,
-                            duration: 0.7,
-                            ease: 'elastic.out(1, 0.5)',
-                            overwrite: 'auto'
-                        });
-                    }, opts);
-                });
-
-                // Cleanup otomatis saat media query tidak match lagi
-                return function () {
-                    controller.abort();
-                };
-            }
-        );
 
     });
     </script>

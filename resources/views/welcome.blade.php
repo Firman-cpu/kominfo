@@ -110,7 +110,7 @@
                             {{-- SIDEBAR --}}
                             <aside class="border-r border-[#e8edf3] bg-[#f8fafc] p-2.5 sm:p-3">
 
-                                <div class="mb-6 flex items-center gap-2 px-1 sm:px-1.5">
+                                <div class="mb-6 flex items-center pr-5 sm:px-1.5">
 
                                     <img
                                         src="{{ asset('image/logo.png') }}"
@@ -119,7 +119,7 @@
                                     >
 
                                     <span class="hidden font-semibold text-[#344760] sm:block sm:text-[10px]">
-                                        PRAKERIN
+                                        DISKOMINFO
                                     </span>
 
                                 </div>
@@ -158,7 +158,7 @@
                                         </p>
 
                                         <h2 class="mt-1 text-xs font-bold text-[#30425a] sm:text-sm">
-                                            Dashboard PRAKERIN
+                                            Dashboard DINAS KOMUNIKASI DAN INFORMATIKA
                                         </h2>
 
                                         <p class="mt-1 hidden text-[9px] text-[#8a97a8] sm:block">
