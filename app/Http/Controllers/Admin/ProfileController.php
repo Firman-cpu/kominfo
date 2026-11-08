@@ -3,53 +3,57 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
 use App\Models\Assessment;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        $adminId       = session('admin_id');
-        $admin         = Admin::findOrFail($adminId);
+        $admin = Auth::guard('admin')->user();
 
-        $totalStudents    = Student::count();
-        $activeStudents   = Student::where('status', 'active')->count();
+        $totalStudents = Student::count();
+        $activeStudents = Student::where('status', 'active')->count();
         $completedStudents = Student::where('status', 'completed')->count();
-        $inactiveStudents = Student::where('status', 'inactive')->count();
         $totalAssessments = Assessment::count();
 
         return view('admin.profile.index', [
-            'admin'             => $admin,
-            'totalStudents'     => $totalStudents,
-            'activeStudents'    => $activeStudents,
+            'admin' => $admin,
+            'totalStudents' => $totalStudents,
+            'activeStudents' => $activeStudents,
             'completedStudents' => $completedStudents,
-            'inactiveStudents'  => $inactiveStudents,
-            'totalAssessments'  => $totalAssessments,
+            'totalAssessments' => $totalAssessments,
         ]);
     }
 
     public function update(Request $request)
     {
-        $adminId = session('admin_id');
-        $admin   = Admin::findOrFail($adminId);
+        $admin = Auth::guard('admin')->user();
 
         $request->validate([
-            'username'         => ['required', 'string', 'min:3', 'max:50'],
+            'name' => ['required', 'string', 'max:255'],
+            'username' => [
+                'required',
+                'string',
+                'alpha_dash',
+                'min:3',
+                'max:50',
+                Rule::unique('admins', 'username')->ignore($admin->id),
+            ],
             'current_password' => ['nullable', 'string'],
-            'new_password'     => ['nullable', 'string', 'min:6', 'confirmed'],
+            'new_password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
-        // Update username
+        $admin->name = $request->name;
         $admin->username = $request->username;
-        session(['admin_username' => $request->username]);
 
         // Update password jika diisi
         if ($request->filled('current_password')) {
-            if (! Hash::check($request->current_password, $admin->password)) {
+            if (!Hash::check($request->current_password, $admin->password)) {
                 return back()->withErrors([
                     'current_password' => 'Password saat ini tidak sesuai.',
                 ])->withInput();
@@ -64,6 +68,6 @@ class ProfileController extends Controller
 
         return redirect()
             ->route('admin.profile.index')
-            ->with('success', 'Profil berhasil diperbarui.');
+            ->with('success', 'Profil dan kredensial akun Anda berhasil diperbarui.');
     }
 }

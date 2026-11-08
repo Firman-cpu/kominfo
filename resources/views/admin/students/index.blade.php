@@ -1,643 +1,246 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts/admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kelola data siswa Praktik Kerja Lapangan — PRAKERIN DISKOMINFO PACITAN.">
-    <meta name="theme-color" content="#f5f7fa">
+@section('title', 'Data Siswa & Mahasiswa')
+@section('page-title', 'Siswa Prakerin & Mahasiswa Magang')
+@section('page-subtitle', 'Pengelolaan data peserta PKL Dinas Komunikasi dan Informatika')
 
-    <title>Data Siswa — Admin PRAKERIN</title>
+@section('content')
+<div class="space-y-6">
+    {{-- Header Action & Search/Filter Toolbar --}}
+    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h3 class="text-base font-bold text-slate-900">Daftar Seluruh Peserta</h3>
+                <p class="text-xs text-slate-500">Total terdata: {{ $students->total() }} peserta</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin.export.index') }}"
+                   class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
+                    <span>Ekspor Excel</span>
+                </a>
+                <a href="{{ route('admin.students.create') }}"
+                   class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors">
+                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                    <span>Tambah Peserta Baru</span>
+                </a>
+            </div>
+        </div>
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+        {{-- Filter Form --}}
+        <form method="GET" action="{{ route('admin.students.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-3 border-t border-slate-100">
+            {{-- Search Input --}}
+            <div class="lg:col-span-1">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                    </span>
+                    <input type="text"
+                           name="search"
+                           value="{{ request('search') }}"
+                           placeholder="Cari nama, NIS, instansi..."
+                           class="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all placeholder-slate-400">
+                </div>
+            </div>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+            {{-- Filter Tahun --}}
+            <div>
+                <select name="year" onchange="this.form.submit()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-700 bg-white">
+                    <option value="">Semua Tahun</option>
+                    @foreach ($availableYears as $yr)
+                        <option value="{{ $yr }}" {{ request('year') == $yr ? 'selected' : '' }}>
+                            Tahun {{ $yr }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-    <script>
-        document.documentElement.classList.add('gsap-init');
-    </script>
+            {{-- Filter Tipe --}}
+            <div>
+                <select name="type" onchange="this.form.submit()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-700 bg-white">
+                    <option value="">Semua Tipe Peserta</option>
+                    <option value="prakerin" {{ request('type') === 'prakerin' ? 'selected' : '' }}>Siswa Prakerin (SMK)</option>
+                    <option value="magang" {{ request('type') === 'magang' ? 'selected' : '' }}>Mahasiswa Magang (PT)</option>
+                </select>
+            </div>
 
-    <style>
-        [x-cloak] {
-            display: none !important;
-        }
+            {{-- Filter Bidang --}}
+            <div>
+                <select name="department_id" onchange="this.form.submit()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-700 bg-white">
+                    <option value="">Semua Bidang</option>
+                    @foreach ($departments as $dept)
+                        <option value="{{ $dept->id }}" {{ request('department_id') == $dept->id ? 'selected' : '' }}>
+                            {{ $dept->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-        html.gsap-init [data-anim] {
-            opacity: 0;
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: 0% center;
-            }
-
-            100% {
-                background-position: 200% center;
-            }
-        }
-
-        .shimmer-text {
-            background-size: 200% auto;
-            animation: shimmer 6s linear infinite;
-        }
-
-        .orb {
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
-        }
-
-        .orb-1 {
-            background: radial-gradient(
-                circle,
-                rgba(65, 107, 158, 0.15) 0%,
-                rgba(65, 107, 158, 0.06) 40%,
-                transparent 75%
-            );
-        }
-
-        .orb-2 {
-            background: radial-gradient(
-                circle,
-                rgba(125, 211, 252, 0.18) 0%,
-                rgba(125, 211, 252, 0.05) 42%,
-                transparent 75%
-            );
-        }
-
-        .grid-mask {
-            -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
-            mask-image: linear-gradient(to bottom, black, transparent 85%);
-        }
-
-        .student-card {
-            transition:
-                border-color 200ms ease,
-                box-shadow 200ms ease,
-                transform 200ms ease;
-        }
-
-        .action-button {
-            transition:
-                color 180ms ease,
-                background-color 180ms ease,
-                border-color 180ms ease,
-                transform 180ms ease;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-    </style>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.451.0/dist/umd/lucide.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-</head>
-
-<body class="min-h-screen overflow-x-hidden bg-[#f5f7fa] text-[#263449] antialiased selection:bg-[#416b9e]/15">
-
-    {{-- BACKGROUND --}}
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div class="orb orb-1 absolute -left-40 -top-40 h-[480px] w-[480px] rounded-full"></div>
-
-        <div class="orb orb-2 absolute -right-40 top-[15%] h-[460px] w-[460px] rounded-full"></div>
-
-        <div class="grid-mask absolute inset-0 opacity-70 [background-image:linear-gradient(#e6ecf4_1px,transparent_1px),linear-gradient(90deg,#e6ecf4_1px,transparent_1px)] [background-size:56px_56px]"></div>
-
-        <div class="absolute left-1/2 top-0 h-px w-[70%] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#416b9e]/40 to-transparent"></div>
+            {{-- Filter Status & Submit/Reset --}}
+            <div class="flex items-center gap-2">
+                <select name="status" onchange="this.form.submit()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-700 bg-white">
+                    <option value="">Semua Status</option>
+                    <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Sedang Aktif</option>
+                    <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
+                </select>
+                @if (request()->hasAny(['search', 'year', 'type', 'department_id', 'status']))
+                    <a href="{{ route('admin.students.index') }}"
+                       class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs transition-colors shrink-0"
+                       title="Reset Filter">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </a>
+                @endif
+            </div>
+        </form>
     </div>
 
-
-    <main class="relative mx-auto max-w-7xl px-4 pb-20 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pb-28">
-        {{-- BACK BUTTON --}}
-        <a
-            data-anim
-            href="{{ route('admin.dashboard.page') }}"
-            class="mb-5 group inline-flex items-center gap-2.5 rounded-full border border-[#dce5f0] bg-white/90 px-4 py-2.5 shadow-sm shadow-slate-200/40 transition duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md hover:shadow-blue-100/70"
-        >
-            <i data-lucide="arrow-left" class="h-4 w-4 text-[#365b88] transition-transform duration-300 group-hover:-translate-x-1"></i>
-
-            <span class="text-xs font-bold tracking-wide text-[#365b88]">
-                Kembali ke Dashboard
-            </span>
-        </a>
-
-        {{-- HEADER --}}
-        <section class="relative">
-
-            <div class="flex flex-row items-center justify-between gap-7 sm:flex-row sm:items-end">
-
-                <div>
-                    <h1
-                        data-anim
-                        class="text-4xl font-black leading-[0.98] tracking-[-0.05em] text-[#263449] sm:text-5xl lg:text-6xl"
-                    >
-                        DATA
-
-                        <span class="shimmer-text block bg-gradient-to-r from-[#243f63] via-[#416b9e] to-sky-500 bg-clip-text text-transparent">
-                            SISWA PKL
-                        </span>
-                    </h1>
-                </div>
-
-                <img
-                    src="{{ asset('image/logo.png') }}"
-                    alt="Logo DISKOMINFO Kabupaten Pacitan"
-                    class="h-30 w-auto object-contain"
-                >
-
-
-
-            </div>
-
-            <div data-anim class="mt-8 h-px w-full bg-gradient-to-r from-[#416b9e]/30 via-[#416b9e]/10 to-transparent"></div>
-
-        </section>
-
-
-        {{-- FLASH MESSAGE --}}
-        @if (session('success'))
-            <div
-                data-anim
-                class="success-message mt-7 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-white p-4 shadow-sm"
-                role="status"
-                aria-live="polite"
-            >
-                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-                    <i data-lucide="check-circle-2" class="h-5 w-5"></i>
-                </div>
-
-                <div class="min-w-0 flex-1">
-                    <p class="text-sm font-bold text-emerald-800">
-                        Berhasil
-                    </p>
-
-                    <p class="mt-1 text-xs leading-5 text-emerald-700">
-                        {{ session('success') }}
-                    </p>
-                </div>
-
-                <i data-lucide="badge-check" class="mt-1 h-4 w-4 shrink-0 text-emerald-500"></i>
-            </div>
-        @endif
-
-
-        {{-- SECTION LABEL --}}
-        <section class="mt-10">
-
-            <div data-anim class="mb-5 flex items-center gap-3">
-                <span class="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#718096]">
-                    student.directory
-                </span>
-
-                <span class="h-px flex-1 bg-[#e0e7f0]"></span>
-
-                <span class="font-mono text-[9px] text-[#9aa7b8]">
-                    RECORDS
-                </span>
-            </div>
-
-
-            {{-- STUDENT LIST CARD --}}
-            <div
-                data-anim
-                class="overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white shadow-[0_8px_35px_-20px_rgba(36,63,99,0.2)]"
-            >
-
-                {{-- CARD HEADER --}}
-                <div class="flex gap-3 sticky z-10 top-0 border-b border-[#edf1f6] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-
-                    <div class="flex items-center gap-3">
-                        <div class="flex h-10 w-10 items-center justify-center">
-                            <i data-lucide="users-round" class="h-8 w-8 text-[#365b88]"></i>
-                        </div>
-
-                        <div>
-                            <h2 class="text-sm font-bold text-[#263449]">
-                                Daftar Siswa
-                            </h2>
-
-                            <p class="mt-1 text-[11px] text-[#8390a1]">
-                                Data peserta Praktik Kerja Lapangan
-                            </p>
-                        </div>
-                    </div>
-
-                    {{-- ADD STUDENT --}}
-                    <a
-                        data-anim
-                        href="{{ route('admin.students.create') }}"
-                        class="group inline-flex shrink-0 items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-[#243f63] to-[#416b9e] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-[#243f63]/15 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#243f63]/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/20"
-                    >
-                        <i data-lucide="user-round-plus" class="h-4 w-4 transition-transform duration-300 group-hover:scale-110"></i>
-                        Tambah Siswa
-                        <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"></i>
-                    </a>
-                </div>
-
-
-                {{-- EMPTY STATE --}}
-                @if ($students->isEmpty())
-
-                    <div class="empty-state px-5 py-16 text-center sm:px-8 sm:py-20">
-
-                        <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-[#e0e7f0] bg-[#f8fafc]">
-                            <i data-lucide="folder-open" class="h-9 w-9 text-[#9aa7b8]"></i>
-                        </div>
-
-                        <h3 class="mt-6 text-lg font-bold text-[#3b4d65]">
-                            Belum Ada Data Siswa
-                        </h3>
-
-                        <p class="mx-auto mt-2 max-w-sm text-xs leading-6 text-[#8390a1]">
-                            Data siswa PKL belum tersedia. Tambahkan siswa untuk mulai mengelola data peserta.
-                        </p>
-
-                        <a
-                            href="{{ route('admin.students.create') }}"
-                            class="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#243f63] px-4 py-3 text-xs font-bold text-white transition hover:bg-[#365b88] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/20"
-                        >
-                            <i data-lucide="plus" class="h-4 w-4"></i>
-                            Tambah Siswa Pertama
-                        </a>
-
-                    </div>
-
-                @else
-
-                    {{-- DESKTOP TABLE --}}
-                    <div class="hidden overflow-x-auto md:block">
-                        <table class="w-full border-collapse text-left">
-
-                            <thead>
-                                <tr class="border-b border-[#edf1f6] bg-[#f8fafc]">
-                                    <th class="px-6 py-4 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[#8390a1]">
-                                        Siswa
-                                    </th>
-
-                                    <th class="px-6 py-4 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[#8390a1]">
-                                        Jurusan
-                                    </th>
-
-                                    <th class="px-6 py-4 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[#8390a1]">
-                                        Status
-                                    </th>
-
-                                    <th class="px-6 py-4 text-right font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[#8390a1]">
-                                        Aksi
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody class="divide-y divide-[#edf1f6]">
-
-                                @foreach ($students as $student)
-
-                                    <tr
-                                        class="student-card group"
-                                        data-student-row
-                                    >
-                                        {{-- STUDENT --}}
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-3">
-
-                                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#dce6f2] bg-gradient-to-br from-[#f1f6fc] to-[#e8eff8] text-sm font-black uppercase text-[#365b88]">
-                                                    {{ mb_substr($student->name, 0, 1) }}
-                                                </div>
-
-                                                <div class="min-w-0">
-                                                    <p class="truncate text-sm font-bold text-[#34445a] transition group-hover:text-[#365b88]">
-                                                        {{ $student->name }}
-                                                    </p>
-
-                                                    <p class="mt-1 font-mono text-[9px] uppercase tracking-[0.08em] text-[#a0aaba]">
-                                                        Student record
-                                                    </p>
-                                                </div>
-
-                                            </div>
-                                        </td>
-
-
-                                        {{-- MAJOR --}}
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-2.5">
-                                                <i data-lucide="graduation-cap" class="h-4 w-4 shrink-0 text-[#8390a1]"></i>
-
-                                                <span class="text-xs font-medium text-[#5f6f84]">
-                                                    {{ $student->major }}
-                                                </span>
-                                            </div>
-                                        </td>
-
-
-                                        {{-- STATUS --}}
-                                        <td class="px-6 py-4">
-                                            @php
-                                                $studentStatus = strtolower(trim((string) $student->status));
-                                                $isActive = $studentStatus === 'active';
-                                            @endphp
-
-                                            <span class="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-bold
-                                                {{ $isActive
-                                                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                                                    : 'border-[#dce6f2] bg-[#f1f6fc] text-[#536b8b]' }}"
-                                            >
-                                                <span class="h-1.5 w-1.5 rounded-full {{ $isActive ? 'bg-emerald-500' : 'bg-[#7890b1]' }}"></span>
-
-                                                {{ $student->status }}
-                                            </span>
-                                        </td>
-
-
-                                        {{-- ACTIONS --}}
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center justify-end gap-2">
-
-                                                <a
-                                                    href="{{ route('admin.students.edit', $student) }}"
-                                                    class="action-button inline-flex items-center gap-2 rounded-lg border border-[#dce6f2] bg-white px-3 py-2 text-[10px] font-bold text-[#365b88] hover:border-[#b9cbe0] hover:bg-[#f1f6fc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/15"
-                                                    aria-label="Edit data {{ $student->name }}"
-                                                >
-                                                    <i data-lucide="pencil" class="h-3.5 w-3.5"></i>
-                                                    Edit
-                                                </a>
-
-                                                <form
-                                                    action="{{ route('admin.students.destroy', $student) }}"
-                                                    method="POST"
-                                                    class="delete-form"
-                                                    data-student-name="{{ $student->name }}"
-                                                >
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                    <button
-                                                        type="submit"
-                                                        class="action-button inline-flex items-center gap-2 rounded-lg border border-red-100 bg-white px-3 py-2 text-[10px] font-bold text-red-600 hover:border-red-200 hover:bg-red-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-500/10"
-                                                        aria-label="Hapus data {{ $student->name }}"
-                                                    >
-                                                        <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
-                                                        Hapus
-                                                    </button>
-                                                </form>
-
-                                            </div>
-                                        </td>
-
-                                    </tr>
-
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                    {{-- MOBILE CARDS --}}
-                    <div class="divide-y divide-[#edf1f6] md:hidden">
-
-                        @foreach ($students as $student)
-
-                            @php
-                                $studentStatus = strtolower(trim((string) $student->status));
-                                $isActive = $studentStatus === 'active';
-                            @endphp
-
-                            <article class="mobile-student-card p-5" data-student-row>
-
-                                <div class="flex items-start gap-3">
-
-                                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#dce6f2] bg-gradient-to-br from-[#f1f6fc] to-[#e8eff8] text-sm font-black uppercase text-[#365b88]">
-                                        {{ mb_substr($student->name, 0, 1) }}
-                                    </div>
-
-                                    <div class="min-w-0 flex-1">
-                                        <h3 class="break-words text-sm font-bold text-[#34445a]">
+    {{-- Main Data Table --}}
+    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider">
+                        <th class="py-3.5 px-4">Peserta & Foto</th>
+                        <th class="py-3.5 px-4">Tipe</th>
+                        <th class="py-3.5 px-4">Sekolah / Kampus</th>
+                        <th class="py-3.5 px-4">Jurusan / Prodi</th>
+                        <th class="py-3.5 px-4">Bidang Penempatan</th>
+                        <th class="py-3.5 px-4">Durasi PKL</th>
+                        <th class="py-3.5 px-4">Status</th>
+                        <th class="py-3.5 px-4 text-center">Nilai</th>
+                        <th class="py-3.5 px-4 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse ($students as $student)
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            {{-- Peserta (Foto + Nama + Identitas) --}}
+                            <td class="py-3.5 px-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ $student->photo_url }}"
+                                         alt="{{ $student->name }}"
+                                         class="w-10 h-10 rounded-full object-cover border border-slate-200 shadow-xs shrink-0">
+                                    <div>
+                                        <a href="{{ route('admin.students.show', $student->id) }}"
+                                           class="font-bold text-slate-900 hover:text-blue-600 transition-colors">
                                             {{ $student->name }}
-                                        </h3>
-
-                                        <p class="mt-1.5 flex items-start gap-2 text-xs leading-5 text-[#718096]">
-                                            <i data-lucide="graduation-cap" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#8390a1]"></i>
-                                            {{ $student->major }}
+                                        </a>
+                                        <p class="text-[11px] text-slate-500 font-mono">
+                                            {{ $student->type === 'magang' ? 'NIM' : 'NIS' }}: {{ $student->identity_number }}
                                         </p>
-
-                                        <div class="mt-3">
-                                            <span class="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-bold
-                                                {{ $isActive
-                                                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                                                    : 'border-[#dce6f2] bg-[#f1f6fc] text-[#536b8b]' }}"
-                                            >
-                                                <span class="h-1.5 w-1.5 rounded-full {{ $isActive ? 'bg-emerald-500' : 'bg-[#7890b1]' }}"></span>
-                                                {{ $student->status }}
-                                            </span>
-                                        </div>
                                     </div>
-
                                 </div>
+                            </td>
 
+                            {{-- Tipe --}}
+                            <td class="py-3.5 px-4">
+                                <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold {{ $student->type === 'magang' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-blue-50 text-blue-700 border border-blue-200' }}">
+                                    {{ $student->type_label }}
+                                </span>
+                            </td>
 
-                                <div class="mt-5 grid grid-cols-2 gap-2">
+                            {{-- Sekolah / Kampus --}}
+                            <td class="py-3.5 px-4 font-medium text-slate-800">
+                                {{ $student->institution ?? '-' }}
+                            </td>
 
-                                    <a
-                                        href="{{ route('admin.students.edit', $student) }}"
-                                        class="action-button inline-flex items-center justify-center gap-2 rounded-xl border border-[#dce6f2] bg-[#f8fafc] px-3 py-3 text-xs font-bold text-[#365b88] hover:bg-[#f1f6fc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/15"
-                                    >
-                                        <i data-lucide="pencil" class="h-4 w-4"></i>
-                                        Edit
+                            {{-- Jurusan --}}
+                            <td class="py-3.5 px-4 text-slate-600">
+                                {{ $student->major }}
+                                @if ($student->type === 'prakerin' && $student->class)
+                                    <span class="block text-[10px] text-slate-400">Kelas: {{ $student->class }}</span>
+                                @elseif ($student->type === 'magang' && $student->faculty)
+                                    <span class="block text-[10px] text-slate-400">{{ $student->faculty }}</span>
+                                @endif
+                            </td>
+
+                            {{-- Bidang --}}
+                            <td class="py-3.5 px-4">
+                                @if ($student->department)
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                                        {{ $student->department->name }}
+                                    </span>
+                                @else
+                                    <span class="text-slate-400 italic">Belum diatur</span>
+                                @endif
+                            </td>
+
+                            {{-- Durasi --}}
+                            <td class="py-3.5 px-4 text-slate-600 text-[11px]">
+                                {{ $student->start_date ? $student->start_date->format('d/m/Y') : '-' }}
+                                <span class="text-slate-400">s/d</span>
+                                {{ $student->end_date ? $student->end_date->format('d/m/Y') : '-' }}
+                            </td>
+
+                            {{-- Status --}}
+                            <td class="py-3.5 px-4">
+                                @include('components.admin.badge-status', ['status' => $student->status])
+                            </td>
+
+                            {{-- Status Penilaian --}}
+                            <td class="py-3.5 px-4 text-center">
+                                @if ($student->assessment)
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200" title="Rata-rata Nilai">
+                                        <i data-lucide="star" class="w-3 h-3 text-amber-500 fill-amber-500"></i>
+                                        {{ $student->assessment->average_score }}
+                                    </span>
+                                @else
+                                    <a href="{{ route('admin.assessments.create', ['student_id' => $student->id]) }}"
+                                       class="inline-flex items-center gap-1 text-[11px] text-blue-600 hover:text-blue-800 font-medium hover:underline">
+                                        <i data-lucide="plus-circle" class="w-3 h-3"></i>
+                                        Beri Nilai
                                     </a>
+                                @endif
+                            </td>
 
-                                    <form
-                                        action="{{ route('admin.students.destroy', $student) }}"
-                                        method="POST"
-                                        class="delete-form"
-                                        data-student-name="{{ $student->name }}"
-                                    >
+                            {{-- Aksi --}}
+                            <td class="py-3.5 px-4 text-right">
+                                <div class="inline-flex items-center gap-1">
+                                    <a href="{{ route('admin.students.show', $student->id) }}"
+                                       class="p-1.5 rounded-lg text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                                       title="Lihat Detail Lengkap">
+                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                    </a>
+                                    <a href="{{ route('admin.students.edit', $student->id) }}"
+                                       class="p-1.5 rounded-lg text-slate-600 hover:text-amber-600 hover:bg-amber-50 transition-colors"
+                                       title="Edit Data">
+                                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                    </a>
+                                    <form method="POST" action="{{ route('admin.students.destroy', $student->id) }}"
+                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ $student->name }}? Data nilai terkait juga akan terhapus.')"
+                                          class="inline">
                                         @csrf
                                         @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="action-button inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-100 bg-white px-3 py-3 text-xs font-bold text-red-600 hover:border-red-200 hover:bg-red-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-500/10"
-                                        >
-                                            <i data-lucide="trash-2" class="h-4 w-4"></i>
-                                            Hapus
+                                        <button type="submit"
+                                                class="p-1.5 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                                                title="Hapus Data">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
                                     </form>
-
                                 </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" class="py-12 text-center text-slate-400">
+                                <div class="max-w-sm mx-auto">
+                                    <i data-lucide="users" class="w-10 h-10 text-slate-300 mx-auto mb-2"></i>
+                                    <p class="font-medium text-slate-600">Tidak ada data peserta ditemukan.</p>
+                                    <p class="text-xs text-slate-400 mt-1">Coba sesuaikan kata kunci pencarian atau filter yang Anda gunakan.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
-                            </article>
-
-                        @endforeach
-
-                    </div>
-
-                @endif
-
-                {{-- CARD FOOTER --}}
-                <div class="flex flex-col gap-2 border-t border-[#edf1f6] bg-[#fbfcfe] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-
-                        <span class="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#718096]">
-                            {{ $students->count() }} data ditampilkan
-                        </span>
-
-                    <p class="font-mono text-[9px] text-[#a0aaba]">
-                        PRAKERIN / DISKOMINFO PACITAN
-                    </p>
-
-                </div>
-
+        {{-- Pagination --}}
+        @if ($students->hasPages())
+            <div class="p-4 border-t border-slate-100 bg-slate-50/50">
+                {{ $students->links() }}
             </div>
-
-        </section>
-
-
-        {{-- FOOTER --}}
-        <footer data-anim class="mt-10 flex flex-col items-center justify-between gap-3 sm:flex-row">
-
-            <p class="text-[10px] text-[#9aa7b8]">
-                &copy; {{ date('Y') }} DISKOMINFO Kabupaten Pacitan
-            </p>
-
-            <div class="flex items-center gap-2 font-mono text-[9px] text-[#8390a1]">
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                admin.students.management
-            </div>
-
-        </footer>
-
-    </main>
-
-
-    {{-- ICONS + ANIMATIONS + DELETE CONFIRMATION --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var root = document.documentElement;
-
-            function showContent() {
-                root.classList.remove('gsap-init');
-
-                document.querySelectorAll('[data-anim]').forEach(function (el) {
-                    el.style.opacity = '';
-                    el.style.transform = '';
-                    el.style.visibility = '';
-                });
-            }
-
-            // Lucide icons
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons({
-                    attrs: {
-                        'stroke-width': 1.8
-                    }
-                });
-            }
-
-            // Delete confirmation
-            document.querySelectorAll('.delete-form').forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    var name = form.dataset.studentName || 'siswa ini';
-
-                    var confirmed = window.confirm(
-                        'Yakin ingin menghapus data ' + name + '? Tindakan ini tidak dapat dibatalkan.'
-                    );
-
-                    if (!confirmed) {
-                        event.preventDefault();
-                    }
-                });
-            });
-
-            // GSAP fallback
-            if (!window.gsap) {
-                showContent();
-                return;
-            }
-
-            var prefersReducedMotion = window.matchMedia(
-                '(prefers-reduced-motion: reduce)'
-            ).matches;
-
-            if (prefersReducedMotion) {
-                showContent();
-                return;
-            }
-
-            try {
-                gsap.config({
-                    force3D: true
-                });
-
-                var timeline = gsap.timeline({
-                    defaults: {
-                        ease: 'power3.out'
-                    },
-                    onComplete: function () {
-                        document.querySelectorAll('[data-anim]').forEach(function (el) {
-                            el.style.opacity = '';
-                            el.style.transform = '';
-                        });
-                    }
-                });
-
-                timeline.from('[data-anim]', {
-                    y: 20,
-                    opacity: 0,
-                    duration: 0.55,
-                    stagger: {
-                        each: 0.045,
-                        from: 'start'
-                    }
-                });
-
-                root.classList.remove('gsap-init');
-
-                // Ambient background
-                gsap.to('.orb-1', {
-                    x: 30,
-                    y: 25,
-                    duration: 14,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'sine.inOut'
-                });
-
-                gsap.to('.orb-2', {
-                    x: -25,
-                    y: 30,
-                    duration: 16,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'sine.inOut'
-                });
-
-                // Student row entrance
-                gsap.from('[data-student-row]', {
-                    y: 10,
-                    opacity: 0,
-                    duration: 0.4,
-                    stagger: 0.045,
-                    delay: 0.15,
-                    ease: 'power2.out',
-                    clearProps: 'all'
-                });
-
-            } catch (error) {
-                console.warn('[gsap] animation error — showing content', error);
-                showContent();
-            }
-
-            // Safety net
-            window.setTimeout(showContent, 1800);
-        });
-    </script>
-
-</body>
-</html>
+        @endif
+    </div>
+</div>
+@endsection

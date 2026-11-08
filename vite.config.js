@@ -15,9 +15,9 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5173,
     strictPort: true,
-    origin: "http://192.168.27.44:5173",
+    origin: "http://192.168.27.97:5173",
     hmr: {
-      host: "192.168.27.44",
+      host: "192.168.27.97",
     },
   },
 });

@@ -1,392 +1,140 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Admin Login — PRAKERIN DISKOMINFO PACITAN.">
-    <meta name="theme-color" content="#f5f7fa">
+    <title>Login Administrator & Operator — PRAKERIN DISKOMINFO Pacitan</title>
 
-    <title>Admin Login — PRAKERIN DISKOMINFO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        [x-cloak] {
-            display: none !important;
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: 0% center;
-            }
-
-            100% {
-                background-position: 200% center;
-            }
-        }
-
-        .shimmer-text {
-            background-size: 200% auto;
-            animation: shimmer 6s linear infinite;
-        }
-
-        .login-input {
-            transition:
-                border-color 200ms ease,
-                box-shadow 200ms ease,
-                background-color 200ms ease;
-        }
-
-        .login-input:focus {
-            outline: none;
-        }
-
-        .grid-mask {
-            mask-image: linear-gradient(to bottom, black, transparent 85%);
-            -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
+        body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
     </style>
 </head>
+<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 min-h-screen flex items-center justify-center p-4">
 
-<body class="min-h-screen overflow-x-hidden bg-[#f5f7fa] text-[#263449] antialiased selection:bg-[#365b88]/15">
+    <div class="max-w-md w-full">
+        {{-- Card Container --}}
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-8">
+            {{-- Header --}}
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white mx-auto shadow-lg shadow-blue-500/30 mb-4">
+                    <i data-lucide="shield-check" class="w-8 h-8"></i>
+                </div>
+                <h1 class="text-xl font-extrabold text-slate-900">PRAKERIN DISKOMINFO</h1>
+                <p class="text-xs text-slate-500 mt-1 font-medium">Kabupaten Pacitan — Masuk ke Portal Pengelolaan</p>
+            </div>
 
-    {{-- BACKGROUND — PRAKERIN LIGHT ATMOSPHERE --}}
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+            {{-- Flash Alert --}}
+            @if (session('success'))
+                <div class="mb-5 p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs rounded-xl flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4 shrink-0"></i>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
 
-        <div class="orb-1 absolute -left-40 -top-40 h-[440px] w-[440px] rounded-full bg-[#416b9e]/10 blur-[120px]"></div>
+            @if ($errors->has('auth'))
+                <div class="mb-5 p-3.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+                    <span>{{ $errors->first('auth') }}</span>
+                </div>
+            @endif
 
-        <div class="orb-2 absolute -right-40 top-[15%] h-[440px] w-[440px] rounded-full bg-sky-300/20 blur-[130px]"></div>
+            <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-5">
+                @csrf
 
-        <div class="orb-3 absolute bottom-[-240px] left-[35%] h-[460px] w-[460px] rounded-full bg-blue-200/30 blur-[130px]"></div>
-
-        <div class="grid-mask absolute inset-0 opacity-[0.32] [background-image:linear-gradient(#dce5f0_1px,transparent_1px),linear-gradient(90deg,#dce5f0_1px,transparent_1px)] [background-size:48px_48px]"></div>
-
-        <div class="absolute left-1/2 top-0 h-px w-[70%] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#416b9e]/40 to-transparent"></div>
-    </div>
-
-
-    {{-- LOGIN --}}
-    <main class="relative flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-
-        <section
-            class="login-card relative w-full max-w-md overflow-hidden rounded-3xl border border-[#e0e7f0] bg-white/90 p-7 shadow-[0_24px_80px_-30px_rgba(36,63,99,0.22)] backdrop-blur-2xl sm:p-9"
-            aria-labelledby="login-heading"
-        >
-            {{-- CARD DECORATION --}}
-            <div class="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[#243f63] via-[#416b9e] to-sky-400"></div>
-
-            <div class="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-blue-100/60 blur-[100px]"></div>
-
-            <div class="pointer-events-none absolute -bottom-32 -left-20 h-56 w-56 rounded-full bg-sky-100/70 blur-[110px]"></div>
-
-            <div class="relative">
-
-                {{-- BRAND --}}
-                <div class="login-brand mb-8 flex items-center">
-                <img
-                    src="{{ asset('image/logo.png') }}"
-                    alt="Logo DISKOMINFO Kabupaten Pacitan"
-                    class="h-12 w-auto object-contain"
-                >
-
-                    <div>
-                        <p class="text-sm font-extrabold tracking-tight text-[#263449]">
-                            DINAS KOMUNIKASI DAN INFORMATIKA
-                        </p>
-
-                        <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#8390a1]">
-                            KABUPATEN PACITAN
-                        </p>
+                {{-- Username --}}
+                <div>
+                    <label for="username" class="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
+                        Username
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </span>
+                        <input type="text"
+                               name="username"
+                               id="username"
+                               value="{{ old('username') }}"
+                               required
+                               autocomplete="username"
+                               autofocus
+                               placeholder="Masukkan username Anda"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl border {{ $errors->has('username') ? 'border-rose-400 bg-rose-50/30 focus:border-rose-500 focus:ring-rose-200' : 'border-slate-300 focus:border-blue-600 focus:ring-blue-100' }} text-sm focus:ring-4 focus:outline-hidden transition-all text-slate-800 placeholder-slate-400">
                     </div>
+                    @error('username')
+                        <p class="mt-1.5 text-xs text-rose-600 font-medium flex items-center gap-1">
+                            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
-                {{-- HEADING --}}
-                <h1
-                    id="login-heading"
-                    class="login-title text-4xl font-black leading-[0.98] tracking-[-0.045em] text-[#263449] sm:text-[2.75rem]"
-                >
-                    ADMIN
-
-                    <span class="shimmer-text mt-1 block bg-gradient-to-r from-[#243f63] via-[#416b9e] to-sky-500 bg-clip-text text-transparent">
-                        LOGIN
-                    </span>
-                </h1>
-
-                {{-- ERRORS --}}
-                @if ($errors->any())
-                    <div
-                        class="login-errors mt-6 overflow-hidden rounded-2xl border border-red-200 bg-red-50 p-4"
-                        role="alert"
-                        aria-live="polite"
-                    >
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="alert-triangle" class="mt-0.5 h-4 w-4 shrink-0 text-red-500"></i>
-
-                            <div class="min-w-0">
-                                <div class="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-red-600">
-                                    login.failed
-                                </div>
-
-                                <ul class="mt-2 space-y-1">
-                                    @foreach ($errors->all() as $error)
-                                        <li class="text-xs leading-5 text-red-700">
-                                            {{ $error }}
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
+                {{-- Password --}}
+                <div>
+                    <label for="password" class="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                        </span>
+                        <input type="password"
+                               name="password"
+                               id="password"
+                               required
+                               autocomplete="current-password"
+                               placeholder="••••••••"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl border {{ $errors->has('password') ? 'border-rose-400 bg-rose-50/30 focus:border-rose-500 focus:ring-rose-200' : 'border-slate-300 focus:border-blue-600 focus:ring-blue-100' }} text-sm focus:ring-4 focus:outline-hidden transition-all text-slate-800 placeholder-slate-400">
                     </div>
-                @endif
+                    @error('password')
+                        <p class="mt-1.5 text-xs text-rose-600 font-medium flex items-center gap-1">
+                            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
 
+                {{-- Remember Me --}}
+                <div class="flex items-center justify-between text-xs">
+                    <label class="flex items-center gap-2 text-slate-600 cursor-pointer select-none">
+                        <input type="checkbox" name="remember" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                        <span>Ingat saya di perangkat ini</span>
+                    </label>
+                </div>
 
-                {{-- FORM --}}
-                <form
-                    action="{{ route('admin.login.submit') }}"
-                    method="POST"
-                    class="login-form mt-7 space-y-5"
-                >
-                    @csrf
+                {{-- Submit Button --}}
+                <button type="submit"
+                        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-700 to-indigo-600 hover:from-blue-800 hover:to-indigo-700 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 focus:ring-4 focus:ring-blue-200 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <i data-lucide="log-in" class="w-4 h-4"></i>
+                    <span>Masuk ke Dashboard</span>
+                </button>
+            </form>
 
-                    {{-- USERNAME --}}
-                    <div class="field">
-                        <label
-                            for="username"
-                            class="mb-2 flex items-center justify-between font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#718096]"
-                        >
-                            <span class="flex items-center gap-2">
-                                <i data-lucide="user-round" class="h-3.5 w-3.5 text-[#416b9e]"></i>
-                                Username
-                            </span>
-
-                            <span class="text-[9px] font-medium normal-case tracking-normal text-[#a0aaba]">
-                                Required
-                            </span>
-                        </label>
-
-                        <div class="relative">
-                            <i data-lucide="user" class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9aa7b8]"></i>
-
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                value="{{ old('username') }}"
-                                required
-                                autocomplete="username"
-                                placeholder="Masukkan username"
-                                class="login-input w-full rounded-xl border border-[#e0e7f0] bg-[#f8fafc] py-3.5 pl-11 pr-4 text-sm text-[#263449] placeholder:text-[#a0aaba] focus:border-[#416b9e] focus:bg-white focus:ring-4 focus:ring-[#416b9e]/10"
-                            >
-                        </div>
-                    </div>
-
-
-                    {{-- PASSWORD --}}
-                    <div class="field">
-                        <label
-                            for="password"
-                            class="mb-2 flex items-center justify-between font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#718096]"
-                        >
-                            <span class="flex items-center gap-2">
-                                <i data-lucide="lock-keyhole" class="h-3.5 w-3.5 text-[#416b9e]"></i>
-                                Password
-                            </span>
-
-                            <span class="text-[9px] font-medium normal-case tracking-normal text-[#a0aaba]">
-                                Required
-                            </span>
-                        </label>
-
-                        <div class="relative">
-                            <i data-lucide="key-round" class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9aa7b8]"></i>
-
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                required
-                                autocomplete="current-password"
-                                placeholder="Masukkan password"
-                                class="login-input w-full rounded-xl border border-[#e0e7f0] bg-[#f8fafc] py-3.5 pl-11 pr-4 text-sm text-[#263449] placeholder:text-[#a0aaba] focus:border-[#416b9e] focus:bg-white focus:ring-4 focus:ring-[#416b9e]/10"
-                            >
-                        </div>
-                    </div>
-
-
-                    {{-- SUBMIT BUTTON --}}
-                    <button
-                        type="submit"
-                        class="btn-submit group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-[#243f63] via-[#365b88] to-[#416b9e] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-lg shadow-[#243f63]/20 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#243f63]/25 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#416b9e]/25 active:translate-y-0"
-                    >
-                        <span class="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full"></span>
-
-                        <i data-lucide="log-in" class="relative h-4 w-4"></i>
-
-                        <span class="relative">Login Dashboard</span>
-
-                        <i data-lucide="arrow-right" class="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"></i>
-                    </button>
-                </form>
+            <div class="mt-6 pt-6 border-t border-slate-100 text-center">
+                <a href="{{ route('home') }}" class="text-xs text-slate-500 hover:text-blue-600 inline-flex items-center gap-1 transition-colors">
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                    <span>Kembali ke Halaman Utama</span>
+                </a>
             </div>
-        </section>
+        </div>
 
-    </main>
+        {{-- Footer Note --}}
+        <p class="text-center text-xs text-slate-400 mt-6">
+            Akses dibatasi khusus Administrator & Operator yang berwenang.
+        </p>
+    </div>
 
-
-    {{-- CDN LIBRARIES --}}
-    <script src="https://cdn.jsdelivr.net/npm/lucide@0.451.0/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-
-
-    {{-- ICONS + ANIMATIONS --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons({
-                    attrs: {
-                        'stroke-width': 1.8
-                    }
-                });
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.initLucide) {
+                window.initLucide();
             }
-
-            const animatedElements = document.querySelectorAll(
-                '.login-card, .login-brand, .login-badge, .login-title, ' +
-                '.login-sub, .login-errors, .field, .btn-submit, ' +
-                '.login-security, .login-footer'
-            );
-
-            function resetAnimations() {
-                animatedElements.forEach(function (element) {
-                    element.style.opacity = '';
-                    element.style.transform = '';
-                    element.style.visibility = '';
-                });
-            }
-
-            if (!window.gsap) {
-                console.warn('[gsap] not loaded — animations skipped');
-                return;
-            }
-
-            const prefersReducedMotion = window.matchMedia(
-                '(prefers-reduced-motion: reduce)'
-            ).matches;
-
-            try {
-                if (!prefersReducedMotion) {
-                    const tl = gsap.timeline({
-                        defaults: {
-                            ease: 'power3.out'
-                        }
-                    });
-
-                    tl.from('.login-card', {
-                        y: 28,
-                        opacity: 0,
-                        scale: 0.985,
-                        duration: 0.75
-                    })
-                    .from('.login-brand', {
-                        y: 12,
-                        opacity: 0,
-                        duration: 0.4
-                    }, '-=0.4')
-                    .from('.login-badge', {
-                        y: 10,
-                        opacity: 0,
-                        duration: 0.4
-                    }, '-=0.2')
-                    .from('.login-title', {
-                        y: 18,
-                        opacity: 0,
-                        duration: 0.55
-                    }, '-=0.2')
-                    .from('.login-sub', {
-                        y: 10,
-                        opacity: 0,
-                        duration: 0.4
-                    }, '-=0.3');
-
-                    if (document.querySelector('.login-errors')) {
-                        tl.from('.login-errors', {
-                            y: 10,
-                            opacity: 0,
-                            duration: 0.4
-                        }, '-=0.2');
-                    }
-
-                    tl.from('.field', {
-                        y: 12,
-                        opacity: 0,
-                        duration: 0.4,
-                        stagger: 0.08
-                    }, '-=0.15')
-                    .from('.btn-submit', {
-                        y: 8,
-                        opacity: 0,
-                        duration: 0.4
-                    }, '-=0.15')
-                    .from('.login-security', {
-                        y: 8,
-                        opacity: 0,
-                        duration: 0.35
-                    }, '-=0.15')
-                    .from('.login-footer', {
-                        y: 6,
-                        opacity: 0,
-                        duration: 0.35
-                    }, '-=0.15');
-
-                    // Ambient background movement
-                    gsap.to('.orb-1', {
-                        x: 30,
-                        y: 20,
-                        duration: 14,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: 'sine.inOut'
-                    });
-
-                    gsap.to('.orb-2', {
-                        x: -25,
-                        y: 30,
-                        duration: 16,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: 'sine.inOut'
-                    });
-
-                    gsap.to('.orb-3', {
-                        x: 18,
-                        y: -25,
-                        duration: 18,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: 'sine.inOut'
-                    });
-                }
-            } catch (error) {
-                console.warn('[gsap] animation error — showing content', error);
-                resetAnimations();
-            }
-
-            // Safety net: content must remain visible.
-            window.setTimeout(resetAnimations, 2500);
         });
     </script>
-
 </body>
-
 </html>

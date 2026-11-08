@@ -1,7 +1,5 @@
 @php
-    // =====================================================
-    // DATA INSTANSI — edit di sini saja
-    // =====================================================
+    // DATA INSTANSI
     $org = [
         'name'    => 'Dinas Komunikasi dan Informatika',
         'region'  => 'Kabupaten Pacitan',
@@ -67,9 +65,7 @@
     class="min-h-screen overflow-x-hidden bg-[#f5f7fa] text-[#263449] antialiased selection:bg-[#416b9e]/20"
 >
 
-    {{-- ======================================================
-         BACKGROUND — DISKOMINFO BLUE ATMOSPHERE
-    ======================================================= --}}
+    {{-- BACKGROUND --}}
     <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
 
         <div
@@ -101,14 +97,10 @@
     </div>
 
 
-    {{-- ======================================================
-         MAIN CONTENT
-    ======================================================= --}}
+    {{-- MAIN CONTENT --}}
     <main class="relative mx-auto max-w-7xl px-4 pb-40 pt-16 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
 
-        {{-- ==================================================
-             HEADER
-        =================================================== --}}
+        {{-- HEADER --}}
         <header class="loc-head mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
 
             <div class="max-w-2xl">
@@ -119,9 +111,7 @@
         </header>
 
 
-        {{-- ==================================================
-             PROFILE + MAP
-        =================================================== --}}
+        {{-- PROFILE + MAP --}}
         <section class="grid gap-5 lg:grid-cols-5" aria-label="Profil dan peta lokasi">
 
             {{-- ---------- Profile card ---------- --}}
@@ -204,11 +194,14 @@
 
                     <div class="flex items-start gap-3 py-3.5">
                         <dt class="flex w-24 shrink-0 items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-[#6b7a8f]">
-                            <i data-lucide="calendar-days" class="h-3.5 w-3.5 text-[#7193bb]"></i>
-                            Hari Kerja
+                            <i data-lucide="clock" class="h-3.5 w-3.5 text-[#7193bb]"></i>
+                            Jam Kerja
                         </dt>
                         <dd class="text-xs font-bold leading-6 text-[#43546a]">
-                            {{ $org['days'] }}
+                            <div class="text-[#263449]">{{ config('diskominfo.office_hours.workdays') }}</div>
+                            <div class="text-[11px] font-medium text-[#64748b]">Senin - Kamis: {{ config('diskominfo.office_hours.monday_thursday') }}</div>
+                            <div class="text-[11px] font-medium text-[#64748b]">Jumat: {{ config('diskominfo.office_hours.friday') }}</div>
+                            <div class="text-[10px] font-mono text-[#8a98ab]">{{ config('diskominfo.office_hours.weekend') }}</div>
                         </dd>
                     </div>
 
@@ -250,7 +243,7 @@
             </article>
 
 
-            {{-- ---------- Map card ---------- --}}
+            {{-- Map card --}}
             <article
                 class="loc-card flex flex-col overflow-hidden rounded-2xl border border-[#e0e7f0] bg-white
                        shadow-[0_4px_20px_rgba(35,57,84,0.04)] lg:col-span-3"
@@ -283,9 +276,7 @@
         </section>
 
 
-        {{-- ==================================================
-             GALLERY
-        =================================================== --}}
+        {{-- GALLERY --}}
         <section class="mt-16" aria-label="Galeri foto">
 
             <div class="loc-card mb-6 flex items-end justify-between gap-4">
@@ -348,9 +339,7 @@
         </section>
 
 
-        {{-- ==================================================
-             BACK TO STUDENTS
-        =================================================== --}}
+        {{-- BACK TO STUDENTS --}}
         <div class="loc-card mt-14 flex justify-center">
             <a
                 href="{{ route('students.index') }}"
@@ -376,33 +365,29 @@
     @include('partials.page-transition')
 
 
-    {{-- ======================================================
-         CDN LIBRARIES
-    ======================================================= --}}
+    {{-- CDN LIBRARIES --}}
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.451.0/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
 
 
-    {{-- ======================================================
-         ICONS + ANIMATIONS
-    ======================================================= --}}
+    {{-- ICONS + ANIMATIONS --}}
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        /* ---------- Lucide ---------- */
+        /* Lucide */
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
         }
 
-        /* ---------- GSAP guard ---------- */
+        /* GSAP guard */
         if (!window.gsap) {
             console.warn('[gsap] not loaded — animations skipped');
             return;
         }
 
-        // ScrollToPlugin tetap diregistrasi karena dipakai partial navbar
+        // ScrollToPlugin 
         gsap.registerPlugin.apply(
             gsap,
             [window.ScrollTrigger, window.ScrollToPlugin].filter(Boolean)
@@ -417,7 +402,7 @@
                 y: 24, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out'
             });
 
-            // Card, galeri, tombol — reveal saat masuk viewport
+            // Card, galeri, tombol — 
             const targets = gsap.utils.toArray('.loc-card, .gallery-item');
 
             if (targets.length) {

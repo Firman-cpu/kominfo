@@ -1,9 +1,3 @@
-{{-- =========================================================
-     PAGE TRANSITION — Blue Ice Fade
-     - Opacity 1 saat load → fade OUT untuk menampilkan halaman
-     - Opacity 0 saat idle → fade IN sebelum navigasi
-========================================================== --}}
-
 <div
     id="page-transition"
     aria-hidden="true"
@@ -76,7 +70,7 @@
             return;
         }
 
-        /* FADE OUT — reveal halaman */
+        /* FADE OUT */
         gsap.to(pt, {
             opacity: 0,
             duration: 0.5,
@@ -88,7 +82,7 @@
             }
         });
 
-        /* FADE IN — intercept internal link */
+        /* FADE IN */
         document.addEventListener('click', function (e) {
 
             if (pt.style.display === 'flex') return;

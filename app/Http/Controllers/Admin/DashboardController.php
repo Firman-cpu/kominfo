@@ -4,24 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Services\AnalyticsService;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(AnalyticsService $analyticsService)
     {
-        $totalStudents = Student::count();
+        // Sinkronisasi status otomatis bila ada yang sudah lewat tanggal selesai
+        Student::where('status', 'active')
+            ->whereNotNull('end_date')
+            ->whereDate('end_date', '<', Carbon::today())
+            ->update(['status' => 'completed']);
 
-        $activeStudents = Student::where('status', 'active')->count();
+        $stats = $analyticsService->getDashboardStats();
 
-        $completedStudents = Student::where('status', 'completed')->count();
-
-        $inactiveStudents = Student::where('status', 'inactive')->count();
-
-        return view('admin.dashboard.page', [
-            'totalStudents' => $totalStudents,
-            'activeStudents' => $activeStudents,
-            'completedStudents' => $completedStudents,
-            'inactiveStudents' => $inactiveStudents,
-        ]);
+        return view('admin.dashboard.page', $stats);
     }
 }

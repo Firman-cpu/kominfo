@@ -1,8 +1,3 @@
-{{-- =========================================================
-     FLOATING NAVBAR — shared partial
-     PRAKERIN / DISKOMINFO PACITAN
-     Tailwind CSS styling only
-========================================================== --}}
 
 @php
     $navItems = [
@@ -94,10 +89,6 @@
 
 </nav>
 
-
-{{-- =========================================================
-     NAV INDICATOR LOGIC — preserved
-========================================================== --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var nav       = document.getElementById('floating-nav');
@@ -184,10 +175,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 120);
     });
 
-    /*
-     * CLICK — hanya menggerakkan indicator.
-     * Navigasi tetap ditangani partial page-transition.
-     */
     links.forEach(function (link) {
         link.addEventListener('click', function () {
             var href = link.getAttribute('href') || '';

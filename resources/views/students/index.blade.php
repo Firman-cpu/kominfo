@@ -1,7 +1,5 @@
 @php
     use Illuminate\Support\Str;
-
-    // Nilai status yang dianggap "aktif" (sesuaikan dengan isi kolom status di DB)
     $activeStatuses = ['active', 'aktif'];
 @endphp
 <!DOCTYPE html>
@@ -46,10 +44,7 @@
     class="min-h-screen overflow-x-hidden bg-[#f5f7fa] text-[#263449] antialiased selection:bg-[#416b9e]/20"
 >
 
-    {{-- ======================================================
-         BACKGROUND — DISKOMINFO BLUE ATMOSPHERE
-         (radial-gradient, tanpa filter blur → ringan di GPU)
-    ======================================================= --}}
+    {{-- BACKGROUND --}}
     <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
 
         <div
@@ -83,14 +78,10 @@
     </div>
 
 
-    {{-- ======================================================
-         MAIN CONTENT
-    ======================================================= --}}
+    {{-- MAIN CONTENT --}}
     <main class="relative mx-auto max-w-7xl px-4 pb-40 pt-16 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
 
-        {{-- ==================================================
-             HEADER
-        =================================================== --}}
+        {{-- HEADER --}}
         <header class="students-head mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
 
             <div class="max-w-2xl">
@@ -128,9 +119,7 @@
         </header>
 
 
-        {{-- ==================================================
-             STATISTICS
-        =================================================== --}}
+        {{-- STATISTICS --}}
         <section
             class="stats-strip mb-10 grid overflow-hidden rounded-2xl border border-[#e0e7f0]
                    bg-white shadow-[0_4px_20px_rgba(35,57,84,0.04)] sm:grid-cols-2"
@@ -172,9 +161,7 @@
         </section>
 
 
-        {{-- ==================================================
-             STUDENT TABLE
-        =================================================== --}}
+        {{-- STUDENT TABLE --}}
         @if ($students->count())
 
             <section
@@ -189,27 +176,22 @@
                         <caption class="sr-only">Daftar siswa Praktik Kerja Lapangan DISKOMINFO Kabupaten Pacitan</caption>
 
                         <thead>
+                        <thead>
                             <tr class="border-b border-[#e0e7f0] bg-[#f6f9fc]">
                                 <th scope="col" class="w-16 px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
                                     No
                                 </th>
                                 <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
-                                    Siswa
+                                    Asal Sekolah / Kampus
                                 </th>
                                 <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
-                                    Jurusan
+                                    Jurusan / Program Studi
                                 </th>
                                 <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
-                                    Kelas
+                                    Tipe
                                 </th>
                                 <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
-                                    Mulai
-                                </th>
-                                <th scope="col" class="px-5 py-4 font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
-                                    Status
-                                </th>
-                                <th scope="col" class="px-5 py-4 text-right font-mono text-[10px] font-bold uppercase tracking-wider text-[#6b7a8f]">
-                                    Aksi
+                                    Bidang Penempatan
                                 </th>
                             </tr>
                         </thead>
@@ -217,96 +199,44 @@
                         <tbody class="divide-y divide-[#edf1f6]">
 
                             @foreach ($students as $student)
-
-                                @php
-                                    $isActive = in_array(Str::lower((string) $student->status), $activeStatuses, true);
-                                @endphp
-
                                 <tr class="student-row group transition-colors duration-200 hover:bg-[#f6f9fc]">
 
-                                    {{-- No (lanjut antar halaman pagination) --}}
+                                    {{-- No --}}
                                     <td class="px-5 py-4 font-mono text-xs font-bold text-[#8a98ab]">
                                         {{ str_pad((string) ($students->firstItem() + $loop->index), 2, '0', STR_PAD_LEFT) }}
                                     </td>
 
-                                    {{-- Siswa --}}
+                                    {{-- Asal Sekolah / Kampus --}}
                                     <td class="px-5 py-4">
                                         <div class="flex items-center gap-3">
-                                            <div
-                                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
-                                                       bg-gradient-to-br from-[#243f63] via-[#365b88] to-[#7197c1]
-                                                       text-sm font-black text-white shadow-md shadow-[#365b88]/15"
-                                                aria-hidden="true"
-                                            >
-                                                {{ Str::upper(Str::substr($student->name, 0, 1)) }}
+                                            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-[#365b88] text-xs font-bold">
+                                                <i data-lucide="building" class="w-4 h-4"></i>
                                             </div>
-
-                                            <span
-                                                class="max-w-[220px] truncate text-sm font-black tracking-tight text-[#263449]"
-                                                title="{{ $student->name }}"
-                                            >
-                                                {{ $student->name }}
+                                            <span class="text-sm font-bold tracking-tight text-[#263449]">
+                                                {{ $student->institution ?? 'Institusi Terdaftar' }}
                                             </span>
                                         </div>
                                     </td>
 
                                     {{-- Jurusan --}}
                                     <td class="px-5 py-4">
-                                        <span
-                                            class="block max-w-[220px] truncate font-mono text-[11px] uppercase tracking-wider text-[#416b9e]"
-                                            title="{{ $student->major }}"
-                                        >
+                                        <span class="block font-mono text-xs text-[#416b9e]">
                                             {{ $student->major }}
                                         </span>
                                     </td>
 
-                                    {{-- Kelas --}}
-                                    <td class="whitespace-nowrap px-5 py-4 text-xs font-bold text-[#43546a]">
-                                        {{ $student->class ?? '—' }}
-                                    </td>
-
-                                    {{-- Mulai --}}
-                                    <td class="whitespace-nowrap px-5 py-4 text-xs font-bold text-[#43546a]">
-                                        {{ $student->start_date?->format('d M Y') ?? '—' }}
-                                    </td>
-
-                                    {{-- Status --}}
-                                    <td class="px-5 py-4">
-                                        <span
-                                            class="inline-block rounded-full border px-2.5 py-1 font-mono text-[10px]
-                                                   font-bold uppercase tracking-wider
-                                                   {{ $isActive
-                                                        ? 'border-[#cde9df] bg-[#edf8f3] text-[#347c68]'
-                                                        : 'border-[#dce5f0] bg-[#f1f5fa] text-[#58708e]' }}"
-                                        >
-                                            {{ Str::ucfirst((string) $student->status) }}
+                                    {{-- Tipe --}}
+                                    <td class="whitespace-nowrap px-5 py-4 text-xs font-semibold text-[#43546a]">
+                                        <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold {{ $student->type === 'magang' ? 'bg-indigo-50 text-indigo-700' : 'bg-blue-50 text-blue-700' }} border border-slate-200">
+                                            {{ $student->type_label }}
                                         </span>
                                     </td>
 
-                                    {{-- Aksi --}}
-                                    <td class="px-5 py-4 text-right">
-                                        <a
-                                            href="{{ route('students.show', $student) }}"
-                                            class="inline-flex items-center justify-center gap-1.5 whitespace-nowrap
-                                                   rounded-xl border border-[#dce5f0]
-                                                   bg-gradient-to-r from-[#f3f7fc] to-[#eaf1fa]
-                                                   px-3.5 py-2 text-[11px] font-bold text-[#365b88]
-                                                   transition duration-300
-                                                   hover:border-[#b8cbe1] hover:from-[#eaf1fa] hover:to-[#dfeaf7] hover:text-[#243f63]
-                                                   focus-visible:outline-none focus-visible:ring-2
-                                                   focus-visible:ring-[#416b9e] focus-visible:ring-offset-2"
-                                            aria-label="Lihat detail {{ $student->name }}"
-                                        >
-                                            Lihat Detail
-                                            <i
-                                                data-lucide="arrow-up-right"
-                                                class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                                            ></i>
-                                        </a>
+                                    {{-- Bidang --}}
+                                    <td class="whitespace-nowrap px-5 py-4 text-xs font-semibold text-[#43546a]">
+                                        {{ $student->department?->name ?? 'Dinas Kominfo' }}
                                     </td>
-
                                 </tr>
-
                             @endforeach
 
                         </tbody>
@@ -318,9 +248,7 @@
 
         @else
 
-            {{-- ==================================================
-                 EMPTY STATE
-            =================================================== --}}
+            {{-- EMPTY STATE --}}
             <section
                 class="empty flex min-h-[320px] flex-col items-center justify-center rounded-3xl
                        border border-[#e0e7f0] bg-white p-8 text-center
@@ -342,9 +270,7 @@
         @endif
 
 
-        {{-- ==================================================
-             PAGINATION
-        =================================================== --}}
+        {{-- PAGINATION --}}
         @if ($students->hasPages())
             <nav class="pagination mt-12 flex justify-center" aria-label="Navigasi halaman">
                 {{ $students->links() }}
@@ -361,33 +287,29 @@
     @include('partials.page-transition')
 
 
-    {{-- ======================================================
-         CDN LIBRARIES
-    ======================================================= --}}
+    {{-- CDN LIBRARIES --}}
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.451.0/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
 
 
-    {{-- ======================================================
-         ICONS + ANIMATIONS
-    ======================================================= --}}
+    {{-- ICONS + ANIMATIONS --}}
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        /* ---------- Lucide ---------- */
+        /* Lucide */
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons({ attrs: { 'stroke-width': 1.8 } });
         }
 
-        /* ---------- GSAP guard ---------- */
+        /* GSAP guard */
         if (!window.gsap) {
             console.warn('[gsap] not loaded — animations skipped');
             return;
         }
 
-        // ScrollToPlugin tetap diregistrasi karena dipakai partial navbar
+        // ScrollToPlugin 
         gsap.registerPlugin.apply(
             gsap,
             [window.ScrollTrigger, window.ScrollToPlugin].filter(Boolean)
@@ -395,10 +317,7 @@
 
         const mm = gsap.matchMedia();
 
-        /* =================================================
-           ENTRANCE + AMBIENT (hanya jika motion diizinkan)
-           Konten tetap terlihat penuh kalau reduced-motion.
-        ================================================= */
+
         mm.add('(prefers-reduced-motion: no-preference)', function () {
 
             // Header + stats + wrapper tabel dalam satu timeline
@@ -416,7 +335,7 @@
                 }, '-=0.5');
             }
 
-            // Baris tabel — sembunyikan dulu, lalu reveal saat masuk viewport
+            // Baris tabel
             const rows = gsap.utils.toArray('.student-row');
 
             if (rows.length) {
