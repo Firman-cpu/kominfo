@@ -2,22 +2,9 @@
 
 @section('title', 'Kategori Nilai & Performa')
 @section('page-title', 'Batas Kategori Performa')
-@section('page-subtitle', 'Pengaturan ambang batas rentang nilai minimum untuk setiap predikat evaluasi')
+@section('page-subtitle', '')
 
 @section('content')
-<div class="max-w-4xl mx-auto space-y-6">
-    <div class="bg-blue-50/70 border border-blue-200 p-4 rounded-2xl flex items-start gap-3">
-        <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-            <i data-lucide="info" class="w-4 h-4"></i>
-        </div>
-        <div class="text-xs text-blue-900 leading-relaxed">
-            <p class="font-bold">Informasi Penentuan Kategori:</p>
-            <p class="mt-0.5 text-blue-800">
-                Sistem akan mencocokkan rata-rata nilai siswa secara dinamis mulai dari kategori dengan batas nilai tertinggi. Nilai yang diubah di sini akan langsung mempengaruhi status predikat di seluruh tabel dan analitik.
-            </p>
-        </div>
-    </div>
-
     <form method="POST" action="{{ route('admin.categories.update') }}" class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
         @csrf
         @method('PUT')

@@ -2,7 +2,7 @@
 
 @section('title', 'Edit Penilaian — ' . $assessment->student?->name)
 @section('page-title', 'Edit Penilaian Peserta')
-@section('page-subtitle', 'Perbarui skor aspek kinerja peserta')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
@@ -54,9 +54,9 @@
             <div class="flex items-center gap-4">
                 <img src="{{ $assessment->student?->photo_url }}"
                      alt="{{ $assessment->student?->name }}"
-                     class="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-xs shrink-0">
+                     class="w-14 h-14 rounded-2xl object-cover shrink-0">
                 <div>
-                    <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase {{ $assessment->student?->type === 'magang' ? 'bg-indigo-50 text-indigo-700' : 'bg-blue-50 text-blue-700' }} border border-slate-200 mb-1">
+                    <span class="inline-flex py-0.5 rounded text-[10px] font-bold uppercase {{ $assessment->student?->type === 'magang' ? 'text-indigo-700' : 'text-blue-700' }}">
                         {{ $assessment->student?->type_label }}
                     </span>
                     <h3 class="text-base font-extrabold text-slate-900">{{ $assessment->student?->name }}</h3>
@@ -75,7 +75,7 @@
                        id="assessment_date"
                        value="{{ old('assessment_date', $assessment->assessment_date ? $assessment->assessment_date->format('Y-m-d') : date('Y-m-d')) }}"
                        required
-                       class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800">
+                       class="px-3.5 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800">
             </div>
         </div>
 

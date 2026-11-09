@@ -2,21 +2,9 @@
 
 @section('title', 'Ekspor Data ke Excel')
 @section('page-title', 'Ekspor Data ke Format Excel (.xlsx)')
-@section('page-subtitle', 'Unduh rekapitulasi data siswa, mahasiswa, dan nilai evaluasi resmi')
+@section('page-subtitle', '')
 
 @section('content')
-<div class="max-w-3xl mx-auto space-y-6">
-    <div class="bg-emerald-50/70 border border-emerald-200 p-5 rounded-2xl flex items-start gap-3">
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-            <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-        </div>
-        <div class="text-xs text-emerald-900 leading-relaxed">
-            <h4 class="font-bold">Keamanan & Performa Ekspor Terpadu</h4>
-            <p class="mt-0.5 text-emerald-800">
-                Ekspor data menggunakan mesin streaming OpenSpout yang ringan dan cepat. Dilengkapi proteksi otomatis terhadap <em>CSV/Formula Injection</em> serta pencatatan audit log untuk kepatuhan administrasi.
-            </p>
-        </div>
-    </div>
 
     <form method="POST" action="{{ route('admin.export.download') }}" class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200/80 shadow-xs space-y-6">
         @csrf

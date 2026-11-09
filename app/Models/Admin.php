@@ -53,11 +53,17 @@ class Admin extends Authenticatable
     /**
      * Get the URL to display the admin's photo.
      * Serves from DB blob if available, else falls back to UI Avatar.
+     *
+     * Cache-busting: timestamp di-append agar browser selalu fetch ulang
+     * setelah foto diperbarui. photo_mime (not in $hidden) dipakai sebagai
+     * indikator agar tidak terkena masalah $hidden pada photo_data.
      */
     public function getPhotoUrlAttribute(): string
     {
-        if ($this->photo_data && $this->photo_mime) {
-            return route('admin.profile.photo', $this->id);
+        // Cek photo_mime (tidak di-$hidden) sebagai penanda foto ada di DB
+        if ($this->photo_mime) {
+            $v = $this->updated_at?->timestamp ?? time();
+            return route('admin.profile.photo', $this->id) . '?v=' . $v;
         }
 
         $nameEncoded = urlencode($this->name ?? 'Admin');

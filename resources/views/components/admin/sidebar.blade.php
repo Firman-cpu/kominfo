@@ -1,45 +1,28 @@
 @php
-    $admin = Auth::guard('admin')->user();
+    // Fresh load dari DB setiap request agar foto terbaru selalu tampil di sidebar
+    // (hindari cached user object di session yang belum di-refresh)
+    $admin = Auth::guard('admin')->user()?->fresh() ?? Auth::guard('admin')->user();
 @endphp
 
-<aside class="w-64 bg-slate-900 text-slate-300 flex flex-col shrink-0 border-r border-slate-800 select-none min-h-screen">
+<aside class="fixed top-0 left-0 w-64 h-screen bg-slate-900 text-slate-300 flex flex-col border-r border-slate-800 select-none z-40 overflow-hidden">
     {{-- Brand Header --}}
     <div class="h-16 flex items-center px-6 gap-3 border-b border-slate-800 bg-slate-950/40">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 shrink-0">
-            <i data-lucide="shield-check" class="w-5 h-5"></i>
+        <div class="rounded-xl flex items-center justify-center text-white shrink-0">
+            <img
+            src="{{ asset('image/logo.svg') }}"
+            alt="Logo Diskominfo Kabupaten Pacitan"
+            class="h-10 w-10 shrink-0 object-contain sm:h-9 sm:w-9"
+            >
         </div>
         <div class="overflow-hidden">
-            <h1 class="text-sm font-bold text-white tracking-wide truncate">DISKOMINFO</h1>
-            <p class="text-[11px] text-blue-400 font-medium truncate">Portal Data Prakerin</p>
+            <h1 class="text-sm font-bold text-white tracking-wide truncate">DINAS KOMINFO </h1>
+            <p class="text-xs font-thin tracking-wide text-white">Kabupaten Pacitan</p>
         </div>
     </div>
 
-    {{-- User Profile Card --}}
-    <div class="p-4 mx-3 my-3 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
-            <img src="{{ $admin->photo_url }}"
-                 alt="{{ $admin->name }}"
-                 class="w-full h-full object-cover"
-                 onerror="this.style.display='none'; this.parentElement.textContent='{{ strtoupper(substr($admin->name ?? 'A', 0, 1)) }}';">
-        </div>
-        <div class="overflow-hidden flex-1">
-            <p class="text-xs font-semibold text-white truncate">{{ $admin->name }}</p>
-            <div class="flex items-center gap-1.5 mt-0.5">
-                @if ($admin->isAdministrator())
-                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                        Administrator
-                    </span>
-                @else
-                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                        Operator
-                    </span>
-                @endif
-            </div>
-        </div>
-    </div>
 
     {{-- Navigation Menu --}}
-    <nav class="flex-1 px-3 py-2 space-y-6 overflow-y-auto">
+    <nav class="sidebar-nav flex-1 px-3 py-2 space-y-6 overflow-y-auto">
         {{-- Section Menu Utama --}}
         <div>
             <div class="px-3 mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">

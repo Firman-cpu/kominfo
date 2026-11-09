@@ -70,14 +70,16 @@ class Student extends Model
 
     public function getPhotoUrlAttribute(): string
     {
-        // Priority 1: DB blob
-        if ($this->photo_data && $this->photo_mime) {
-            return route('admin.students.photo', $this->id);
+        $v = $this->updated_at?->timestamp ?? time();
+
+        // Priority 1: DB blob — gunakan photo_mime (tidak di-$hidden) sebagai penanda
+        if ($this->photo_mime) {
+            return route('admin.students.photo', $this->id) . '?v=' . $v;
         }
 
         // Priority 2: filesystem fallback
         if ($this->photo_path && \Illuminate\Support\Facades\Storage::disk('local')->exists($this->photo_path)) {
-            return route('admin.students.photo', $this->id);
+            return route('admin.students.photo', $this->id) . '?v=' . $v;
         }
 
         // Final fallback: UI Avatar

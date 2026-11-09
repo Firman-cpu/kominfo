@@ -2,7 +2,7 @@
 
 @section('title', 'Input Penilaian Baru')
 @section('page-title', 'Input Penilaian Peserta')
-@section('page-subtitle', 'Pemberian evaluasi nilai aspek kinerja siswa/mahasiswa PKL')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
@@ -20,9 +20,6 @@
                 <i data-lucide="check-check" class="w-7 h-7"></i>
             </div>
             <h3 class="text-base font-bold text-slate-800">Semua Peserta Sudah Dinilai!</h3>
-            <p class="text-xs text-slate-500 max-w-md mx-auto">
-                Setiap peserta hanya boleh memiliki 1 data nilai. Saat ini seluruh siswa & mahasiswa yang terdaftar telah memiliki nilai.
-            </p>
             <div class="pt-2">
                 <a href="{{ route('admin.assessments.index') }}"
                    class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs">
@@ -70,7 +67,7 @@
 
                 <div>
                     <label for="student_id" class="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Pilih Peserta (Hanya Menampilkan Peserta yang Belum Dinilai) <span class="text-rose-500">*</span>
+                        Pilih Peserta<span class="text-rose-500">*</span>
                     </label>
 
                     {{-- Searchable Select Dropdown --}}
@@ -80,7 +77,7 @@
                                 x-model="selectedStudentId"
                                 required
                                 class="w-full px-3.5 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800 bg-white">
-                            <option value="">-- Cari dan Pilih Nama Peserta --</option>
+                            <option value="">Pilih Nama Peserta</option>
                             @foreach ($unassessedStudents as $s)
                                 <option value="{{ $s->id }}">
                                     {{ $s->name }} — {{ $s->type === 'magang' ? 'NIM' : 'NIS' }}: {{ $s->identity_number }} ({{ $s->institution ?? '-' }}, Bidang: {{ $s->department?->name ?? '-' }})

@@ -2,7 +2,7 @@
 
 @section('title', 'Detail Peserta — ' . $student->name)
 @section('page-title', 'Detail Profil Peserta')
-@section('page-subtitle', 'Informasi lengkap biodata, bidang penempatan, dan hasil evaluasi nilai')
+@section('page-subtitle', '')
 
 @push('styles')
 <style>
@@ -55,23 +55,23 @@
             <div class="flex items-center gap-5">
                 <img src="{{ $student->photo_url }}"
                      alt="{{ $student->name }}"
-                     class="w-24 h-24 rounded-2xl object-cover border-2 border-slate-200 shadow-sm shrink-0">
+                     class="w-24 h-24 rounded-2xl object-cover shrink-0">
                 <div>
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ $student->type === 'magang' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-blue-50 text-blue-700 border border-blue-200' }}">
+                    <div class="flex items-center gap-2 mb-0.5">
+                        <span class="inline-flex pr-2 pt-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
                             {{ $student->type_label }}
                         </span>
                         @include('components.admin.badge-status', ['status' => $student->status])
                     </div>
                     <h2 class="text-xl md:text-2xl font-extrabold text-slate-900">{{ $student->name }}</h2>
-                    <p class="text-xs text-slate-500 font-mono mt-0.5">
+                    <p class="text-xs text-slate-500 font-mono">
                         {{ $student->type === 'magang' ? 'NIM' : 'NIS' }}: {{ $student->identity_number }}
                     </p>
                 </div>
             </div>
 
             <div class="text-right hidden sm:block">
-                <p class="text-xs font-bold text-slate-800">DINAS KOMINFO PACITAN</p>
+                <p class="text-xs font-bold text-slate-800">DINAS KOMUNIKASI DAN INFORMATIKA</p>
                 <p class="text-[11px] text-slate-500">Pemerintah Kabupaten Pacitan</p>
                 <p class="text-[11px] text-slate-400 mt-1">Dicetak pada: {{ date('d F Y') }}</p>
             </div>
@@ -220,23 +220,6 @@
                 </div>
             @endif
         </div>
-
-        {{-- Signatures for Official Print --}}
-        <div class="pt-8 grid grid-cols-2 text-center text-xs text-slate-700">
-            <div>
-                <p>Mengetahui,</p>
-                <p class="font-bold mt-1">Kepala Dinas Komunikasi dan Informatika</p>
-                <div class="h-20"></div>
-                <p class="font-bold underline uppercase">( .................................................... )</p>
-                <p class="text-[11px] text-slate-500">NIP. ....................................................</p>
-            </div>
-            <div>
-                <p>Pacitan, {{ date('d F Y') }}</p>
-                <p class="font-bold mt-1">Pembimbing Lapangan / Penguji</p>
-                <div class="h-20"></div>
-                <p class="font-bold underline uppercase">( .................................................... )</p>
-                <p class="text-[11px] text-slate-500">NIP. ....................................................</p>
-            </div>
         </div>
     </div>
 </div>

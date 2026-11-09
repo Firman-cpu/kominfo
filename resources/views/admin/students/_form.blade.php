@@ -25,7 +25,7 @@
     class="space-y-8">
 
     {{-- Radio Button Pemilihan Tipe Peserta di Bagian Atas --}}
-    <div class="p-5 rounded-2xl bg-blue-50/60 border border-blue-200">
+    <div class="p-5 rounded-2xl bg-white">
         <label class="block text-xs font-bold text-blue-900 uppercase tracking-wider mb-3">
             Pilih Tipe Peserta:
         </label>
@@ -237,13 +237,6 @@
                 @enderror
             </div>
         </div>
-
-        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center gap-2.5">
-            <i data-lucide="info" class="w-4 h-4 text-blue-600 shrink-0"></i>
-            <span>
-                <strong>Otomatisasi Status:</strong> Sistem akan secara otomatis mengubah status menjadi <strong>Selesai</strong> jika tanggal durasi telah berakhir (hari ini &gt; tanggal selesai).
-            </span>
-        </div>
     </div>
 
     {{-- Form Grid Upload Foto Profil --}}
@@ -283,7 +276,7 @@
                               file:bg-blue-50 file:text-blue-700
                               hover:file:bg-blue-100 cursor-pointer">
                 <p class="text-[11px] text-slate-400 leading-normal">
-                    Format diperbolehkan: JPG, PNG, WEBP. Maksimal ukuran 2 MB. Foto disimpan secara aman di direktori terenkripsi/privat.
+                    Format diperbolehkan: JPG, PNG, WEBP. Maksimal ukuran 2 MB.
                 </p>
                 @error('photo')
                     <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>

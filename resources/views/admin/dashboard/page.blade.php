@@ -1,26 +1,11 @@
 @extends('layouts/admin')
 
 @section('title', 'Dashboard')
-@section('page-title', 'Dashboard Pengelolaan')
-@section('page-subtitle', 'Ringkasan data peserta PKL & Magang Dinas Kominfo')
+@section('page-title', 'Dashboard')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="space-y-8">
-    {{-- Welcome Hero Card --}}
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 md:p-8 text-white shadow-xl">
-        <div class="relative z-10 max-w-2xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold mb-3">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                <span>Selamat Datang, {{ Auth::guard('admin')->user()->name }}</span>
-            </div>
-            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Sistem Informasi Pengelolaan PRAKERIN & Magang</h1>
-            <p class="text-sm text-blue-200/80 mt-2 leading-relaxed">
-                Portal terpadu Dinas Komunikasi dan Informatika Kabupaten Pacitan untuk manajemen data peserta prakerin SMK, mahasiswa magang, penempatan bidang, serta evaluasi penilaian.
-            </p>
-        </div>
-        {{-- Decorative background glow --}}
-        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
-    </div>
 
     {{-- 4 Stat Metric Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -83,7 +68,6 @@
         <div class="flex items-center justify-between mb-4">
             <div>
                 <h2 class="text-base font-bold text-slate-900">Distribusi Bidang Penempatan</h2>
-                <p class="text-xs text-slate-500">Penempatan peserta pada 4 bidang resmi Dinas Kominfo</p>
             </div>
             <a href="{{ route('admin.students.create') }}"
                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors">

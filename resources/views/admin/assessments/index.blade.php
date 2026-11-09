@@ -2,7 +2,7 @@
 
 @section('title', 'Penilaian Peserta PKL & Magang')
 @section('page-title', 'Daftar Penilaian Peserta')
-@section('page-subtitle', 'Evaluasi hasil praktik kerja industri dan magang dinas')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="space-y-6">
@@ -11,7 +11,6 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <h3 class="text-base font-bold text-slate-900">Rekapitulasi Nilai Peserta</h3>
-                <p class="text-xs text-slate-500">Tiap peserta hanya memiliki tepat 1 rekaman nilai</p>
             </div>
             <div class="flex items-center gap-2">
                 <a href="{{ route('admin.export.index') }}"
@@ -108,14 +107,14 @@
                                 <div class="flex items-center gap-3">
                                     <img src="{{ $item->student?->photo_url }}"
                                          alt="{{ $item->student?->name }}"
-                                         class="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0">
+                                         class="w-10 h-10 rounded-xl object-cover shrink-0">
                                     <div>
                                         <a href="{{ route('admin.students.show', $item->student_id) }}"
                                            class="font-bold text-slate-900 hover:text-blue-600 transition-colors">
                                             {{ $item->student?->name ?? 'Peserta' }}
                                         </a>
                                         <p class="text-[11px] text-slate-500 font-mono">
-                                            {{ $item->student?->identity_number }} &bull; {{ $item->student?->institution ?? '-' }}
+                                            {{ $item->student?->identity_number }} | {{ $item->student?->institution ?? '-' }}
                                         </p>
                                     </div>
                                 </div>
@@ -123,11 +122,11 @@
 
                             {{-- Tipe & Bidang --}}
                             <td class="py-3.5 px-4">
-                                <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold {{ $item->student?->type === 'magang' ? 'bg-indigo-50 text-indigo-700' : 'bg-blue-50 text-blue-700' }} border border-slate-200 block w-fit mb-1">
-                                    {{ $item->student?->type_label ?? '-' }}
+                                <span class="inline-flexs rounded text-[13px] font-semibold {{ $item->student?->type === 'magang' ? 'text-indigo-700' : 'text-blue-700' }} block w-fit mb-1">
+                                    <p>{{ $item->student?->type_label ?? '-' }}</p>
                                 </span>
-                                <span class="text-slate-600 font-medium">
-                                    {{ $item->student?->department?->name ?? '-' }}
+                                <span class="text-slate-600 font-medium tracking-wide truncate">
+                                    <p>{{ $item->student?->department?->name ?? '-' }}</p>
                                 </span>
                             </td>
 
@@ -138,7 +137,7 @@
 
                             {{-- Skor --}}
                             <td class="py-3.5 px-4 text-center">
-                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-extrabold bg-amber-50 text-amber-800 border border-amber-200">
+                                <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-extrabold text-amber-800">
                                     <i data-lucide="star" class="w-3.5 h-3.5 text-amber-500 fill-amber-500"></i>
                                     {{ $item->average_score }}
                                 </span>
@@ -146,7 +145,7 @@
 
                             {{-- Kategori Performa --}}
                             <td class="py-3.5 px-4">
-                                <span class="inline-flex px-2.5 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200">
+                                <span class="inline-flex px-2.5 py-1 rounded-md text-xs font-bold text-blue-800">
                                     {{ $item->category?->name ?? 'Belum terdefinisi' }}
                                 </span>
                             </td>

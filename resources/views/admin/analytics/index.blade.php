@@ -1,8 +1,8 @@
 @extends('layouts/admin')
 
 @section('title', 'Analitik & Statistik Admin')
-@section('page-title', 'Analitik & Statistik')
-@section('page-subtitle', 'Statistik umum tren peserta dan penempatan bidang dinas')
+@section('page-title', 'Analitik Dan Statistik')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="space-y-6">

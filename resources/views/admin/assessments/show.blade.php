@@ -2,7 +2,7 @@
 
 @section('title', 'Lembar Nilai — ' . $assessment->student?->name)
 @section('page-title', 'Lembar Evaluasi Penilaian')
-@section('page-subtitle', 'Transkrip dan rincian skor aspek kinerja peserta')
+@section('page-subtitle', '')
 
 @push('styles')
 <style>
@@ -56,18 +56,18 @@
                      alt="{{ $assessment->student?->name }}"
                      class="w-20 h-20 rounded-2xl object-cover border-2 border-slate-200 shadow-xs shrink-0">
                 <div>
-                    <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ $assessment->student?->type === 'magang' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-blue-50 text-blue-700 border border-blue-200' }} mb-1">
+                    <span class="inline-flex pt-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ $assessment->student?->type === 'magang' ? 'text-indigo-700' : 'stext-blue-700' }}">
                         {{ $assessment->student?->type_label }}
                     </span>
                     <h2 class="text-xl md:text-2xl font-extrabold text-slate-900">{{ $assessment->student?->name }}</h2>
                     <p class="text-xs text-slate-500 font-mono">
-                        {{ $assessment->student?->type === 'magang' ? 'NIM' : 'NIS' }}: {{ $assessment->student?->identity_number }} &bull; {{ $assessment->student?->institution ?? '-' }}
+                        {{ $assessment->student?->type === 'magang' ? 'NIM' : 'NIS' }}: {{ $assessment->student?->identity_number }} | {{ $assessment->student?->institution ?? '-' }}
                     </p>
                 </div>
             </div>
 
             <div class="text-right hidden sm:block">
-                <p class="text-xs font-bold text-slate-800">DINAS KOMINFO PACITAN</p>
+                <p class="text-xs font-bold text-slate-800">DINAS KOMUNIKASI DAN KOMUNIKASI</p>
                 <p class="text-[11px] text-slate-500">Transkrip Nilai Prakerin & Magang</p>
                 <p class="text-[11px] text-slate-400 mt-1">Tanggal: {{ $assessment->assessment_date ? $assessment->assessment_date->format('d/m/Y') : '-' }}</p>
             </div>
@@ -130,24 +130,6 @@
                 <p class="text-slate-600 leading-relaxed italic">"{{ $assessment->notes }}"</p>
             </div>
         @endif
-
-        {{-- Signatures for Official Print --}}
-        <div class="pt-8 grid grid-cols-2 text-center text-xs text-slate-700">
-            <div>
-                <p>Mengetahui,</p>
-                <p class="font-bold mt-1">Kepala Dinas Komunikasi dan Informatika</p>
-                <div class="h-20"></div>
-                <p class="font-bold underline uppercase">( .................................................... )</p>
-                <p class="text-[11px] text-slate-500">NIP. ....................................................</p>
-            </div>
-            <div>
-                <p>Pacitan, {{ date('d F Y') }}</p>
-                <p class="font-bold mt-1">Pembimbing Lapangan / Penguji</p>
-                <div class="h-20"></div>
-                <p class="font-bold underline uppercase">( .................................................... )</p>
-                <p class="text-[11px] text-slate-500">NIP. ....................................................</p>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

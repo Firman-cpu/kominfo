@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,25 +12,31 @@ class StudentPhotoController extends Controller
 {
     public function show(Student $student): Response
     {
-        // Priority 1: serve from DB blob
-        $photoData = $student->getAttributes()['photo_data'] ?? $student->photo_data;
-        if ($photoData && $student->photo_mime) {
-            return response($photoData, 200, [
-                'Content-Type' => $student->photo_mime,
-                'Cache-Control' => 'private, max-age=86400',
+        // Raw query untuk hindari $hidden / stale cache
+        $row = DB::table('students')
+            ->where('id', $student->id)
+            ->select('photo_data', 'photo_mime', 'photo_path')
+            ->first();
+
+        // Priority 1: DB blob
+        if ($row && $row->photo_data && $row->photo_mime) {
+            return response($row->photo_data, 200, [
+                'Content-Type'  => $row->photo_mime,
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                'Pragma'        => 'no-cache',
+                'Expires'       => '0',
             ]);
         }
 
-        // Priority 2: serve from filesystem
-        if ($student->photo_path && Storage::disk('local')->exists($student->photo_path)) {
-            $path = Storage::disk('local')->path($student->photo_path);
-
-            return response()->file($path, [
-                'Cache-Control' => 'private, max-age=86400',
+        // Priority 2: filesystem fallback
+        $photoPath = $row?->photo_path ?? $student->photo_path;
+        if ($photoPath && Storage::disk('local')->exists($photoPath)) {
+            return response()->file(Storage::disk('local')->path($photoPath), [
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
             ]);
         }
 
-        // Final fallback: redirect to UI Avatar
+        // Final fallback: UI Avatar
         $name = urlencode($student->name);
         return redirect("https://ui-avatars.com/api/?name={$name}&background=1e3a8a&color=ffffff&bold=true");
     }

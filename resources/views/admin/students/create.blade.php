@@ -2,7 +2,7 @@
 
 @section('title', 'Tambah Peserta Baru')
 @section('page-title', 'Tambah Peserta PKL / Magang')
-@section('page-subtitle', 'Pendaftaran data siswa prakerin SMK atau mahasiswa magang')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">

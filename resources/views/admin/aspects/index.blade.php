@@ -2,7 +2,7 @@
 
 @section('title', 'Kelola Aspek Penilaian')
 @section('page-title', 'Aspek Penilaian Kinerja')
-@section('page-subtitle', 'Kustomisasi aspek nilai dinamis yang digunakan oleh pembimbing')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="space-y-6" x-data="{
@@ -60,8 +60,7 @@
                             </td>
                             <td class="py-3.5 px-4 text-center">
                                 @if ($aspect->is_active)
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold text-emerald-700">
                                         Aktif
                                     </span>
                                 @else

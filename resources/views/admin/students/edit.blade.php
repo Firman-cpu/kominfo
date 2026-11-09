@@ -2,7 +2,7 @@
 
 @section('title', 'Edit Peserta — ' . $student->name)
 @section('page-title', 'Edit Data Peserta')
-@section('page-subtitle', 'Perbarui data identitas, bidang, atau periode PKL')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">

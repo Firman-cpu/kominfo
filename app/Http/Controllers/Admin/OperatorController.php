@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OperatorRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class OperatorController extends Controller
 {
     public function index()
     {
-        $operators = Admin::where('role', 'operator')->orderByDesc('id')->paginate(15);
+        $operators  = Admin::where('role', 'operator')->orderByDesc('id')->paginate(15);
         $adminCount = Admin::where('role', 'administrator')->count();
 
         return view('admin.operators.index', compact('operators', 'adminCount'));
@@ -27,23 +28,25 @@ class OperatorController extends Controller
     {
         $data = $request->validated();
 
-        $createData = [
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-            'role' => 'operator',
+        // ── Buat operator (tanpa foto dulu, hindari binary di LogsActivity) ──
+        $operator = Admin::create([
+            'name'       => $data['name'],
+            'username'   => $data['username'],
+            'password'   => Hash::make($data['password']),
+            'role'       => 'operator',
             'is_primary' => false,
-            'is_active' => $request->has('is_active') ? true : false,
-        ];
+            'is_active'  => $request->boolean('is_active', true),
+        ]);
 
-        // Handle photo upload — store as BLOB in DB
+        // ── Simpan foto via DB::table() ──────────────────────────────────
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
             $file = $request->file('photo');
-            $createData['photo_data'] = file_get_contents($file->getRealPath());
-            $createData['photo_mime'] = $file->getMimeType();
+            DB::table('admins')->where('id', $operator->id)->update([
+                'photo_data' => file_get_contents($file->getRealPath()),
+                'photo_mime' => $file->getMimeType() ?: 'image/jpeg',
+                'updated_at' => now(),
+            ]);
         }
-
-        $operator = Admin::create($createData);
 
         return redirect()
             ->route('admin.operators.index')
@@ -55,8 +58,8 @@ class OperatorController extends Controller
         if ($operator->isAdministrator()) {
             abort(403, 'Akun Administrator tidak dapat diedit melalui manajemen operator.');
         }
-
-        return view('admin.operators.edit', compact('operator'));
+        // Fresh load agar tampilkan foto terbaru di form edit
+        return view('admin.operators.edit', ['operator' => $operator->fresh()]);
     }
 
     public function update(OperatorRequest $request, Admin $operator)
@@ -67,24 +70,27 @@ class OperatorController extends Controller
 
         $data = $request->validated();
 
-        $updateData = [
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'is_active' => $request->has('is_active'),
+        // ── Susun field yang akan di-update ──────────────────────────────
+        $updateFields = [
+            'name'       => $data['name'],
+            'username'   => $data['username'],
+            'is_active'  => $request->boolean('is_active'),
+            'updated_at' => now(),
         ];
 
-        if (!empty($data['password'])) {
-            $updateData['password'] = Hash::make($data['password']);
+        if (! empty($data['password'])) {
+            $updateFields['password'] = Hash::make($data['password']);
         }
 
-        // Handle photo upload — store as BLOB in DB
+        // ── Tambahkan foto jika ada upload baru ──────────────────────────
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
             $file = $request->file('photo');
-            $updateData['photo_data'] = file_get_contents($file->getRealPath());
-            $updateData['photo_mime'] = $file->getMimeType();
+            $updateFields['photo_data'] = file_get_contents($file->getRealPath());
+            $updateFields['photo_mime'] = $file->getMimeType() ?: 'image/jpeg';
         }
 
-        $operator->update($updateData);
+        // ── Satu UPDATE tunggal via DB::table() — bebas dari binary blob error ──
+        DB::table('admins')->where('id', $operator->id)->update($updateFields);
 
         return redirect()
             ->route('admin.operators.index')

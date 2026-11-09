@@ -1,8 +1,8 @@
 @extends('layouts/admin')
 
 @section('title', 'Data Siswa & Mahasiswa')
-@section('page-title', 'Siswa Prakerin & Mahasiswa Magang')
-@section('page-subtitle', 'Pengelolaan data peserta PKL Dinas Komunikasi dan Informatika')
+@section('page-title', 'Siswa Prakerin dan Mahasiswa Magang')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="space-y-6">
@@ -119,7 +119,7 @@
                                 <div class="flex items-center gap-3">
                                     <img src="{{ $student->photo_url }}"
                                          alt="{{ $student->name }}"
-                                         class="w-10 h-10 rounded-full object-cover border border-slate-200 shadow-xs shrink-0">
+                                         class="w-10 h-10 rounded-xl object-cover shrink-0">
                                     <div>
                                         <a href="{{ route('admin.students.show', $student->id) }}"
                                            class="font-bold text-slate-900 hover:text-blue-600 transition-colors">
@@ -134,7 +134,7 @@
 
                             {{-- Tipe --}}
                             <td class="py-3.5 px-4">
-                                <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold {{ $student->type === 'magang' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-blue-50 text-blue-700 border border-blue-200' }}">
+                                <span class="inline-flex px-2 py-0.5 rounded text-[13px] font-semibold">
                                     {{ $student->type_label }}
                                 </span>
                             </td>
@@ -157,7 +157,7 @@
                             {{-- Bidang --}}
                             <td class="py-3.5 px-4">
                                 @if ($student->department)
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium">
                                         {{ $student->department->name }}
                                     </span>
                                 @else
@@ -180,7 +180,7 @@
                             {{-- Status Penilaian --}}
                             <td class="py-3.5 px-4 text-center">
                                 @if ($student->assessment)
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200" title="Rata-rata Nilai">
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold text-amber-700" title="Rata-rata Nilai">
                                         <i data-lucide="star" class="w-3 h-3 text-amber-500 fill-amber-500"></i>
                                         {{ $student->assessment->average_score }}
                                     </span>

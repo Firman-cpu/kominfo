@@ -2,39 +2,24 @@
 
 @section('title', 'Manajemen Akun Operator')
 @section('page-title', 'Manajemen Akun Operator')
-@section('page-subtitle', 'Kelola akun staf operator yang bertugas mengelola data siswa & nilai')
+@section('page-subtitle', '')
 
 @section('content')
-<div class="space-y-6">
-    {{-- Administrator Account Policy Information Card --}}
-    <div class="bg-amber-50/70 border border-amber-200 p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="flex items-start gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                <i data-lucide="shield-alert" class="w-5 h-5"></i>
-            </div>
-            <div>
-                <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider">Struktur Kasta & Kebijakan Akun Administrator</h4>
-                <p class="text-xs text-amber-800 mt-0.5 leading-relaxed">
-                    Sistem dibatasi secara ketat memiliki <strong>maksimal tepat 2 akun Administrator</strong> (Akun Utama + Akun Cadangan). Akun Administrator cadangan dibuat melalui CLI Artisan (<code class="bg-amber-100/80 px-1 py-0.5 rounded text-[11px] font-mono">php artisan admin:create-administrator</code>) demi mencegah eskalasi hak akses lewat antarmuka web.
-                </p>
-                <p class="text-[11px] text-amber-700 font-semibold mt-1">
-                    Status saat ini: Terdaftar {{ $adminCount }} dari maksimal 2 akun Administrator.
-                </p>
-            </div>
-        </div>
-        <a href="{{ route('admin.operators.create') }}"
-           class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs shrink-0 transition-colors">
-            <i data-lucide="user-plus" class="w-4 h-4"></i>
-            <span>Tambah Operator Baru</span>
-        </a>
-    </div>
-
     {{-- Operators Table --}}
     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <div class="flex justify-between items-center">
         <div class="p-5 border-b border-slate-100">
             <h3 class="text-sm font-bold text-slate-900">Daftar Akun Operator Aktif</h3>
             <p class="text-xs text-slate-500">Operator hanya memiliki hak akses CRUD data siswa dan input penilaian</p>
         </div>
+        <div class="px-5">
+            <a href="{{ route('admin.operators.create') }}"
+           class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs shrink-0 transition-colors">
+            <i data-lucide="user-plus" class="w-4 h-4"></i>
+            <span>Tambah Operator Baru</span>
+        </a>
+        </div>
+    </div>
 
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">

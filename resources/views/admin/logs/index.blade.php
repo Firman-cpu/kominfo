@@ -1,8 +1,8 @@
 @extends('layouts/admin')
 
 @section('title', 'Log Aktivitas Data')
-@section('page-title', 'Audit Trail & Log Aktivitas')
-@section('page-subtitle', 'Rekam jejak seluruh perubahan data yang dilakukan oleh Administrator dan Operator')
+@section('page-title', 'Audit Trail Dan Log Aktivitas')
+@section('page-subtitle', '')
 
 @section('content')
 <div class="space-y-6" x-data="{
