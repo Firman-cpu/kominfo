@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\AdminPhotoController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AssessmentAspectController;
 use App\Http\Controllers\Admin\AssessmentController;
@@ -98,6 +99,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     // Profil Akun Sendiri
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/photo/{admin}', [AdminPhotoController::class, 'show'])->name('profile.photo');
 
     /*
     |--------------------------------------------------------------------------

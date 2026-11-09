@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -336,5 +337,167 @@ class AdminSystemTest extends TestCase
         // Pastikan input penilaian kedua untuk siswa yang sama DITOLAK oleh controller dengan validation error
         $duplicateResponse = $this->actingAs($operator, 'admin')->post('/admin/assessments', $postData);
         $duplicateResponse->assertSessionHasErrors('student_id');
+    }
+
+    // ─────────────────────────────────────────────
+    // FOTO PROFIL — ADMINISTRATOR
+    // ─────────────────────────────────────────────
+
+    public function test_administrator_can_upload_profile_photo(): void
+    {
+        $admin = Admin::create([
+            'name'       => 'Admin Foto',
+            'username'   => 'adminfoto',
+            'password'   => Hash::make('password123'),
+            'role'       => 'administrator',
+            'is_primary' => true,
+            'is_active'  => true,
+        ]);
+
+        $file = UploadedFile::fake()->image('avatar.jpg', 200, 200);
+
+        $response = $this->actingAs($admin, 'admin')->put('/admin/profile', [
+            'name'     => $admin->name,
+            'username' => $admin->username,
+            'photo'    => $file,
+        ]);
+
+        $response->assertRedirect('/admin/profile');
+
+        // Verifikasi blob tersimpan
+        $rawData = $admin->fresh()->getAttributes()['photo_data'];
+        $this->assertNotNull($rawData);
+        $this->assertNotEmpty($rawData);
+    }
+
+    public function test_admin_profile_photo_served_from_db(): void
+    {
+        $fakeImage = UploadedFile::fake()->image('test.jpg', 100, 100);
+        $bytes = file_get_contents($fakeImage->getRealPath());
+
+        $admin = Admin::create([
+            'name'       => 'Admin Serve',
+            'username'   => 'adminserve',
+            'password'   => Hash::make('password123'),
+            'role'       => 'administrator',
+            'is_primary' => false,
+            'is_active'  => true,
+            'photo_data' => $bytes,
+            'photo_mime' => 'image/jpeg',
+        ]);
+
+        $response = $this->actingAs($admin, 'admin')
+            ->get('/admin/profile/photo/' . $admin->id);
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'image/jpeg');
+    }
+
+    // ─────────────────────────────────────────────
+    // FOTO PROFIL — OPERATOR
+    // ─────────────────────────────────────────────
+
+    public function test_administrator_can_create_operator_with_photo(): void
+    {
+        $admin = Admin::create([
+            'name'       => 'Admin Photo Test',
+            'username'   => 'adminphototest',
+            'password'   => Hash::make('password123'),
+            'role'       => 'administrator',
+            'is_primary' => true,
+            'is_active'  => true,
+        ]);
+
+        $file = UploadedFile::fake()->image('operator.png', 150, 150);
+
+        $response = $this->actingAs($admin, 'admin')->post('/admin/operators', [
+            'name'      => 'Operator Baru',
+            'username'  => 'op_foto',
+            'password'  => 'password123',
+            'is_active' => '1',
+            'photo'     => $file,
+        ]);
+
+        $response->assertRedirect('/admin/operators');
+
+        $operator = Admin::where('username', 'op_foto')->first();
+        $this->assertNotNull($operator);
+        $rawData = $operator->getAttributes()['photo_data'];
+        $this->assertNotNull($rawData);
+        $this->assertEquals('image/png', $operator->photo_mime);
+    }
+
+    public function test_administrator_can_update_operator_photo(): void
+    {
+        $admin = Admin::create([
+            'name'       => 'Admin Update Photo',
+            'username'   => 'adminupdatephoto',
+            'password'   => Hash::make('password123'),
+            'role'       => 'administrator',
+            'is_primary' => true,
+            'is_active'  => true,
+        ]);
+
+        $operator = Admin::create([
+            'name'      => 'Operator No Photo',
+            'username'  => 'op_nophoto',
+            'password'  => Hash::make('password123'),
+            'role'      => 'operator',
+            'is_active' => true,
+        ]);
+
+        $file = UploadedFile::fake()->image('new_avatar.jpg', 200, 200);
+
+        $response = $this->actingAs($admin, 'admin')->put('/admin/operators/' . $operator->id, [
+            'name'     => $operator->name,
+            'username' => $operator->username,
+            'photo'    => $file,
+        ]);
+
+        $response->assertRedirect('/admin/operators');
+        $rawData = $operator->fresh()->getAttributes()['photo_data'];
+        $this->assertNotNull($rawData);
+        $this->assertEquals('image/jpeg', $operator->fresh()->photo_mime);
+    }
+
+    // ─────────────────────────────────────────────
+    // FOTO SISWA — SERVE DARI DB BLOB
+    // ─────────────────────────────────────────────
+
+    public function test_student_photo_served_from_db_blob(): void
+    {
+        $admin = Admin::create([
+            'name'       => 'Admin Student Photo',
+            'username'   => 'adminstphoto',
+            'password'   => Hash::make('password123'),
+            'role'       => 'administrator',
+            'is_primary' => true,
+            'is_active'  => true,
+        ]);
+
+        $fakeImage = UploadedFile::fake()->image('siswa.jpg', 100, 100);
+        $bytes = file_get_contents($fakeImage->getRealPath());
+
+        $dept = Department::first() ?? Department::create(['name' => 'TI', 'code' => 'TI', 'description' => null]);
+
+        $student = Student::create([
+            'type'            => 'prakerin',
+            'identity_number' => '1234567890',
+            'name'            => 'Siswa Foto',
+            'major'           => 'RPL',
+            'institution'     => 'SMKN 1 Test',
+            'department_id'   => $dept->id,
+            'start_date'      => Carbon::today()->toDateString(),
+            'end_date'        => Carbon::today()->addMonths(3)->toDateString(),
+            'status'          => 'active',
+            'photo_data'      => $bytes,
+            'photo_mime'      => 'image/jpeg',
+        ]);
+
+        $response = $this->actingAs($admin, 'admin')
+            ->get('/admin/students/' . $student->id . '/photo');
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'image/jpeg');
     }
 }

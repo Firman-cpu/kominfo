@@ -16,8 +16,11 @@
 
     {{-- User Profile Card --}}
     <div class="p-4 mx-3 my-3 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
-            {{ strtoupper(substr($admin->name ?? 'A', 0, 1)) }}
+        <div class="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
+            <img src="{{ $admin->photo_url }}"
+                 alt="{{ $admin->name }}"
+                 class="w-full h-full object-cover"
+                 onerror="this.style.display='none'; this.parentElement.textContent='{{ strtoupper(substr($admin->name ?? 'A', 0, 1)) }}';">
         </div>
         <div class="overflow-hidden flex-1">
             <p class="text-xs font-semibold text-white truncate">{{ $admin->name }}</p>

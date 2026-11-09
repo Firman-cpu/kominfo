@@ -29,6 +29,7 @@ class OperatorRequest extends FormRequest
             ],
             'password' => [$isCreate ? 'required' : 'nullable', 'string', 'min:8'],
             'is_active' => ['nullable', 'boolean'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ];
     }
 

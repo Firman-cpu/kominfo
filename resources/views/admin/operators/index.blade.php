@@ -53,8 +53,10 @@
                         <tr class="hover:bg-slate-50/70 transition-colors">
                             <td class="py-3.5 px-4 font-bold text-slate-900">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">
-                                        {{ strtoupper(substr($op->name, 0, 1)) }}
+                                    <div class="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-slate-100">
+                                        <img src="{{ $op->photo_url }}" alt="{{ $op->name }}"
+                                             class="w-full h-full object-cover"
+                                             onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($op->name) }}&background=1e3a8a&color=ffffff&bold=true&size=64'">
                                     </div>
                                     <span>{{ $op->name }}</span>
                                 </div>

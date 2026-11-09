@@ -19,11 +19,14 @@ class Admin extends Authenticatable
         'is_primary',
         'is_active',
         'last_login_at',
+        'photo_data',
+        'photo_mime',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'photo_data', // exclude raw blob from serialization
     ];
 
     protected $casts = [
@@ -45,5 +48,19 @@ class Admin extends Authenticatable
     public function activityLogs(): HasMany
     {
         return $this->hasMany(ActivityLog::class);
+    }
+
+    /**
+     * Get the URL to display the admin's photo.
+     * Serves from DB blob if available, else falls back to UI Avatar.
+     */
+    public function getPhotoUrlAttribute(): string
+    {
+        if ($this->photo_data && $this->photo_mime) {
+            return route('admin.profile.photo', $this->id);
+        }
+
+        $nameEncoded = urlencode($this->name ?? 'Admin');
+        return "https://ui-avatars.com/api/?name={$nameEncoded}&background=1e3a8a&color=ffffff&bold=true";
     }
 }

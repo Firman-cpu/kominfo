@@ -19,23 +19,19 @@
 
     <div class="flex items-center gap-3">
         {{-- Status Sync Badge indicator --}}
-        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Sistem Aktif
-        </span>
 
         {{-- User Avatar Dropdown/Badge --}}
-        <div class="flex items-center gap-3 pl-3 border-l border-slate-200">
+        <div class="flex items-center gap-3 pl-3">
             <div class="text-right hidden sm:block">
                 <p class="text-xs font-semibold text-slate-800">{{ $admin->name }}</p>
                 <p class="text-[11px] text-slate-500 font-medium">
                     {{ $admin->isAdministrator() ? 'Administrator' : 'Operator Data' }}
                 </p>
-            </div>
-            <a href="{{ route('admin.profile.index') }}"
-               class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs ring-2 ring-blue-500/30 hover:ring-blue-500 transition-all">
-                {{ strtoupper(substr($admin->name ?? 'A', 0, 1)) }}
-            </a>
+            </div class="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
+            <img src="{{ $admin->photo_url }}"
+                 alt="{{ $admin->name }}"
+                 class="rounded-full w-10 h-10 object-cover"
+                 onerror="this.style.display='none'; this.parentElement.textContent='{{ strtoupper(substr($admin->name ?? 'A', 0, 1)) }}';">
         </div>
     </div>
 </header>

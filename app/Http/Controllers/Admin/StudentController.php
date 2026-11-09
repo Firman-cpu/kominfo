@@ -72,6 +72,10 @@ class StudentController extends Controller
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
+            // Store in DB as blob
+            $data['photo_data'] = file_get_contents($file->getRealPath());
+            $data['photo_mime'] = $file->getMimeType();
+            // Also keep filesystem copy for backward compat
             $filename = Str::random(32) . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('private/students', $filename, 'local');
             $data['photo_path'] = $path;
@@ -111,6 +115,10 @@ class StudentController extends Controller
             }
 
             $file = $request->file('photo');
+            // Store in DB as blob
+            $data['photo_data'] = file_get_contents($file->getRealPath());
+            $data['photo_mime'] = $file->getMimeType();
+            // Also keep filesystem copy for backward compat
             $filename = Str::random(32) . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('private/students', $filename, 'local');
             $data['photo_path'] = $path;

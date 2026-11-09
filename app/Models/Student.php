@@ -21,10 +21,16 @@ class Student extends Model
         'faculty', // Fakultas (mahasiswa)
         'department_id', // Bidang
         'photo_path',
+        'photo_data',
+        'photo_mime',
         'class', // Kelas (siswa)
         'start_date',
         'end_date',
         'status', // active / completed
+    ];
+
+    protected $hidden = [
+        'photo_data', // exclude raw blob from serialization
     ];
 
     protected $casts = [
@@ -64,11 +70,17 @@ class Student extends Model
 
     public function getPhotoUrlAttribute(): string
     {
+        // Priority 1: DB blob
+        if ($this->photo_data && $this->photo_mime) {
+            return route('admin.students.photo', $this->id);
+        }
+
+        // Priority 2: filesystem fallback
         if ($this->photo_path && \Illuminate\Support\Facades\Storage::disk('local')->exists($this->photo_path)) {
             return route('admin.students.photo', $this->id);
         }
 
-        // Fallback UI Avatar
+        // Final fallback: UI Avatar
         $nameEncoded = urlencode($this->name);
         return "https://ui-avatars.com/api/?name={$nameEncoded}&background=1e3a8a&color=ffffff&bold=true";
     }

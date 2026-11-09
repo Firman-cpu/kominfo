@@ -44,12 +44,20 @@ class ProfileController extends Controller
                 'max:50',
                 Rule::unique('admins', 'username')->ignore($admin->id),
             ],
+            'photo' => ['nullable', 'image', 'max:2048'],
             'current_password' => ['nullable', 'string'],
             'new_password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
         $admin->name = $request->name;
         $admin->username = $request->username;
+
+        // Handle photo upload — store as DB blob
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $admin->photo_data = file_get_contents($file->getRealPath());
+            $admin->photo_mime = $file->getMimeType();
+        }
 
         // Update password jika diisi
         if ($request->filled('current_password')) {

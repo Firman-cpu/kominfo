@@ -9,8 +9,11 @@
     {{-- Profile Card --}}
     <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="flex items-center gap-4">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md shrink-0">
-                {{ strtoupper(substr($admin->name ?? 'A', 0, 1)) }}
+            <div class="w-16 h-16 rounded-2xl overflow-hidden bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md shrink-0">
+                <img src="{{ $admin->photo_url }}"
+                     alt="Foto {{ $admin->name }}"
+                     class="w-full h-full object-cover"
+                     onerror="this.style.display='none'; this.parentElement.classList.add('flex');">
             </div>
             <div>
                 <div class="flex items-center gap-2 mb-1">
@@ -34,7 +37,7 @@
     </div>
 
     {{-- Update Profile & Password Form --}}
-    <form method="POST" action="{{ route('admin.profile.update') }}" class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200/80 shadow-xs space-y-6">
+    <form method="POST" action="{{ route('admin.profile.update') }}" enctype="multipart/form-data" class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200/80 shadow-xs space-y-6">
         @csrf
         @method('PUT')
 
@@ -43,6 +46,32 @@
                 <i data-lucide="user" class="w-4 h-4 text-blue-600"></i>
                 <span>Informasi Akun</span>
             </h4>
+
+            {{-- Photo Upload --}}
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-2">
+                    Foto Profil
+                </label>
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shrink-0 shadow">
+                        <img src="{{ $admin->photo_url }}"
+                             alt="Foto profil"
+                             class="w-full h-full object-cover"
+                             onerror="this.style.display='none';">
+                    </div>
+                    <div class="flex-1">
+                        <input type="file"
+                               name="photo"
+                               id="photo"
+                               accept="image/*"
+                               class="block w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all">
+                        <p class="mt-1 text-[11px] text-slate-400">JPG, PNG, GIF hingga 2MB. Foto disimpan di database.</p>
+                        @error('photo')
+                            <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
 
             <div>
                 <label for="name" class="block text-xs font-semibold text-slate-700 mb-1">
