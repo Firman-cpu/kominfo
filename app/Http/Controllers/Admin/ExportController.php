@@ -34,7 +34,7 @@ class ExportController extends Controller
 
         ActivityLogger::log(
             'export',
-            "Mengekspor data ({$dataset}) ke Excel XLSX dengan filter: " . json_encode(array_filter($filters))
+            "Mengekspor data ({$dataset}) ke Excel XLSX dengan filter: ".json_encode(array_filter($filters))
         );
 
         return $exportService->export($filters, $dataset);

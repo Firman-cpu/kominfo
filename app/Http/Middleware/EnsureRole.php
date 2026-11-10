@@ -12,13 +12,13 @@ class EnsureRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         $admin = Auth::guard('admin')->user();
 
-        if (!$admin || !in_array($admin->role, $roles, true)) {
+        if (! $admin || ! in_array($admin->role, $roles, true)) {
             abort(403, 'Akses Ditolak: Anda tidak memiliki wewenang untuk membuka halaman ini.');
         }
 

@@ -59,6 +59,7 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.page');
+    Route::get('/quick-search', [DashboardController::class, 'quickSearch'])->name('quick-search');
 
     // Siswa & Mahasiswa
     Route::get('/students', [AdminStudentController::class, 'index'])->name('students.index');

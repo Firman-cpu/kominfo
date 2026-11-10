@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class Student extends Model
 {
@@ -74,16 +76,17 @@ class Student extends Model
 
         // Priority 1: DB blob — gunakan photo_mime (tidak di-$hidden) sebagai penanda
         if ($this->photo_mime) {
-            return route('admin.students.photo', $this->id) . '?v=' . $v;
+            return route('admin.students.photo', $this->id).'?v='.$v;
         }
 
         // Priority 2: filesystem fallback
-        if ($this->photo_path && \Illuminate\Support\Facades\Storage::disk('local')->exists($this->photo_path)) {
-            return route('admin.students.photo', $this->id) . '?v=' . $v;
+        if ($this->photo_path && Storage::disk('local')->exists($this->photo_path)) {
+            return route('admin.students.photo', $this->id).'?v='.$v;
         }
 
         // Final fallback: UI Avatar
         $nameEncoded = urlencode($this->name);
+
         return "https://ui-avatars.com/api/?name={$nameEncoded}&background=1e3a8a&color=ffffff&bold=true";
     }
 
@@ -109,7 +112,7 @@ class Student extends Model
      */
     public static function getAvailableYears(): array
     {
-        $driver = \Illuminate\Support\Facades\DB::connection()->getDriverName();
+        $driver = DB::connection()->getDriverName();
         $expr = match ($driver) {
             'sqlite' => "DISTINCT CAST(strftime('%Y', start_date) AS INTEGER) as yr",
             'pgsql' => 'DISTINCT CAST(EXTRACT(YEAR FROM start_date) AS INTEGER) as yr',

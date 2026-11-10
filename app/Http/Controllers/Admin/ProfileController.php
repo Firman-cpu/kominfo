@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Assessment;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -18,28 +19,28 @@ class ProfileController extends Controller
         // Fresh load dari DB agar selalu tampilkan data terbaru (termasuk foto baru)
         $admin = Auth::guard('admin')->user()->fresh();
 
-        $totalStudents     = Student::count();
-        $activeStudents    = Student::where('status', 'active')->count();
+        $totalStudents = Student::count();
+        $activeStudents = Student::where('status', 'active')->count();
         $completedStudents = Student::where('status', 'completed')->count();
-        $totalAssessments  = Assessment::count();
+        $totalAssessments = Assessment::count();
 
         return view('admin.profile.index', [
-            'admin'             => $admin,
-            'totalStudents'     => $totalStudents,
-            'activeStudents'    => $activeStudents,
+            'admin' => $admin,
+            'totalStudents' => $totalStudents,
+            'activeStudents' => $activeStudents,
             'completedStudents' => $completedStudents,
-            'totalAssessments'  => $totalAssessments,
+            'totalAssessments' => $totalAssessments,
         ]);
     }
 
     public function update(Request $request)
     {
-        /** @var \App\Models\Admin $admin */
+        /** @var Admin $admin */
         $admin = Auth::guard('admin')->user();
 
         $request->validate([
-            'name'             => ['required', 'string', 'max:255'],
-            'username'         => [
+            'name' => ['required', 'string', 'max:255'],
+            'username' => [
                 'required',
                 'string',
                 'alpha_dash',
@@ -47,15 +48,15 @@ class ProfileController extends Controller
                 'max:50',
                 Rule::unique('admins', 'username')->ignore($admin->id),
             ],
-            'photo'            => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:2048'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:2048'],
             'current_password' => ['nullable', 'string'],
-            'new_password'     => ['nullable', 'string', 'min:8', 'confirmed'],
+            'new_password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
         // ── Simpan perubahan nama / username ─────────────────────────────
         $updateFields = [
-            'name'       => $request->name,
-            'username'   => $request->username,
+            'name' => $request->name,
+            'username' => $request->username,
             'updated_at' => now(),
         ];
 
@@ -84,7 +85,7 @@ class ProfileController extends Controller
         DB::table('admins')->where('id', $admin->id)->update($updateFields);
 
         // ── Refresh session user agar halaman berikutnya langsung tampil data baru
-        $freshAdmin = \App\Models\Admin::find($admin->id);
+        $freshAdmin = Admin::find($admin->id);
         Auth::guard('admin')->setUser($freshAdmin);
 
         return redirect()

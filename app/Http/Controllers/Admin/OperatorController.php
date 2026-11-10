@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OperatorRequest;
 use App\Models\Admin;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,7 +12,7 @@ class OperatorController extends Controller
 {
     public function index()
     {
-        $operators  = Admin::where('role', 'operator')->orderByDesc('id')->paginate(15);
+        $operators = Admin::where('role', 'operator')->orderByDesc('id')->paginate(15);
         $adminCount = Admin::where('role', 'administrator')->count();
 
         return view('admin.operators.index', compact('operators', 'adminCount'));
@@ -30,12 +29,12 @@ class OperatorController extends Controller
 
         // ── Buat operator (tanpa foto dulu, hindari binary di LogsActivity) ──
         $operator = Admin::create([
-            'name'       => $data['name'],
-            'username'   => $data['username'],
-            'password'   => Hash::make($data['password']),
-            'role'       => 'operator',
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'role' => 'operator',
             'is_primary' => false,
-            'is_active'  => $request->boolean('is_active', true),
+            'is_active' => $request->boolean('is_active', true),
         ]);
 
         // ── Simpan foto via DB::table() ──────────────────────────────────
@@ -58,6 +57,7 @@ class OperatorController extends Controller
         if ($operator->isAdministrator()) {
             abort(403, 'Akun Administrator tidak dapat diedit melalui manajemen operator.');
         }
+
         // Fresh load agar tampilkan foto terbaru di form edit
         return view('admin.operators.edit', ['operator' => $operator->fresh()]);
     }
@@ -72,9 +72,9 @@ class OperatorController extends Controller
 
         // ── Susun field yang akan di-update ──────────────────────────────
         $updateFields = [
-            'name'       => $data['name'],
-            'username'   => $data['username'],
-            'is_active'  => $request->boolean('is_active'),
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'is_active' => $request->boolean('is_active'),
             'updated_at' => now(),
         ];
 

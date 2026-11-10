@@ -12,6 +12,7 @@ class PerformanceCategoryController extends Controller
     public function index()
     {
         $categories = PerformanceCategory::orderByDesc('min_score')->get();
+
         return view('admin.categories.index', compact('categories'));
     }
 

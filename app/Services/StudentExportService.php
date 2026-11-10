@@ -19,7 +19,7 @@ class StudentExportService
         if (is_string($value) && strlen($value) > 0) {
             $firstChar = $value[0];
             if (in_array($firstChar, ['=', '+', '-', '@'], true)) {
-                return "'" . $value;
+                return "'".$value;
             }
         }
 
@@ -31,10 +31,10 @@ class StudentExportService
      */
     public function export(array $filters, string $dataset = 'both'): StreamedResponse
     {
-        $filename = 'export_prakerin_' . date('Ymd_His') . '.xlsx';
+        $filename = 'export_prakerin_'.date('Ymd_His').'.xlsx';
 
         return new StreamedResponse(function () use ($filters, $dataset) {
-            $writer = new Writer();
+            $writer = new Writer;
             $writer->openToBrowser('export.xlsx');
 
             // Sheet 1: Data Siswa & Mahasiswa
@@ -59,16 +59,16 @@ class StudentExportService
 
                 $query = Student::with('department')->orderBy('name');
 
-                if (!empty($filters['year'])) {
+                if (! empty($filters['year'])) {
                     $query->whereYear('start_date', $filters['year']);
                 }
-                if (!empty($filters['type'])) {
+                if (! empty($filters['type'])) {
                     $query->where('type', $filters['type']);
                 }
-                if (!empty($filters['department_id'])) {
+                if (! empty($filters['department_id'])) {
                     $query->where('department_id', $filters['department_id']);
                 }
-                if (!empty($filters['status'])) {
+                if (! empty($filters['status'])) {
                     $query->where('status', $filters['status']);
                 }
 
@@ -127,16 +127,16 @@ class StudentExportService
 
                 $query = Assessment::with(['student.department', 'scores.aspect'])
                     ->whereHas('student', function ($sq) use ($filters) {
-                        if (!empty($filters['year'])) {
+                        if (! empty($filters['year'])) {
                             $sq->whereYear('start_date', $filters['year']);
                         }
-                        if (!empty($filters['type'])) {
+                        if (! empty($filters['type'])) {
                             $sq->where('type', $filters['type']);
                         }
-                        if (!empty($filters['department_id'])) {
+                        if (! empty($filters['department_id'])) {
                             $sq->where('department_id', $filters['department_id']);
                         }
-                        if (!empty($filters['status'])) {
+                        if (! empty($filters['status'])) {
                             $sq->where('status', $filters['status']);
                         }
                     });

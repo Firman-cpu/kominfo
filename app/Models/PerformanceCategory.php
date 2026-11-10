@@ -26,8 +26,6 @@ class PerformanceCategory extends Model
 
     /**
      * Cache in-memory untuk request saat ini agar tidak query berulang kali pada perulangan tabel
-     *
-     * @var Collection|null
      */
     protected static ?Collection $runtimeCache = null;
 
@@ -46,8 +44,6 @@ class PerformanceCategory extends Model
 
     /**
      * Dapatkan semua kategori performa terurut dari nilai tertinggi ke terendah
-     *
-     * @return Collection
      */
     public static function getCached(): Collection
     {
@@ -58,7 +54,7 @@ class PerformanceCategory extends Model
         try {
             static::$runtimeCache = static::orderByDesc('min_score')->get();
         } catch (\Throwable) {
-            static::$runtimeCache = new Collection();
+            static::$runtimeCache = new Collection;
         }
 
         return static::$runtimeCache;
@@ -66,9 +62,6 @@ class PerformanceCategory extends Model
 
     /**
      * Tentukan kategori performa berdasarkan skor rata-rata
-     *
-     * @param float $score
-     * @return PerformanceCategory|null
      */
     public static function forScore(float $score): ?self
     {
@@ -84,7 +77,7 @@ class PerformanceCategory extends Model
         }
 
         $last = $categories->last();
+
         return $last instanceof self ? $last : null;
     }
 }
-

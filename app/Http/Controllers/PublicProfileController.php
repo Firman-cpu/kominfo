@@ -8,12 +8,12 @@ class PublicProfileController extends Controller
     {
         $team = [
             [
-                'name'   => 'Dinas Komunikasi dan Informatika',
-                'short'  => 'DISKOMINFO',
+                'name' => 'Dinas Komunikasi dan Informatika',
+                'short' => 'DISKOMINFO',
                 'kabupaten' => 'Kabupaten Pacitan',
                 'address' => 'Jl. Jaksa Agung Suprapto No.8, Pacitan, Jawa Timur 63513',
-                'email'  => 'diskominfo@pacitankab.go.id',
-                'phone'  => '(0357) 881234',
+                'email' => 'diskominfo@pacitankab.go.id',
+                'phone' => '(0357) 881234',
                 'website' => 'https://pacitankab.go.id',
                 'vision' => 'Mewujudkan Pacitan yang maju, mandiri, dan sejahtera melalui penerapan teknologi informasi dan komunikasi yang merata dan berkeadilan.',
                 'mission' => [
@@ -50,7 +50,7 @@ class PublicProfileController extends Controller
         ];
 
         return view('public.profile', [
-            'org'  => $team[0],
+            'org' => $team[0],
             'faqs' => $faqs,
         ]);
     }

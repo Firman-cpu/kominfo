@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
-    use Notifiable, LogsActivity;
+    use LogsActivity, Notifiable;
 
     protected $fillable = [
         'name',
@@ -63,10 +63,12 @@ class Admin extends Authenticatable
         // Cek photo_mime (tidak di-$hidden) sebagai penanda foto ada di DB
         if ($this->photo_mime) {
             $v = $this->updated_at?->timestamp ?? time();
-            return route('admin.profile.photo', $this->id) . '?v=' . $v;
+
+            return route('admin.profile.photo', $this->id).'?v='.$v;
         }
 
         $nameEncoded = urlencode($this->name ?? 'Admin');
+
         return "https://ui-avatars.com/api/?name={$nameEncoded}&background=1e3a8a&color=ffffff&bold=true";
     }
 }

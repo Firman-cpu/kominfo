@@ -35,6 +35,7 @@ class Assessment extends Model
     {
         if ($this->relationLoaded('scores')) {
             $count = $this->scores->count();
+
             return $count > 0 ? round($this->scores->avg('score'), 2) : 0.0;
         }
 

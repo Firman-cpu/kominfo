@@ -21,16 +21,17 @@ class AdminPhotoController extends Controller
 
         if ($row && $row->photo_data && $row->photo_mime) {
             return response($row->photo_data, 200, [
-                'Content-Type'  => $row->photo_mime,
+                'Content-Type' => $row->photo_mime,
                 // no-store: browser selalu fetch ulang, tidak pernah cache
                 'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-                'Pragma'        => 'no-cache',
-                'Expires'       => '0',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
             ]);
         }
 
         // Fallback ke UI Avatar
         $name = urlencode($admin->name ?? 'Admin');
+
         return redirect("https://ui-avatars.com/api/?name={$name}&background=1e3a8a&color=ffffff&bold=true");
     }
 }

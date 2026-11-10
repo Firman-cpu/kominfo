@@ -21,10 +21,10 @@ class StudentPhotoController extends Controller
         // Priority 1: DB blob
         if ($row && $row->photo_data && $row->photo_mime) {
             return response($row->photo_data, 200, [
-                'Content-Type'  => $row->photo_mime,
+                'Content-Type' => $row->photo_mime,
                 'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-                'Pragma'        => 'no-cache',
-                'Expires'       => '0',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
             ]);
         }
 
@@ -38,6 +38,7 @@ class StudentPhotoController extends Controller
 
         // Final fallback: UI Avatar
         $name = urlencode($student->name);
+
         return redirect("https://ui-avatars.com/api/?name={$name}&background=1e3a8a&color=ffffff&bold=true");
     }
 }

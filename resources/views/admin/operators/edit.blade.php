@@ -7,12 +7,12 @@
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6">
     <a href="{{ route('admin.operators.index') }}"
-       class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors">
+       class="neu-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 inline-flex items-center gap-1.5 transition-all">
         <i data-lucide="arrow-left" class="w-4 h-4"></i>
         <span>Kembali ke Daftar Operator</span>
     </a>
 
-    <form method="POST" action="{{ route('admin.operators.update', $operator->id) }}" class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.operators.update', $operator->id) }}" class="neu-card p-6 md:p-8 rounded-3xl space-y-5" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -22,19 +22,19 @@
                 Foto Profil Operator <span class="text-slate-400 font-normal">(opsional, maks. 2MB)</span>
             </label>
             <div class="flex items-center gap-4">
-                <div class="w-20 h-20 rounded-xl overflow-hidden border-2 border-dashed border-slate-300 flex items-center justify-center shrink-0 bg-slate-100">
+                <div class="neu-inset w-20 h-20 rounded-2xl overflow-hidden flex items-center justify-center shrink-0 relative">
                     <img id="photo-preview" src="{{ $operator->photo_url }}" alt="Foto {{ $operator->name }}"
                          class="w-full h-full object-cover"
-                         onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($operator->name) }}&background=1e3a8a&color=ffffff&bold=true'">
+                         onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($operator->name) }}&background=3b52f6&color=ffffff&bold=true'">
                 </div>
-                <div class="flex-1">
-                    <label for="photo" class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 hover:border-blue-400 hover:bg-blue-50 text-xs font-semibold text-slate-600 transition-colors">
-                        <i data-lucide="upload" class="w-4 h-4"></i>
-                        Ganti Foto
+                <div class="flex-1 space-y-1.5">
+                    <label for="photo" class="cursor-pointer neu-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-700 transition-all">
+                        <i data-lucide="upload" class="w-4 h-4 text-blue-600"></i>
+                        <span>Ganti Foto</span>
                     </label>
                     <input type="file" name="photo" id="photo" accept="image/jpeg,image/png,image/jpg,image/webp" class="sr-only"
                            onchange="previewPhoto(this)">
-                    <p class="text-[11px] text-slate-400 mt-1.5">JPG, PNG, atau WebP — maks. 2 MB</p>
+                    <p class="text-[11px] text-slate-500">JPG, PNG, atau WebP — maks. 2 MB</p>
                 </div>
             </div>
             @error('photo')
@@ -43,7 +43,7 @@
         </div>
 
         <div>
-            <label for="name" class="block text-xs font-semibold text-slate-700 mb-1">
+            <label for="name" class="block text-xs font-semibold text-slate-700 mb-1.5">
                 Nama Lengkap Petugas Operator <span class="text-rose-500">*</span>
             </label>
             <input type="text"
@@ -51,14 +51,14 @@
                    id="name"
                    value="{{ old('name', $operator->name) }}"
                    required
-                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800">
+                   class="neu-input w-full px-4 py-2.5 rounded-xl text-sm text-slate-800">
             @error('name')
                 <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
-            <label for="username" class="block text-xs font-semibold text-slate-700 mb-1">
+            <label for="username" class="block text-xs font-semibold text-slate-700 mb-1.5">
                 Username Login <span class="text-rose-500">*</span>
             </label>
             <input type="text"
@@ -66,40 +66,40 @@
                    id="username"
                    value="{{ old('username', $operator->username) }}"
                    required
-                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800 font-mono">
+                   class="neu-input w-full px-4 py-2.5 rounded-xl text-sm font-mono text-slate-800">
             @error('username')
                 <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+        <div class="neu-card-sm p-4 rounded-2xl border border-white/70 space-y-2">
             <label for="password" class="block text-xs font-semibold text-slate-700">
-                Ganti Password Baru (Kosongkan bila tidak ingin mengubah)
+                Ganti Password Baru <span class="text-slate-400 font-normal">(Kosongkan bila tidak ingin mengubah)</span>
             </label>
             <input type="password"
                    name="password"
                    id="password"
                    placeholder="Masukkan password baru (minimal 8 karakter)"
-                   class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800 bg-white">
+                   class="neu-input w-full px-4 py-2.5 rounded-xl text-sm text-slate-800 bg-[#ebf0f7]">
             @error('password')
                 <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
             @enderror
         </div>
 
         <div class="pt-2">
-            <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+            <label class="flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer">
                 <input type="checkbox" name="is_active" value="1" {{ old('is_active', $operator->is_active) ? 'checked' : '' }} class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
                 <span>Status Akun Aktif (Dapat Login ke Sistem)</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-200/70">
             <a href="{{ route('admin.operators.index') }}"
-               class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition-colors">
+               class="neu-btn px-5 py-2.5 rounded-xl text-slate-700 text-xs font-semibold transition-all">
                 Batal
             </a>
             <button type="submit"
-                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-2 cursor-pointer">
+                    class="neu-primary px-6 py-2.5 rounded-xl text-white text-xs font-semibold shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2 cursor-pointer">
                 <i data-lucide="save" class="w-4 h-4"></i>
                 <span>Simpan Perubahan</span>
             </button>

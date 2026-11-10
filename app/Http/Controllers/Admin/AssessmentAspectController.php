@@ -12,6 +12,7 @@ class AssessmentAspectController extends Controller
     public function index()
     {
         $aspects = AssessmentAspect::withCount('scores')->orderBy('sort_order')->get();
+
         return view('admin.aspects.index', compact('aspects'));
     }
 
@@ -26,7 +27,7 @@ class AssessmentAspectController extends Controller
         $originalKey = $key;
         $counter = 1;
         while (AssessmentAspect::where('key', $key)->exists()) {
-            $key = $originalKey . '_' . $counter++;
+            $key = $originalKey.'_'.$counter++;
         }
 
         $aspect = AssessmentAspect::create([
@@ -62,7 +63,7 @@ class AssessmentAspectController extends Controller
 
     public function destroy(AssessmentAspect $aspect)
     {
-        if (!$aspect->canBeDeleted()) {
+        if (! $aspect->canBeDeleted()) {
             return back()->withErrors([
                 'error' => "Aspek '{$aspect->name}' tidak dapat dihapus karena sudah memiliki rekaman nilai. Anda dapat menonaktifkannya agar tidak muncul pada penilaian baru.",
             ]);

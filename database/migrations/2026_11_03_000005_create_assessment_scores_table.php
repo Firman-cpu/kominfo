@@ -42,7 +42,7 @@ return new class extends Migration
             }
         }
 
-        if (!empty($scoresToInsert)) {
+        if (! empty($scoresToInsert)) {
             DB::table('assessment_scores')->insert($scoresToInsert);
         }
     }

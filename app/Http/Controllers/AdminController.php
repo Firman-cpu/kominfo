@@ -23,11 +23,12 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-        $throttleKey = Str::transliterate(Str::lower($request->input('username')) . '|' . $request->ip());
+        $throttleKey = Str::transliterate(Str::lower($request->input('username')).'|'.$request->ip());
 
         // Rate Limiter: Maksimal 5 percobaan per menit
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
+
             return back()->withErrors([
                 'username' => "Terlalu banyak percobaan login. Silakan tunggu {$seconds} detik lagi.",
             ])->onlyInput('username');
@@ -40,7 +41,7 @@ class AdminController extends Controller
 
         $admin = Admin::where('username', $credentials['username'])->first();
 
-        if (!$admin || !Hash::check($credentials['password'], $admin->password)) {
+        if (! $admin || ! Hash::check($credentials['password'], $admin->password)) {
             RateLimiter::hit($throttleKey, 60);
 
             ActivityLogger::log(
@@ -55,7 +56,7 @@ class AdminController extends Controller
             ])->onlyInput('username');
         }
 
-        if (!$admin->is_active) {
+        if (! $admin->is_active) {
             return back()->withErrors([
                 'username' => 'Akun Anda dinonaktifkan. Silakan hubungi Administrator.',
             ])->onlyInput('username');

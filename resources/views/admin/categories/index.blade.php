@@ -2,36 +2,42 @@
 
 @section('title', 'Kategori Nilai & Performa')
 @section('page-title', 'Batas Kategori Performa')
-@section('page-subtitle', '')
+@section('page-subtitle', 'Penentuan rentang batas ambang skor untuk klasifikasi predikat kelulusan')
 
 @section('content')
-    <form method="POST" action="{{ route('admin.categories.update') }}" class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+<div class="max-w-4xl mx-auto">
+    <form method="POST" action="{{ route('admin.categories.update') }}" class="neu-card p-6 md:p-8 rounded-3xl space-y-6">
         @csrf
         @method('PUT')
 
-        <div class="p-6 border-b border-slate-100">
-            <h3 class="text-sm font-bold text-slate-900">Konfigurasi Ambang Batas Nilai Minimum</h3>
-            <p class="text-xs text-slate-500 mt-0.5">Atur batas nilai minimum (0-100) untuk masing-masing taraf predikat</p>
+        <div class="flex items-center gap-2.5 border-b border-slate-200/70 pb-4">
+            <div class="neu-card-sm w-9 h-9 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
+                <i data-lucide="award" class="w-4 h-4"></i>
+            </div>
+            <div>
+                <h3 class="text-sm font-bold text-slate-900">Konfigurasi Ambang Batas Nilai Minimum</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Atur batas nilai minimum (0-100) untuk masing-masing taraf predikat</p>
+            </div>
         </div>
 
-        <div class="p-6 space-y-6">
+        <div class="space-y-4">
             @foreach ($categories as $index => $cat)
                 <input type="hidden" name="categories[{{ $index }}][id]" value="{{ $cat->id }}">
 
-                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                <div class="neu-card-sm p-5 rounded-2xl border border-white/70 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                     {{-- Predikat / Nama --}}
                     <div class="md:col-span-4">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Nama Predikat</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Nama Predikat</label>
                         <input type="text"
                                name="categories[{{ $index }}][name]"
                                value="{{ old("categories.{$index}.name", $cat->name) }}"
                                required
-                               class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-semibold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800 bg-white">
+                               class="neu-input w-full px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-800 bg-[#ebf0f7]">
                     </div>
 
                     {{-- Batas Minimum --}}
                     <div class="md:col-span-3">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Batas Minimal Skor (≥)</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Batas Minimal Skor (≥)</label>
                         <div class="relative">
                             <input type="number"
                                    step="0.01"
@@ -40,25 +46,25 @@
                                    name="categories[{{ $index }}][min_score]"
                                    value="{{ old("categories.{$index}.min_score", $cat->min_score) }}"
                                    required
-                                   class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-mono font-extrabold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-blue-700 bg-white">
+                                   class="neu-input w-full px-3.5 py-2.5 rounded-xl text-xs font-mono font-black text-blue-700 bg-[#ebf0f7]">
                         </div>
                     </div>
 
                     {{-- Keterangan / Deskripsi --}}
                     <div class="md:col-span-5">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi Hasil</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Deskripsi Hasil</label>
                         <input type="text"
                                name="categories[{{ $index }}][description]"
                                value="{{ old("categories.{$index}.description", $cat->description) }}"
-                               class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800 bg-white">
+                               class="neu-input w-full px-3.5 py-2.5 rounded-xl text-xs text-slate-800 bg-[#ebf0f7]">
                     </div>
                 </div>
             @endforeach
         </div>
 
-        <div class="p-6 bg-slate-50/50 border-t border-slate-100 flex items-center justify-end">
+        <div class="pt-4 border-t border-slate-200/70 flex items-center justify-end">
             <button type="submit"
-                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-2 cursor-pointer">
+                    class="neu-primary px-6 py-2.5 rounded-xl text-white text-xs font-semibold shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2 cursor-pointer">
                 <i data-lucide="save" class="w-4 h-4"></i>
                 <span>Simpan Perubahan Kategori</span>
             </button>

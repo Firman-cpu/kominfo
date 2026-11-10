@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-    $table->id();
+            $table->id();
 
-    $table->string('nis')->unique();
-    $table->string('name');
-    $table->string('major');
-    $table->string('class')->nullable();
+            $table->string('nis')->unique();
+            $table->string('name');
+            $table->string('major');
+            $table->string('class')->nullable();
 
-    $table->date('start_date')->nullable();
-    $table->date('end_date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
 
-    $table->string('status')->default('active');
+            $table->string('status')->default('active');
 
-    $table->timestamps();
-});
+            $table->timestamps();
+        });
     }
 
     /**

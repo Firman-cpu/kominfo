@@ -33,6 +33,7 @@ class CreateAdministrator extends Command
 
         if ($adminCount >= 2) {
             $this->error('Gagal: Sistem hanya mengizinkan maksimal tepat 2 akun Administrator (1 Akun Utama dan 1 Akun Cadangan).');
+
             return Command::FAILURE;
         }
 
@@ -53,6 +54,7 @@ class CreateAdministrator extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
+
             return Command::FAILURE;
         }
 
@@ -61,11 +63,13 @@ class CreateAdministrator extends Command
 
         if ($password !== $passwordConfirmation) {
             $this->error('Konfirmasi password tidak cocok.');
+
             return Command::FAILURE;
         }
 
         if (strlen($password) < 8) {
             $this->error('Password minimal 8 karakter.');
+
             return Command::FAILURE;
         }
 

@@ -37,6 +37,7 @@ class ActivityLogController extends Controller
     public function show(ActivityLog $log)
     {
         $log->load('admin');
+
         return view('admin.logs.show', compact('log'));
     }
 }

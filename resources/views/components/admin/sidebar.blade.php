@@ -1,145 +1,139 @@
 @php
-    // Fresh load dari DB setiap request agar foto terbaru selalu tampil di sidebar
-    // (hindari cached user object di session yang belum di-refresh)
     $admin = Auth::guard('admin')->user()?->fresh() ?? Auth::guard('admin')->user();
 @endphp
 
-<aside class="fixed top-0 left-0 w-64 h-screen bg-slate-900 text-slate-300 flex flex-col border-r border-slate-800 select-none z-40 overflow-hidden">
-    {{-- Brand Header --}}
-    <div class="h-16 flex items-center px-6 gap-3 border-b border-slate-800 bg-slate-950/40">
-        <div class="rounded-xl flex items-center justify-center text-white shrink-0">
-            <img
-            src="{{ asset('image/logo.svg') }}"
-            alt="Logo Diskominfo Kabupaten Pacitan"
-            class="h-10 w-10 shrink-0 object-contain sm:h-9 sm:w-9"
-            >
-        </div>
-        <div class="overflow-hidden">
-            <h1 class="text-sm font-bold text-white tracking-wide truncate">DINAS KOMINFO </h1>
-            <p class="text-xs font-thin tracking-wide text-white">Kabupaten Pacitan</p>
-        </div>
-    </div>
-
-
-    {{-- Navigation Menu --}}
-    <nav class="sidebar-nav flex-1 px-3 py-2 space-y-6 overflow-y-auto">
-        {{-- Section Menu Utama --}}
-        <div>
-            <div class="px-3 mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                Menu Utama
+<div class="flex h-full w-full flex-col justify-between bg-[#ebf0f7] select-none p-2">
+    {{-- Top Section: Brand & Nav --}}
+    <div class="flex flex-col flex-1 overflow-hidden">
+        {{-- Brand Header (Neumorphic) --}}
+        <div class="flex h-16 items-center px-4 gap-1 border-b border-[#d8e2ee] shrink-0">
+            <div class="flex h-12 w-12 items-center justify-center p-2">
+                <img
+                    src="{{ asset('image/logo.svg') }}"
+                    alt="Logo Diskominfo Kabupaten Pacitan"
+                    class="h-full w-full object-contain"
+                >
             </div>
-            <ul class="space-y-1">
-                <li>
+            <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-1.5">
+                    <h1 class="text-sm font-extrabold tracking-tight text-slate-900 truncate">DISKOMINFO</h1>
+                </div>
+                <p class="text-[11px] font-semibold text-slate-400 truncate">Kabupaten Pacitan</p>
+            </div>
+        </div>
+
+        {{-- Navigation Menu --}}
+        <nav class="flex-1 overflow-y-auto px-2 py-4 space-y-4" aria-label="Navigasi Utama">
+            {{-- Menu Utama --}}
+            <div>
+                <p class="px-3 mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                    Menu Utama
+                </p>
+                <div class="space-y-1.5">
+                    {{-- Dashboard --}}
+                    @php $isDashboard = request()->routeIs('admin.dashboard.*') || request()->is('admin/dashboard'); @endphp
                     <a href="{{ route('admin.dashboard.page') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.dashboard.page') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isDashboard ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105 {{ $isDashboard ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Dashboard</span>
                     </a>
-                </li>
-                <li>
+
+                    {{-- Siswa & Mahasiswa --}}
+                    @php $isStudents = request()->routeIs('admin.students.*'); @endphp
                     <a href="{{ route('admin.students.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.students.*') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="users" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isStudents ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="users" class="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105 {{ $isStudents ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Siswa & Mahasiswa</span>
                     </a>
-                </li>
-                <li>
+
+                    {{-- Penilaian Peserta --}}
+                    @php $isAssessments = request()->routeIs('admin.assessments.*'); @endphp
                     <a href="{{ route('admin.assessments.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.assessments.*') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="award" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isAssessments ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="award" class="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105 {{ $isAssessments ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Penilaian Peserta</span>
                     </a>
-                </li>
-                <li>
+
+                    {{-- Aspek Penilaian --}}
+                    @php $isAspects = request()->routeIs('admin.aspects.*'); @endphp
                     <a href="{{ route('admin.aspects.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.aspects.*') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="sliders" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isAspects ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="sliders" class="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105 {{ $isAspects ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Aspek Penilaian</span>
                     </a>
-                </li>
-                <li>
+
+                    {{-- Kategori Nilai --}}
+                    @php $isCategories = request()->routeIs('admin.categories.*'); @endphp
                     <a href="{{ route('admin.categories.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.categories.*') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="badge-percent" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isCategories ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="badge-percent" class="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105 {{ $isCategories ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Kategori Nilai</span>
                     </a>
-                </li>
-                <li>
+
+                    {{-- Analitik & Statistik --}}
+                    @php $isAnalytics = request()->routeIs('admin.analytics.*'); @endphp
                     <a href="{{ route('admin.analytics.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.analytics.*') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="bar-chart-3" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isAnalytics ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105 {{ $isAnalytics ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Analitik & Statistik</span>
                     </a>
-                </li>
-                <li>
+
+                    {{-- Ekspor Excel --}}
+                    @php $isExport = request()->routeIs('admin.export.*'); @endphp
                     <a href="{{ route('admin.export.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.export.*') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="file-spreadsheet" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isExport ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="file-spreadsheet" class="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105 {{ $isExport ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Ekspor Excel</span>
                     </a>
-                </li>
-            </ul>
-        </div>
-
-        {{-- Section Khusus Administrator (Kasta Tertinggi) --}}
-        @if ($admin->isAdministrator())
-            <div>
-                <div class="px-3 mb-2 text-[10px] font-bold tracking-wider text-amber-400/90 uppercase flex items-center gap-1.5">
-                    <i data-lucide="shield" class="w-3 h-3 text-amber-400"></i>
-                    <span>Administrator</span>
                 </div>
-                <ul class="space-y-1">
-                    <li>
+            </div>
+
+            {{-- Administrator Khusus --}}
+            @if ($admin?->isAdministrator())
+                <div>
+                    <p class="px-3 mb-2 text-[10px] font-bold tracking-wider text-amber-600 uppercase flex items-center gap-1.5">
+                        <i data-lucide="shield" class="w-3 h-3 text-amber-500"></i>
+                        <span>Administrator</span>
+                    </p>
+                    <div class="space-y-1.5">
+                        @php $isOperators = request()->routeIs('admin.operators.*'); @endphp
                         <a href="{{ route('admin.operators.index') }}"
-                           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.operators.*') ? 'bg-amber-600 text-white shadow-sm shadow-amber-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                            <i data-lucide="user-cog" class="w-4 h-4 shrink-0"></i>
+                           class="group flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isOperators ? 'bg-amber-600 text-gray-700 font-bold neu-card-sm' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                            <i data-lucide="user-cog" class="w-4 h-4 shrink-0 {{ $isOperators ? 'text-gray-700' : 'text-slate-500' }}"></i>
                             <span>Akun Operator</span>
                         </a>
-                    </li>
-                    <li>
+
+                        @php $isLogs = request()->routeIs('admin.logs.*'); @endphp
                         <a href="{{ route('admin.logs.index') }}"
-                           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.logs.*') ? 'bg-amber-600 text-white shadow-sm shadow-amber-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                            <i data-lucide="history" class="w-4 h-4 shrink-0"></i>
+                           class="group flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isLogs ? 'bg-amber-600 text-gray-700 font-bold neu-card-sm' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                            <i data-lucide="history" class="w-4 h-4 shrink-0 {{ $isLogs ? 'text-gray-700' : 'text-slate-500' }}"></i>
                             <span>Log Aktivitas</span>
                         </a>
-                    </li>
-                </ul>
-            </div>
-        @endif
+                    </div>
+                </div>
+            @endif
 
-        {{-- Section Akun Saya --}}
-        <div>
-            <div class="px-3 mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                Pengaturan
-            </div>
-            <ul class="space-y-1">
-                <li>
+            {{-- Pengaturan & Web Publik --}}
+            <div>
+                <p class="px-3 mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                    Pengaturan
+                </p>
+                <div class="space-y-1.5">
+                    @php $isProfile = request()->routeIs('admin.profile.*'); @endphp
                     <a href="{{ route('admin.profile.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('admin.profile.*') ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
-                        <i data-lucide="user" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm transition-all duration-200 {{ $isProfile ? 'neu-primary font-bold' : 'text-slate-600 hover:text-slate-900 hover:neu-card-sm font-medium' }}">
+                        <i data-lucide="user" class="w-4 h-4 shrink-0 {{ $isProfile ? 'text-white' : 'text-slate-500' }}"></i>
                         <span>Profil Saya</span>
                     </a>
-                </li>
-                <li>
+
                     <a href="{{ route('home') }}" target="_blank"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors">
-                        <i data-lucide="external-link" class="w-4 h-4 shrink-0"></i>
+                       class="group flex items-center gap-3 px-3 py-2 rounded-xl text-xs sm:text-sm text-slate-500 hover:text-slate-900 hover:neu-card-sm transition-all duration-200 font-medium">
+                        <i data-lucide="external-link" class="w-4 h-4 shrink-0 text-slate-400 group-hover:text-slate-600"></i>
                         <span>Lihat Web Publik</span>
                     </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    {{-- Logout Button Bottom --}}
-    <div class="p-4 border-t border-slate-800">
-        <form method="POST" action="{{ route('admin.logout') }}">
-            @csrf
-            <button type="submit"
-                    class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-rose-400 hover:text-white hover:bg-rose-500/20 border border-rose-500/30 transition-colors">
-                <i data-lucide="log-out" class="w-4 h-4"></i>
-                <span>Keluar (Logout)</span>
-            </button>
-        </form>
+                </div>
+            </div>
+        </nav>
     </div>
-</aside>
+
+</div>

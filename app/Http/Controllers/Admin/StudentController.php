@@ -27,9 +27,9 @@ class StudentController extends Controller
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('identity_number', 'like', "%{$search}%")
-                  ->orWhere('institution', 'like', "%{$search}%")
-                  ->orWhere('major', 'like', "%{$search}%");
+                    ->orWhere('identity_number', 'like', "%{$search}%")
+                    ->orWhere('institution', 'like', "%{$search}%")
+                    ->orWhere('major', 'like', "%{$search}%");
             });
         }
 
@@ -63,6 +63,7 @@ class StudentController extends Controller
     public function create()
     {
         $departments = Department::orderBy('sort_order')->get();
+
         return view('admin.students.create', compact('departments'));
     }
 
@@ -76,7 +77,7 @@ class StudentController extends Controller
             $data['photo_data'] = file_get_contents($file->getRealPath());
             $data['photo_mime'] = $file->getMimeType();
             // Also keep filesystem copy for backward compat
-            $filename = Str::random(32) . '.' . $file->getClientOriginalExtension();
+            $filename = Str::random(32).'.'.$file->getClientOriginalExtension();
             $path = $file->storeAs('private/students', $filename, 'local');
             $data['photo_path'] = $path;
         }
@@ -95,12 +96,14 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         $student->load(['department', 'assessment.scores.aspect']);
+
         return view('admin.students.show', compact('student'));
     }
 
     public function edit(Student $student)
     {
         $departments = Department::orderBy('sort_order')->get();
+
         return view('admin.students.edit', compact('student', 'departments'));
     }
 
@@ -119,7 +122,7 @@ class StudentController extends Controller
             $data['photo_data'] = file_get_contents($file->getRealPath());
             $data['photo_mime'] = $file->getMimeType();
             // Also keep filesystem copy for backward compat
-            $filename = Str::random(32) . '.' . $file->getClientOriginalExtension();
+            $filename = Str::random(32).'.'.$file->getClientOriginalExtension();
             $path = $file->storeAs('private/students', $filename, 'local');
             $data['photo_path'] = $path;
         }

@@ -7,12 +7,12 @@
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6">
     <a href="{{ route('admin.operators.index') }}"
-       class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors">
+       class="neu-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 inline-flex items-center gap-1.5 transition-all">
         <i data-lucide="arrow-left" class="w-4 h-4"></i>
         <span>Kembali ke Daftar Operator</span>
     </a>
 
-    <form method="POST" action="{{ route('admin.operators.store') }}" class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.operators.store') }}" class="neu-card p-6 md:p-8 rounded-3xl space-y-5" enctype="multipart/form-data">
         @csrf
 
         {{-- Photo Upload --}}
@@ -21,20 +21,20 @@
                 Foto Profil Operator <span class="text-slate-400 font-normal">(opsional, maks. 2MB)</span>
             </label>
             <div class="flex items-center gap-4">
-                <div class="w-20 h-20 rounded-xl bg-slate-100 overflow-hidden border-2 border-dashed border-slate-300 flex items-center justify-center shrink-0" id="photo-preview-wrap">
+                <div class="neu-inset w-20 h-20 rounded-2xl overflow-hidden flex items-center justify-center shrink-0 relative" id="photo-preview-wrap">
                     <div id="photo-placeholder" class="text-center">
-                        <i data-lucide="user" class="w-8 h-8 text-slate-300 mx-auto"></i>
+                        <i data-lucide="user" class="w-8 h-8 text-slate-400 mx-auto"></i>
                     </div>
                     <img id="photo-preview" src="" alt="Preview" class="w-full h-full object-cover hidden">
                 </div>
-                <div class="flex-1">
-                    <label for="photo" class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 hover:border-blue-400 hover:bg-blue-50 text-xs font-semibold text-slate-600 transition-colors">
-                        <i data-lucide="upload" class="w-4 h-4"></i>
-                        Pilih Foto
+                <div class="flex-1 space-y-1.5">
+                    <label for="photo" class="cursor-pointer neu-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-700 transition-all">
+                        <i data-lucide="upload" class="w-4 h-4 text-blue-600"></i>
+                        <span>Pilih Foto</span>
                     </label>
                     <input type="file" name="photo" id="photo" accept="image/jpeg,image/png,image/jpg,image/webp" class="sr-only"
                            onchange="previewPhoto(this, 'photo-preview', 'photo-placeholder')">
-                    <p class="text-[11px] text-slate-400 mt-1.5">JPG, PNG, atau WebP — maks. 2 MB</p>
+                    <p class="text-[11px] text-slate-500">JPG, PNG, atau WebP — maks. 2 MB</p>
                 </div>
             </div>
             @error('photo')
@@ -43,7 +43,7 @@
         </div>
 
         <div>
-            <label for="name" class="block text-xs font-semibold text-slate-700 mb-1">
+            <label for="name" class="block text-xs font-semibold text-slate-700 mb-1.5">
                 Nama Lengkap Petugas Operator <span class="text-rose-500">*</span>
             </label>
             <input type="text"
@@ -52,14 +52,14 @@
                    value="{{ old('name') }}"
                    required
                    placeholder="Contoh: Budi Santoso, S.Kom"
-                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800">
+                   class="neu-input w-full px-4 py-2.5 rounded-xl text-sm text-slate-800">
             @error('name')
                 <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
-            <label for="username" class="block text-xs font-semibold text-slate-700 mb-1">
+            <label for="username" class="block text-xs font-semibold text-slate-700 mb-1.5">
                 Username Login <span class="text-rose-500">*</span>
             </label>
             <input type="text"
@@ -68,14 +68,14 @@
                    value="{{ old('username') }}"
                    required
                    placeholder="Contoh: operator_ti atau budi"
-                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800 font-mono">
+                   class="neu-input w-full px-4 py-2.5 rounded-xl text-sm font-mono text-slate-800">
             @error('username')
                 <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
-            <label for="password" class="block text-xs font-semibold text-slate-700 mb-1">
+            <label for="password" class="block text-xs font-semibold text-slate-700 mb-1.5">
                 Password Sementara <span class="text-rose-500">*</span>
             </label>
             <input type="password"
@@ -83,26 +83,26 @@
                    id="password"
                    required
                    placeholder="Minimal 8 karakter"
-                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all text-slate-800">
+                   class="neu-input w-full px-4 py-2.5 rounded-xl text-sm text-slate-800">
             @error('password')
                 <p class="mt-1 text-xs text-rose-600">{{ $message }}</p>
             @enderror
         </div>
 
         <div class="pt-2">
-            <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+            <label class="flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer">
                 <input type="checkbox" name="is_active" value="1" checked class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
                 <span>Akun langsung aktif dan dapat login</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-200/70">
             <a href="{{ route('admin.operators.index') }}"
-               class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition-colors">
+               class="neu-btn px-5 py-2.5 rounded-xl text-slate-700 text-xs font-semibold transition-all">
                 Batal
             </a>
             <button type="submit"
-                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-2 cursor-pointer">
+                    class="neu-primary px-6 py-2.5 rounded-xl text-white text-xs font-semibold shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2 cursor-pointer">
                 <i data-lucide="user-plus" class="w-4 h-4"></i>
                 <span>Simpan Akun Operator</span>
             </button>

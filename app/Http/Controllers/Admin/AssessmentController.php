@@ -22,8 +22,8 @@ class AssessmentController extends Controller
         if ($search = $request->input('search')) {
             $query->whereHas('student', function ($sq) use ($search) {
                 $sq->where('name', 'like', "%{$search}%")
-                   ->orWhere('identity_number', 'like', "%{$search}%")
-                   ->orWhere('institution', 'like', "%{$search}%");
+                    ->orWhere('identity_number', 'like', "%{$search}%")
+                    ->orWhere('institution', 'like', "%{$search}%");
             });
         }
 
@@ -100,6 +100,7 @@ class AssessmentController extends Controller
     public function show(Assessment $assessment)
     {
         $assessment->load(['student.department', 'scores.aspect']);
+
         return view('admin.assessments.show', compact('assessment'));
     }
 
